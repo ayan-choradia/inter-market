@@ -4390,6 +4390,7 @@
     let lockedBaseline = null;
 
     // User tweaks storage (holds user modifications; null = identical to baseline)
+    let deducedFrontShift = 0.0;        // In bp vs T0 reference (front outright can be negative/positive)
     let deducedSpreads = null;          // [S0, S1, S2, S3]
     let deducedFlies = null;            // [F0, F1, F2, F6M]
     let deduced12MSpread = null;        // Delta_12M
@@ -4496,6 +4497,7 @@
       // Capture fresh baseline for newly selected market
       snapshotLiveToBaseline();
       // Reset user tweaks
+      deducedFrontShift = 0.0;
       deducedSpreads = null;
       deducedFlies = null;
       deduced12MSpread = null;
@@ -4558,7 +4560,21 @@
       recalculateAndRenderDeduceStudio();
     }
 
+        // Handlers for Front Outright Shift (T0 · Dec26)
+    function onFrontShiftTweak(newValStr) {
+      const newVal = parseFloat(newValStr);
+      if (isNaN(newVal)) return;
+      deducedFrontShift = Number(newVal.toFixed(2));
+      recalculateAndRenderDeduceStudio();
+    }
+
+    function setFrontShiftPreset(val) {
+      deducedFrontShift = Number(val.toFixed(2));
+      recalculateAndRenderDeduceStudio();
+    }
+
     function resetDeduceToLive() {
+      deducedFrontShift = 0.0;
       deducedSpreads = null;
       deducedFlies = null;
       deduced12MSpread = null;
@@ -4915,6 +4931,37 @@
           : `<span class="badge badge-indigo" style="font-size:9px;">0.00 bp</span>`;
 
         panelBBody.innerHTML = `
+          <!-- Front Outright Shift Control (T0 · Dec26) - Unfixed zero point! -->
+          <div style="background:#070b14; border:1px solid #1e293b; border-radius:6px; padding:8px 10px; margin-bottom:8px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; font-size:11px;">
+              <span style="font-weight:800; color:#38bdf8;">
+                <i class="fa-solid fa-arrows-up-down"></i> Front Outright (T₀ · Dec26) Shift / Level
+              </span>
+              <div style="display:flex; align-items:center; gap:6px;">
+                <span style="font-size:10px; color:#64748b;">Base: 0.00 bp (${base.yields[0].toFixed(4)}%)</span>
+                <span class="badge ${deducedFrontShift === 0 ? 'badge-indigo' : (deducedFrontShift > 0 ? 'badge-teal' : 'badge-amber')}" style="font-size:9px;">
+                  ${deducedFrontShift > 0 ? '+' : ''}${deducedFrontShift.toFixed(2)} bp (${(base.yields[0] + deducedFrontShift/100.0).toFixed(4)}%)
+                </span>
+              </div>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <input type="range" class="tweaker-slider" min="-50" max="50" step="0.1" value="${deducedFrontShift}"
+                     oninput="onFrontShiftTweak(this.value)" style="flex:1;">
+              <input type="number" class="btn" style="width:72px; padding:2px 4px; font-size:11px; text-align:right; font-family:var(--font-mono); background:#060a12; color:#38bdf8;"
+                     step="0.1" value="${deducedFrontShift.toFixed(2)}" onchange="onFrontShiftTweak(this.value)">
+            </div>
+            <div style="display:flex; gap:4px; margin-top:6px; flex-wrap:wrap; align-items:center;">
+              <span style="font-size:10px; color:#64748b; font-weight:700;">Front Presets:</span>
+              <button class="btn btn-sm btn-outline" style="font-size:9px; padding:1px 5px;" onclick="setFrontShiftPreset(0)">At Ref (0 bp)</button>
+              <button class="btn btn-sm btn-outline" style="font-size:9px; padding:1px 5px;" onclick="setFrontShiftPreset(-5.0)">-5.0 bp</button>
+              <button class="btn btn-sm btn-outline" style="font-size:9px; padding:1px 5px;" onclick="setFrontShiftPreset(-10.0)">-10.0 bp</button>
+              <button class="btn btn-sm btn-outline" style="font-size:9px; padding:1px 5px;" onclick="setFrontShiftPreset(-15.0)">-15.0 bp</button>
+              <button class="btn btn-sm btn-outline" style="font-size:9px; padding:1px 5px;" onclick="setFrontShiftPreset(-20.0)">-20.0 bp</button>
+              <button class="btn btn-sm btn-outline" style="font-size:9px; padding:1px 5px;" onclick="setFrontShiftPreset(5.0)">+5.0 bp</button>
+              <button class="btn btn-sm btn-outline" style="font-size:9px; padding:1px 5px;" onclick="setFrontShiftPreset(10.0)">+10.0 bp</button>
+            </div>
+          </div>
+
           <!-- Tweak Tabs: Spreads vs Flies vs Slope -->
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:8px;">
             <!-- Column 1: Spreads -->
@@ -4996,11 +5043,11 @@
 
       const quarterCodes = ['Dec26', 'Mar27', 'Jun27', 'Sep27', 'Dec27'];
       const myMoves = [
-        0.0,
-        spreads[0],
-        Number((spreads[0] + spreads[1]).toFixed(2)),
-        Number((spreads[0] + spreads[1] + spreads[2]).toFixed(2)),
-        d12
+        deducedFrontShift,
+        Number((deducedFrontShift + spreads[0]).toFixed(2)),
+        Number((deducedFrontShift + spreads[0] + spreads[1]).toFixed(2)),
+        Number((deducedFrontShift + spreads[0] + spreads[1] + spreads[2]).toFixed(2)),
+        Number((deducedFrontShift + d12).toFixed(2))
       ];
 
       let html = '';
@@ -5086,11 +5133,11 @@
       const knotX = [0, 1, 2, 3, 4];
       const liveY = base.yMoves;
       const myY = [
-        0.0,
-        deducedSpreads[0],
-        Number((deducedSpreads[0] + deducedSpreads[1]).toFixed(2)),
-        Number((deducedSpreads[0] + deducedSpreads[1] + deducedSpreads[2]).toFixed(2)),
-        deducedD12
+        deducedFrontShift,
+        Number((deducedFrontShift + deducedSpreads[0]).toFixed(2)),
+        Number((deducedFrontShift + deducedSpreads[0] + deducedSpreads[1]).toFixed(2)),
+        Number((deducedFrontShift + deducedSpreads[0] + deducedSpreads[1] + deducedSpreads[2]).toFixed(2)),
+        Number((deducedFrontShift + deducedD12).toFixed(2))
       ];
 
       // Fit cubic polynomials
@@ -5220,11 +5267,11 @@
       if (deduceViewMode === 'rel_t0') {
         const liveY = base.yMoves;
         const myY = [
-          0.0,
-          spreads[0],
-          Number((spreads[0] + spreads[1]).toFixed(2)),
-          Number((spreads[0] + spreads[1] + spreads[2]).toFixed(2)),
-          d12
+          deducedFrontShift,
+          Number((deducedFrontShift + spreads[0]).toFixed(2)),
+          Number((deducedFrontShift + spreads[0] + spreads[1]).toFixed(2)),
+          Number((deducedFrontShift + spreads[0] + spreads[1] + spreads[2]).toFixed(2)),
+          Number((deducedFrontShift + d12).toFixed(2))
         ];
 
         // Dense polynomial interpolation
@@ -5304,11 +5351,11 @@
       } else if (deduceViewMode === 'yield') {
         const liveYields = base.yields;
         const myYields = [
-          liveYields[0],
-          Number((liveYields[0] + spreads[0] / 100.0).toFixed(4)),
-          Number((liveYields[0] + (spreads[0] + spreads[1]) / 100.0).toFixed(4)),
-          Number((liveYields[0] + (spreads[0] + spreads[1] + spreads[2]) / 100.0).toFixed(4)),
-          Number((liveYields[0] + d12 / 100.0).toFixed(4))
+          Number((liveYields[0] + deducedFrontShift / 100.0).toFixed(4)),
+          Number((liveYields[0] + (deducedFrontShift + spreads[0]) / 100.0).toFixed(4)),
+          Number((liveYields[0] + (deducedFrontShift + spreads[0] + spreads[1]) / 100.0).toFixed(4)),
+          Number((liveYields[0] + (deducedFrontShift + spreads[0] + spreads[1] + spreads[2]) / 100.0).toFixed(4)),
+          Number((liveYields[0] + (deducedFrontShift + d12) / 100.0).toFixed(4))
         ];
 
         traces.push({
@@ -5392,12 +5439,13 @@
         },
         yaxis: {
           title: { 
-            text: deduceViewMode === 'yield' ? 'Implied Yield (%)' : 'Spread / Rate Move (bp)', 
+            text: deduceViewMode === 'yield' ? 'Implied Yield (%)' : 'Rate Move vs T₀ Ref (bp)', 
             font: { color: '#64748b', size: 10 } 
           },
           gridcolor: '#131d33',
-          zerolinecolor: '#334155',
-          zerolinewidth: 1.5,
+          zeroline: true,
+          zerolinecolor: '#475569',
+          zerolinewidth: 2,
           tickfont: { color: '#94a3b8', size: 10, family: 'monospace' }
         },
         barmode: 'group',
