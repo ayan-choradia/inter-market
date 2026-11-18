@@ -933,6 +933,216 @@
 
       </div>
 
+      <!-- ═══════════════════════════════════════════════════════════════ -->
+      <!-- SECTION 04: ARBITRARY CURVE COMBINATIONS & STRUCTURE TWEAKER   -->
+      <!-- (a - x·b, 12M Fly - 2·6M Fly, 6M Fly - 2·3M Fly, ∑ Spreads - y·Leg) -->
+      <!-- ═══════════════════════════════════════════════════════════════ -->
+      <div class="curve-panel" style="margin-top:20px; border:1px solid #7c3aed; background:linear-gradient(180deg, #0b0f1e 0%, #070914 100%);">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:16px; border-bottom:1px solid #1e293b; padding-bottom:12px;">
+          <div>
+            <div style="font-size:10px; color:#a78bfa; font-weight:800; letter-spacing:1px; text-transform:uppercase;">
+              ADVANCED STRUCTURE LAB & RELATIVE CURVATURE TWEAKER
+            </div>
+            <div style="font-size:20px; font-weight:800; color:#fff; display:flex; align-items:center; gap:8px;">
+              <i class="fa-solid fa-calculator" style="color:#c084fc;"></i> 04 · Arbitrary Curve Combinations & Structure Tweaker
+            </div>
+            <div style="font-size:11px; color:#94a3b8; margin-top:2px; display:flex; align-items:center; gap:12px;">
+              <span><span style="color:#c084fc;">●</span> Generalized <code style="color:#38bdf8;">a - x·b</code> Combinations, Multi-Fly Curvature Tweakers (<code style="color:#00d97e;">12M - 2·6M Fly</code>, <code style="color:#f59e0b;">6M - 2·3M Fly</code>), and Strip Neutralizers (<code style="color:#ec4899;">∑ Spreads - y·Leg</code>)</span>
+              <span style="color:#64748b;">|</span>
+              <span id="comboLastUpdated" style="color:#64748b; font-family:var(--font-mono);">Live streaming via Lightstreamer</span>
+            </div>
+          </div>
+
+          <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+            <span style="font-size:11px; color:var(--text-dim);">Market:</span>
+            <button class="btn active" id="btnComboMktUSD" onclick="setComboMarket('USD')"><i class="fa-solid fa-landmark"></i> USD (SRA)</button>
+            <button class="btn" id="btnComboMktEUR" onclick="setComboMarket('EUR')">🇪🇺 EUR (ER)</button>
+            <button class="btn" id="btnComboMktGBP" onclick="setComboMarket('GBP')">🇬🇧 GBP (SON)</button>
+            <button class="btn" id="btnComboMktCHF" onclick="setComboMarket('CHF')">🇨🇭 CHF (CRA)</button>
+          </div>
+        </div>
+
+        <!-- Interactive Combination Builder & Tweaker Form -->
+        <div style="background:#090d1a; border:1px solid #1e2238; border-radius:8px; padding:16px; margin-bottom:18px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
+            <div style="font-weight:700; color:#e2e8f0; font-size:13px; display:flex; align-items:center; gap:8px;">
+              <i class="fa-solid fa-sliders" style="color:#38bdf8;"></i> Custom Formula & Ratio Tweaker:
+              <span style="font-size:11px; font-weight:400; color:#94a3b8;">Select any contract or fly for Leg A and Leg B with arbitrary ratio coefficient <code style="color:#38bdf8;">x</code> or <code style="color:#ec4899;">y</code></span>
+            </div>
+            <div style="display:flex; gap:6px;">
+              <button class="btn active" id="btnModeAxB" onclick="setComboMode('AXB')" style="font-size:11px; padding:4px 8px;"><i class="fa-solid fa-code-compare"></i> Mode: a - x·b</button>
+              <button class="btn" id="btnModeTotalSpread" onclick="setComboMode('TOTAL_SPREAD')" style="font-size:11px; padding:4px 8px;"><i class="fa-solid fa-layer-group"></i> Mode: ∑ Spreads - y·Leg</button>
+              <button class="btn" id="btnModeXAB" onclick="setComboMode('XAB')" style="font-size:11px; padding:4px 8px;"><i class="fa-solid fa-arrows-split-up-and-left"></i> Mode: x·a - b</button>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:14px; align-items:start;">
+            <!-- Leg A Input -->
+            <div style="background:#0e1326; padding:12px; border-radius:6px; border-left:3px solid #38bdf8;">
+              <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+                <span style="font-size:11px; font-weight:700; color:#38bdf8; text-transform:uppercase;">Leg A</span>
+                <span id="badgeLegAValue" style="font-size:11px; font-weight:800; color:#fff; font-family:var(--font-mono);">-- bp</span>
+              </div>
+              <div id="wrapperLegANormal" style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                <div>
+                  <label style="font-size:10px; color:#64748b; display:block; margin-bottom:3px;">Structure Type:</label>
+                  <select id="selectLegAType" class="btn" style="width:100%; font-size:11px; padding:5px 6px;" onchange="onComboBuilderChange()">
+                    <option value="FLY_12M" selected>12M Fly (Half-Year/Annual)</option>
+                    <option value="FLY_6M">6M Fly (Half-Yearly Legs)</option>
+                    <option value="FLY_3M">3M Fly (Quarterly Legs)</option>
+                    <option value="SPREAD_12M">12M Calendar Spread</option>
+                    <option value="SPREAD_6M">6M Calendar Spread</option>
+                    <option value="SPREAD_3M">3M Calendar Spread</option>
+                    <option value="OUTRIGHT">Outright Implied Rate %</option>
+                    <option value="OUTRIGHT_PRICE">Outright Futures Price</option>
+                  </select>
+                </div>
+                <div>
+                  <label style="font-size:10px; color:#64748b; display:block; margin-bottom:3px;">Start Quarter:</label>
+                  <select id="selectLegATenor" class="btn" style="width:100%; font-size:11px; padding:5px 6px; font-family:var(--font-mono);" onchange="onComboBuilderChange()"></select>
+                </div>
+              </div>
+              <div id="wrapperLegATotal" style="display:none;">
+                <label style="font-size:10px; color:#64748b; display:block; margin-bottom:3px;">Total Spread Strip:</label>
+                <select id="selectTotalSpreadType" class="btn" style="width:100%; font-size:11px; padding:5px 6px;" onchange="onComboBuilderChange()">
+                  <option value="TOTAL_3M" selected>Total 3M Spreads (1Y Strip: ∑ S_3M = Z26-Z27)</option>
+                  <option value="TOTAL_6M">Total 6M Spreads (∑ S_6M across 1Y)</option>
+                  <option value="TOTAL_12M">Total 12M Spreads (Full 2Y Strip)</option>
+                  <option value="TOTAL_ALL">Combined (3M + 6M + 9M + 12M Total Slope)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Operator & Ratio Multiplier -->
+            <div style="background:#0e1326; padding:12px; border-radius:6px; border-left:3px solid #c084fc;">
+              <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+                <span id="labelRatioMult" style="font-size:11px; font-weight:700; color:#c084fc; text-transform:uppercase;">Ratio Multiplier (x)</span>
+                <button class="btn" onclick="autoCalculateRatio()" style="font-size:10px; padding:2px 6px; background:#241640; border-color:#7c3aed; color:#c084fc;" title="Auto-calculate optimal curvature or hedge ratio"><i class="fa-solid fa-wand-magic-sparkles"></i> Auto-Generate x</button>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+                <span id="symbolOperator" style="font-size:16px; font-weight:800; color:#f8fafc;">−</span>
+                <input type="number" id="inputMultiplierX" value="2.0000" step="0.1" style="flex:1; background:#060814; border:1px solid #7c3aed; color:#fff; font-family:var(--font-mono); font-weight:700; font-size:14px; padding:6px 10px; border-radius:4px;" oninput="onComboBuilderChange()">
+                <span style="font-size:14px; color:#64748b;">×</span>
+              </div>
+              <div style="display:flex; gap:4px; flex-wrap:wrap;">
+                <button class="btn" style="font-size:10px; padding:2px 6px;" onclick="setRatioPreset(0.5)">0.5x</button>
+                <button class="btn" style="font-size:10px; padding:2px 6px;" onclick="setRatioPreset(1.0)">1.0x</button>
+                <button class="btn" style="font-size:10px; padding:2px 6px;" onclick="setRatioPreset(1.5)">1.5x</button>
+                <button class="btn active" id="btnPreset2" style="font-size:10px; padding:2px 6px;" onclick="setRatioPreset(2.0)">2.0x</button>
+                <button class="btn" style="font-size:10px; padding:2px 6px;" onclick="setRatioPreset(4.0)">4.0x</button>
+                <button class="btn" style="font-size:10px; padding:2px 6px; color:#00d97e; border-color:#00d97e44;" onclick="solveZeroRatio()" title="Solve x so structure equals 0"><i class="fa-solid fa-crosshairs"></i> Zero Root</button>
+              </div>
+            </div>
+
+            <!-- Leg B Input -->
+            <div style="background:#0e1326; padding:12px; border-radius:6px; border-left:3px solid #f59e0b;">
+              <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+                <span style="font-size:11px; font-weight:700; color:#f59e0b; text-transform:uppercase;">Leg B</span>
+                <span id="badgeLegBValue" style="font-size:11px; font-weight:800; color:#fff; font-family:var(--font-mono);">-- bp</span>
+              </div>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                <div>
+                  <label style="font-size:10px; color:#64748b; display:block; margin-bottom:3px;">Structure Type:</label>
+                  <select id="selectLegBType" class="btn" style="width:100%; font-size:11px; padding:5px 6px;" onchange="onComboBuilderChange()">
+                    <option value="FLY_6M" selected>6M Fly (Half-Yearly Legs)</option>
+                    <option value="FLY_3M">3M Fly (Quarterly Legs)</option>
+                    <option value="FLY_12M">12M Fly (Half-Year/Annual)</option>
+                    <option value="SPREAD_3M">3M Calendar Spread</option>
+                    <option value="SPREAD_6M">6M Calendar Spread</option>
+                    <option value="SPREAD_12M">12M Calendar Spread</option>
+                    <option value="OUTRIGHT">Outright Implied Rate %</option>
+                    <option value="OUTRIGHT_PRICE">Outright Futures Price</option>
+                  </select>
+                </div>
+                <div>
+                  <label style="font-size:10px; color:#64748b; display:block; margin-bottom:3px;">Start Quarter:</label>
+                  <select id="selectLegBTenor" class="btn" style="width:100%; font-size:11px; padding:5px 6px; font-family:var(--font-mono);" onchange="onComboBuilderChange()"></select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Live Result & Action Card -->
+            <div style="background:#0e1326; padding:12px; border-radius:6px; border-left:3px solid #00d97e; display:flex; flex-direction:column; justify-content:space-between;">
+              <div>
+                <div style="font-size:10px; color:#64748b; text-transform:uppercase; font-weight:700; margin-bottom:4px;">Structure Live Net Value</div>
+                <div id="badgeNetResultValue" style="font-size:22px; font-weight:900; color:#00d97e; font-family:var(--font-mono); letter-spacing:-0.5px;">-- bp</div>
+                <div id="textFormulaPreview" style="font-size:11px; color:#94a3b8; font-family:var(--font-mono); margin-top:3px; word-break:break-all;">Dec26 12M Fly - 2.0 × Dec26 6M Fly</div>
+              </div>
+              <div style="display:flex; gap:6px; margin-top:10px;">
+                <button class="btn active" onclick="addCurrentComboToTable()" style="flex:1; font-size:11px; padding:6px 8px; justify-content:center;"><i class="fa-solid fa-plus"></i> Add to Table</button>
+                <button class="btn" onclick="plotCurrentBuilderCurve()" style="flex:1; font-size:11px; padding:6px 8px; justify-content:center; border-color:#00d97e; color:#00d97e;"><i class="fa-solid fa-chart-line"></i> Plot Curve</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Layout: Combinations Table (Left) & Dynamic Curve Canvas (Right) -->
+        <div style="display:grid; grid-template-columns:1.2fr 1fr; gap:16px; align-items:start;">
+
+          <!-- Left Column: The Combinations Table -->
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:8px;">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <i class="fa-solid fa-table-cells" style="color:#38bdf8;"></i>
+                <strong style="color:#fff; font-size:13px;">Institutional & Custom Combinations Board:</strong>
+              </div>
+              <div style="display:flex; gap:4px;">
+                <button class="btn active" id="btnFilterCombosAll" onclick="setComboFilter('ALL')" style="font-size:10px; padding:2px 6px;">All</button>
+                <button class="btn" id="btnFilterCombosFly" onclick="setComboFilter('FLY')" style="font-size:10px; padding:2px 6px;">Fly Curvatures</button>
+                <button class="btn" id="btnFilterCombosTotal" onclick="setComboFilter('TOTAL')" style="font-size:10px; padding:2px 6px;">∑ Spreads</button>
+                <button class="btn" id="btnFilterCombosCustom" onclick="setComboFilter('CUSTOM')" style="font-size:10px; padding:2px 6px;">Custom</button>
+              </div>
+            </div>
+
+            <div style="max-height:480px; overflow-y:auto; border:1px solid #1a2235; border-radius:6px; background:#080c16;">
+              <table class="live-table" style="font-size:11px; width:100%; border-collapse:collapse;">
+                <thead>
+                  <tr style="background:#0e1526; color:#94a3b8; border-bottom:1px solid #1e293b; position:sticky; top:0; z-index:2;">
+                    <th style="padding:6px 8px; text-align:left;">Mkt</th>
+                    <th style="padding:6px 8px; text-align:left;">Combination / Formula</th>
+                    <th style="padding:6px 8px; text-align:right;">Leg A</th>
+                    <th style="padding:6px 8px; text-align:center;">Weight (x)</th>
+                    <th style="padding:6px 8px; text-align:right;">Leg B</th>
+                    <th style="padding:6px 8px; text-align:right;">Net Value</th>
+                    <th style="padding:6px 8px; text-align:center;">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="tbodyCombinationsList">
+                  <!-- Dynamically populated combinations -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Right Column: Live Dynamic Curve Plot & Continuous Equation Card -->
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:8px;">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <i class="fa-solid fa-chart-spline" style="color:#00d97e;"></i>
+                <strong id="plotComboTitle" style="color:#fff; font-size:13px;">Selected Structure Dynamic Curve</strong>
+              </div>
+              <div style="display:flex; gap:6px; align-items:center;">
+                <label style="font-size:10px; color:#94a3b8; display:flex; align-items:center; gap:4px; cursor:pointer;">
+                  <input type="checkbox" id="chkShowComponents" checked onchange="renderPlottedCombinationCurve()"> Components
+                </label>
+                <label style="font-size:10px; color:#94a3b8; display:flex; align-items:center; gap:4px; cursor:pointer;">
+                  <input type="checkbox" id="chkShowPolynomialFit" checked onchange="renderPlottedCombinationCurve()"> Poly Curve
+                </label>
+              </div>
+            </div>
+
+            <!-- Plotly Canvas for Combinations -->
+            <div id="chartCombinationPlotly" style="width:100%; height:320px; background:#070b14; border-radius:6px; border:1px solid #162032;"></div>
+
+            <!-- Live Equation & Slope Decomposition Card for Plotted Structure -->
+            <div id="comboEquationCard" style="margin-top:10px; background:#0a0e1c; border:1px solid #1a2238; border-radius:6px; padding:10px;">
+              <!-- Dynamically populated with equation, slope, curvature, R2 -->
+            </div>
+          </div>
+
+        </div>
+      </div>
+
     </div>
 
     <!-- ═══════════════════════════════════════════════════════════════ -->
@@ -1471,6 +1681,7 @@
         else if (activeNavTab === 'tabTables') renderDepthTables();
         renderLiveOutrightsFeed();
         renderCurveBoardTables();
+        updateCombinationsModuleLive();
       } catch (err) {
         console.error("Fetch error:", err);
       }
@@ -3415,6 +3626,602 @@
       if (eqBanner) eqBanner.innerHTML = eqCardsHtml;
     }
 
+    // ═══════════════════════════════════════════════════════════════════
+    // 04 · ARBITRARY CURVE COMBINATIONS & HIGHER-ORDER CURVATURE TWEAKER
+    // (a - x·b, 12M Fly - 2·6M Fly, 6M Fly - 2·3M Fly, ∑ Spreads - y·Leg)
+    // ═══════════════════════════════════════════════════════════════════
+    let comboActiveMarket = 'USD';
+    let comboActiveMode = 'AXB';         // 'AXB', 'TOTAL_SPREAD', 'XAB'
+    let comboActiveFilter = 'ALL';       // 'ALL', 'FLY', 'TOTAL', 'CUSTOM'
+    let activePlottedComboId = 'c1';
+
+    let customCombinationsList = [
+      { id: 'c1', market: 'USD', name: 'Dec26 12M Fly - 2·6M Fly', mode: 'AXB', legAType: 'FLY_12M', legATenor: 'Z26', multX: 2.0, legBType: 'FLY_6M', legBTenor: 'Z26', isDefault: true, tag: 'FLY' },
+      { id: 'c2', market: 'USD', name: 'Dec26 6M Fly - 2·3M Fly', mode: 'AXB', legAType: 'FLY_6M', legATenor: 'Z26', multX: 2.0, legBType: 'FLY_3M', legBTenor: 'Z26', isDefault: true, tag: 'FLY' },
+      { id: 'c3', market: 'USD', name: 'Mar27 12M Fly - 2·6M Fly', mode: 'AXB', legAType: 'FLY_12M', legATenor: 'H27', multX: 2.0, legBType: 'FLY_6M', legBTenor: 'H27', isDefault: true, tag: 'FLY' },
+      { id: 'c4', market: 'USD', name: 'Mar27 6M Fly - 2·3M Fly', mode: 'AXB', legAType: 'FLY_6M', legATenor: 'H27', multX: 2.0, legBType: 'FLY_3M', legBTenor: 'H27', isDefault: true, tag: 'FLY' },
+      { id: 'c5', market: 'USD', name: 'Jun27 12M Fly - 2·6M Fly', mode: 'AXB', legAType: 'FLY_12M', legATenor: 'M27', multX: 2.0, legBType: 'FLY_6M', legBTenor: 'M27', isDefault: true, tag: 'FLY' },
+      { id: 'c6', market: 'USD', name: 'Jun27 6M Fly - 2·3M Fly', mode: 'AXB', legAType: 'FLY_6M', legATenor: 'M27', multX: 2.0, legBType: 'FLY_3M', legBTenor: 'M27', isDefault: true, tag: 'FLY' },
+      { id: 'c7', market: 'EUR', name: 'Dec26 12M Fly - 2·6M Fly', mode: 'AXB', legAType: 'FLY_12M', legATenor: 'Z26', multX: 2.0, legBType: 'FLY_6M', legBTenor: 'Z26', isDefault: true, tag: 'FLY' },
+      { id: 'c8', market: 'EUR', name: 'Dec26 6M Fly - 2·3M Fly', mode: 'AXB', legAType: 'FLY_6M', legATenor: 'Z26', multX: 2.0, legBType: 'FLY_3M', legBTenor: 'Z26', isDefault: true, tag: 'FLY' },
+      { id: 'c9', market: 'GBP', name: 'Dec26 12M Fly - 2·6M Fly', mode: 'AXB', legAType: 'FLY_12M', legATenor: 'Z26', multX: 2.0, legBType: 'FLY_6M', legBTenor: 'Z26', isDefault: true, tag: 'FLY' },
+      { id: 'c10', market: 'CHF', name: 'Dec26 12M Fly - 2·6M Fly', mode: 'AXB', legAType: 'FLY_12M', legATenor: 'Z26', multX: 2.0, legBType: 'FLY_6M', legBTenor: 'Z26', isDefault: true, tag: 'FLY' },
+      { id: 'c11', market: 'USD', name: 'Total 3M Spreads - 4·(Dec26 3M Spread)', mode: 'TOTAL_SPREAD', totalType: 'TOTAL_3M', multX: 4.0, legBType: 'SPREAD_3M', legBTenor: 'Z26', isDefault: true, tag: 'TOTAL' },
+      { id: 'c12', market: 'USD', name: 'Total 6M Spreads - 2·(Dec26 6M Fly)', mode: 'TOTAL_SPREAD', totalType: 'TOTAL_6M', multX: 2.0, legBType: 'FLY_6M', legBTenor: 'Z26', isDefault: true, tag: 'TOTAL' },
+      { id: 'c13', market: 'EUR', name: 'Total 3M Spreads - 4·(Dec26 3M Spread)', mode: 'TOTAL_SPREAD', totalType: 'TOTAL_3M', multX: 4.0, legBType: 'SPREAD_3M', legBTenor: 'Z26', isDefault: true, tag: 'TOTAL' }
+    ];
+
+    function initCombinationModule() {
+      const selA = document.getElementById('selectLegATenor');
+      const selB = document.getElementById('selectLegBTenor');
+      if (selA && selB) {
+        let optHtml = '';
+        BOARD_QUARTERS.forEach(bq => {
+          optHtml += `<option value="${bq.short}">${bq.short} (${bq.code})</option>`;
+        });
+        selA.innerHTML = optHtml;
+        selB.innerHTML = optHtml;
+        selA.value = 'Z26';
+        selB.value = 'Z26';
+      }
+      onComboBuilderChange();
+      renderCombinationsTable();
+      renderPlottedCombinationCurve();
+    }
+
+    function setComboMarket(m) {
+      comboActiveMarket = m;
+      for (const btnId of ['btnComboMktUSD', 'btnComboMktEUR', 'btnComboMktGBP', 'btnComboMktCHF']) {
+        const btn = document.getElementById(btnId);
+        if (btn) btn.classList.remove('active');
+      }
+      const map = { 'USD': 'btnComboMktUSD', 'EUR': 'btnComboMktEUR', 'GBP': 'btnComboMktGBP', 'CHF': 'btnComboMktCHF' };
+      const ab = document.getElementById(map[m]);
+      if (ab) ab.classList.add('active');
+      onComboBuilderChange();
+      renderCombinationsTable();
+      renderPlottedCombinationCurve();
+    }
+
+    function setComboMode(mode) {
+      comboActiveMode = mode;
+      document.getElementById('btnModeAxB').classList.toggle('active', mode === 'AXB');
+      document.getElementById('btnModeTotalSpread').classList.toggle('active', mode === 'TOTAL_SPREAD');
+      document.getElementById('btnModeXAB').classList.toggle('active', mode === 'XAB');
+
+      const wrapNorm = document.getElementById('wrapperLegANormal');
+      const wrapTot = document.getElementById('wrapperLegATotal');
+      const sym = document.getElementById('symbolOperator');
+      const lbl = document.getElementById('labelRatioMult');
+
+      if (mode === 'TOTAL_SPREAD') {
+        if (wrapNorm) wrapNorm.style.display = 'none';
+        if (wrapTot) wrapTot.style.display = 'block';
+        if (sym) sym.innerText = '−';
+        if (lbl) lbl.innerText = 'Ratio Multiplier (y)';
+      } else if (mode === 'XAB') {
+        if (wrapNorm) wrapNorm.style.display = 'grid';
+        if (wrapTot) wrapTot.style.display = 'none';
+        if (sym) sym.innerText = '× Leg A −';
+        if (lbl) lbl.innerText = 'Weight (x)';
+      } else {
+        if (wrapNorm) wrapNorm.style.display = 'grid';
+        if (wrapTot) wrapTot.style.display = 'none';
+        if (sym) sym.innerText = '−';
+        if (lbl) lbl.innerText = 'Ratio Multiplier (x)';
+      }
+      onComboBuilderChange();
+    }
+
+    function setComboFilter(f) {
+      comboActiveFilter = f;
+      for (const id of ['btnFilterCombosAll', 'btnFilterCombosFly', 'btnFilterCombosTotal', 'btnFilterCombosCustom']) {
+        const b = document.getElementById(id);
+        if (b) b.classList.remove('active');
+      }
+      const map = { 'ALL': 'btnFilterCombosAll', 'FLY': 'btnFilterCombosFly', 'TOTAL': 'btnFilterCombosTotal', 'CUSTOM': 'btnFilterCombosCustom' };
+      if (map[f]) document.getElementById(map[f]).classList.add('active');
+      renderCombinationsTable();
+    }
+
+    function setRatioPreset(val) {
+      const inp = document.getElementById('inputMultiplierX');
+      if (inp) {
+        inp.value = val.toFixed(4);
+        onComboBuilderChange();
+      }
+    }
+
+    function autoCalculateRatio() {
+      const typeA = document.getElementById('selectLegAType').value;
+      const typeB = document.getElementById('selectLegBType').value;
+      const inp = document.getElementById('inputMultiplierX');
+      if (!inp) return;
+
+      if (comboActiveMode === 'TOTAL_SPREAD') {
+        const totType = document.getElementById('selectTotalSpreadType').value;
+        if (totType === 'TOTAL_3M' && typeB === 'SPREAD_3M') inp.value = (4.0).toFixed(4);
+        else if (totType === 'TOTAL_6M' && (typeB === 'SPREAD_6M' || typeB === 'FLY_6M')) inp.value = (2.0).toFixed(4);
+        else {
+          const vA = evaluateSingleLeg(comboActiveMarket, totType, 'Z26');
+          const tenorB = document.getElementById('selectLegBTenor').value;
+          const vB = evaluateSingleLeg(comboActiveMarket, typeB, tenorB);
+          if (vB && Math.abs(vB) > 0.0001) inp.value = Math.abs(vA / vB).toFixed(4);
+          else inp.value = (2.0).toFixed(4);
+        }
+      } else {
+        if (typeA === 'FLY_12M' && typeB === 'FLY_6M') inp.value = (2.0).toFixed(4);
+        else if (typeA === 'FLY_6M' && typeB === 'FLY_3M') inp.value = (2.0).toFixed(4);
+        else if (typeA === 'FLY_12M' && typeB === 'FLY_3M') inp.value = (4.0).toFixed(4);
+        else if (typeA === 'SPREAD_12M' && typeB === 'SPREAD_6M') inp.value = (2.0).toFixed(4);
+        else {
+          const tenorA = document.getElementById('selectLegATenor').value;
+          const tenorB = document.getElementById('selectLegBTenor').value;
+          const vA = evaluateSingleLeg(comboActiveMarket, typeA, tenorA);
+          const vB = evaluateSingleLeg(comboActiveMarket, typeB, tenorB);
+          if (vB && Math.abs(vB) > 0.0001) inp.value = Math.abs(vA / vB).toFixed(4);
+          else inp.value = (1.0).toFixed(4);
+        }
+      }
+      onComboBuilderChange();
+    }
+
+    function solveZeroRatio() {
+      const tenorA = document.getElementById('selectLegATenor').value;
+      const typeA = (comboActiveMode === 'TOTAL_SPREAD') ? document.getElementById('selectTotalSpreadType').value : document.getElementById('selectLegAType').value;
+      const tenorB = document.getElementById('selectLegBTenor').value;
+      const typeB = document.getElementById('selectLegBType').value;
+      const vA = evaluateSingleLeg(comboActiveMarket, typeA, tenorA);
+      const vB = evaluateSingleLeg(comboActiveMarket, typeB, tenorB);
+      const inp = document.getElementById('inputMultiplierX');
+      if (inp && vB && Math.abs(vB) > 0.0001) {
+        if (comboActiveMode === 'XAB') {
+          if (vA && Math.abs(vA) > 0.0001) inp.value = (vB / vA).toFixed(4);
+        } else {
+          inp.value = (vA / vB).toFixed(4);
+        }
+        onComboBuilderChange();
+      }
+    }
+
+    function evaluateSingleLeg(mkt, type, startTenor) {
+      const prices = getBoardMarketPrices();
+      const mktObj = BOARD_MARKETS.find(b => b.key === mkt) || BOARD_MARKETS[0];
+      const mPrices = prices[mktObj.label] || {};
+      
+      const qIndex = BOARD_QUARTERS.findIndex(b => b.short === startTenor || b.code === startTenor);
+      const idx = qIndex >= 0 ? qIndex : 0;
+
+      const pAt = (offset) => {
+        if (idx + offset < BOARD_QUARTERS.length) {
+          const s = BOARD_QUARTERS[idx + offset].short;
+          return mPrices[s];
+        }
+        return undefined;
+      };
+
+      const p0 = pAt(0);
+      if (p0 === undefined || p0 === null) return null;
+
+      switch (type) {
+        case 'FLY_12M': {
+          const p4 = pAt(4), p8 = pAt(8);
+          if (p4 !== undefined && p8 !== undefined) return Number(((p0 - 2.0*p4 + p8) * 100.0).toFixed(2));
+          return null;
+        }
+        case 'FLY_6M': {
+          const p2 = pAt(2), p4 = pAt(4);
+          if (p2 !== undefined && p4 !== undefined) return Number(((p0 - 2.0*p2 + p4) * 100.0).toFixed(2));
+          return null;
+        }
+        case 'FLY_3M': {
+          const p1 = pAt(1), p2 = pAt(2);
+          if (p1 !== undefined && p2 !== undefined) return Number(((p0 - 2.0*p1 + p2) * 100.0).toFixed(2));
+          return null;
+        }
+        case 'SPREAD_12M': {
+          const p4 = pAt(4);
+          if (p4 !== undefined) return Number(((p0 - p4) * 100.0).toFixed(2));
+          return null;
+        }
+        case 'SPREAD_6M': {
+          const p2 = pAt(2);
+          if (p2 !== undefined) return Number(((p0 - p2) * 100.0).toFixed(2));
+          return null;
+        }
+        case 'SPREAD_3M': {
+          const p1 = pAt(1);
+          if (p1 !== undefined) return Number(((p0 - p1) * 100.0).toFixed(2));
+          return null;
+        }
+        case 'OUTRIGHT': {
+          return Number((100.0 - p0).toFixed(4));
+        }
+        case 'OUTRIGHT_PRICE': {
+          return Number(p0.toFixed(4));
+        }
+        case 'TOTAL_3M': {
+          const p4 = pAt(4);
+          if (p4 !== undefined) return Number(((p0 - p4) * 100.0).toFixed(2));
+          return null;
+        }
+        case 'TOTAL_6M': {
+          const p2 = pAt(2), p4 = pAt(4);
+          if (p2 !== undefined && p4 !== undefined) return Number(((p0 - p2 + p2 - p4) * 100.0).toFixed(2));
+          return null;
+        }
+        case 'TOTAL_12M': {
+          const p4 = pAt(4), p8 = pAt(8);
+          if (p4 !== undefined && p8 !== undefined) return Number(((p0 - p8) * 100.0).toFixed(2));
+          return null;
+        }
+        case 'TOTAL_ALL': {
+          const allP = Object.values(mPrices).filter(v => v !== null && v !== undefined);
+          if (allP.length >= 2) return Number(((allP[0] - allP[allP.length - 1]) * 100.0).toFixed(2));
+          return null;
+        }
+        default:
+          return null;
+      }
+    }
+
+    function evaluateCombination(combo) {
+      const mkt = combo.market || comboActiveMarket;
+      const mult = combo.multX !== undefined ? combo.multX : 1.0;
+      let valA = null, valB = null, net = null;
+
+      if (combo.mode === 'TOTAL_SPREAD') {
+        valA = evaluateSingleLeg(mkt, combo.totalType || 'TOTAL_3M', 'Z26');
+        valB = evaluateSingleLeg(mkt, combo.legBType, combo.legBTenor);
+        if (valA !== null && valB !== null) net = Number((valA - mult * valB).toFixed(2));
+      } else if (combo.mode === 'XAB') {
+        valA = evaluateSingleLeg(mkt, combo.legAType, combo.legATenor);
+        valB = evaluateSingleLeg(mkt, combo.legBType, combo.legBTenor);
+        if (valA !== null && valB !== null) net = Number((mult * valA - valB).toFixed(2));
+      } else {
+        valA = evaluateSingleLeg(mkt, combo.legAType, combo.legATenor);
+        valB = evaluateSingleLeg(mkt, combo.legBType, combo.legBTenor);
+        if (valA !== null && valB !== null) net = Number((valA - mult * valB).toFixed(2));
+      }
+      return { valA, valB, net, mult };
+    }
+
+    function getStructureLabel(type, tenor) {
+      const typeNames = {
+        'FLY_12M': '12M Fly', 'FLY_6M': '6M Fly', 'FLY_3M': '3M Fly',
+        'SPREAD_12M': '12M Spread', 'SPREAD_6M': '6M Spread', 'SPREAD_3M': '3M Spread',
+        'OUTRIGHT': 'Rate', 'OUTRIGHT_PRICE': 'Price',
+        'TOTAL_3M': 'Total 3M Spreads', 'TOTAL_6M': 'Total 6M Spreads', 'TOTAL_12M': 'Total 12M Spreads', 'TOTAL_ALL': 'Total Aggregate Spreads'
+      };
+      if (type.startsWith('TOTAL_')) return typeNames[type] || type;
+      return `${tenor} ${typeNames[type] || type}`;
+    }
+
+    function onComboBuilderChange() {
+      const typeA = (comboActiveMode === 'TOTAL_SPREAD') ? document.getElementById('selectTotalSpreadType').value : document.getElementById('selectLegAType').value;
+      const tenorA = document.getElementById('selectLegATenor').value;
+      const typeB = document.getElementById('selectLegBType').value;
+      const tenorB = document.getElementById('selectLegBTenor').value;
+      const multX = parseFloat(document.getElementById('inputMultiplierX').value) || 1.0;
+
+      const valA = evaluateSingleLeg(comboActiveMarket, typeA, tenorA);
+      const valB = evaluateSingleLeg(comboActiveMarket, typeB, tenorB);
+
+      const bA = document.getElementById('badgeLegAValue');
+      const bB = document.getElementById('badgeLegBValue');
+      const bNet = document.getElementById('badgeNetResultValue');
+      const tPrev = document.getElementById('textFormulaPreview');
+
+      if (bA) bA.innerText = (valA !== null) ? `${valA > 0 ? '+' : ''}${valA.toFixed(2)} bp` : '-- bp';
+      if (bB) bB.innerText = (valB !== null) ? `${valB > 0 ? '+' : ''}${valB.toFixed(2)} bp` : '-- bp';
+
+      let netVal = null;
+      let formulaStr = '';
+      const lblA = getStructureLabel(typeA, tenorA);
+      const lblB = getStructureLabel(typeB, tenorB);
+
+      if (valA !== null && valB !== null) {
+        if (comboActiveMode === 'TOTAL_SPREAD') {
+          netVal = valA - multX * valB;
+          formulaStr = `${lblA} (${valA.toFixed(2)} bp) − ${multX.toFixed(2)} × ${lblB} (${valB.toFixed(2)} bp)`;
+        } else if (comboActiveMode === 'XAB') {
+          netVal = multX * valA - valB;
+          formulaStr = `${multX.toFixed(2)} × ${lblA} (${valA.toFixed(2)} bp) − ${lblB} (${valB.toFixed(2)} bp)`;
+        } else {
+          netVal = valA - multX * valB;
+          formulaStr = `${lblA} (${valA.toFixed(2)} bp) − ${multX.toFixed(2)} × ${lblB} (${valB.toFixed(2)} bp)`;
+        }
+      }
+
+      if (bNet) {
+        if (netVal !== null) {
+          bNet.innerText = `${netVal > 0 ? '+' : ''}${netVal.toFixed(2)} bp`;
+          bNet.style.color = (netVal >= 0) ? '#00d97e' : '#ef4444';
+        } else {
+          bNet.innerText = '-- bp';
+          bNet.style.color = '#94a3b8';
+        }
+      }
+
+      if (tPrev) {
+        tPrev.innerText = formulaStr || `${lblA} − ${multX.toFixed(2)} × ${lblB}`;
+      }
+    }
+
+    function addCurrentComboToTable() {
+      const typeA = (comboActiveMode === 'TOTAL_SPREAD') ? document.getElementById('selectTotalSpreadType').value : document.getElementById('selectLegAType').value;
+      const tenorA = document.getElementById('selectLegATenor').value;
+      const typeB = document.getElementById('selectLegBType').value;
+      const tenorB = document.getElementById('selectLegBTenor').value;
+      const multX = parseFloat(document.getElementById('inputMultiplierX').value) || 1.0;
+
+      const lblA = getStructureLabel(typeA, tenorA);
+      const lblB = getStructureLabel(typeB, tenorB);
+      let name = '';
+      if (comboActiveMode === 'TOTAL_SPREAD') name = `${lblA} - ${multX}·${lblB}`;
+      else if (comboActiveMode === 'XAB') name = `${multX}·${lblA} - ${lblB}`;
+      else name = `${lblA} - ${multX}·${lblB}`;
+
+      const newId = 'custom_' + Date.now();
+      const newCombo = {
+        id: newId,
+        market: comboActiveMarket,
+        name: name,
+        mode: comboActiveMode,
+        legAType: typeA,
+        legATenor: tenorA,
+        totalType: (comboActiveMode === 'TOTAL_SPREAD') ? typeA : undefined,
+        multX: multX,
+        legBType: typeB,
+        legBTenor: tenorB,
+        isDefault: false,
+        tag: 'CUSTOM'
+      };
+
+      customCombinationsList.unshift(newCombo);
+      activePlottedComboId = newId;
+      renderCombinationsTable();
+      renderPlottedCombinationCurve();
+    }
+
+    function plotCurrentBuilderCurve() {
+      addCurrentComboToTable();
+    }
+
+    function renderCombinationsTable() {
+      const tbody = document.getElementById('tbodyCombinationsList');
+      if (!tbody) return;
+
+      let filtered = customCombinationsList;
+      if (comboActiveFilter === 'FLY') filtered = customCombinationsList.filter(c => c.tag === 'FLY');
+      else if (comboActiveFilter === 'TOTAL') filtered = customCombinationsList.filter(c => c.tag === 'TOTAL');
+      else if (comboActiveFilter === 'CUSTOM') filtered = customCombinationsList.filter(c => c.tag === 'CUSTOM');
+
+      let html = '';
+      filtered.forEach(c => {
+        const evalRes = evaluateCombination(c);
+        const isActive = (c.id === activePlottedComboId);
+        const valAStr = evalRes.valA !== null ? `${evalRes.valA > 0 ? '+' : ''}${evalRes.valA.toFixed(2)}` : '--';
+        const valBStr = evalRes.valB !== null ? `${evalRes.valB > 0 ? '+' : ''}${evalRes.valB.toFixed(2)}` : '--';
+        const netStr = evalRes.net !== null ? `${evalRes.net > 0 ? '+' : ''}${evalRes.net.toFixed(2)} bp` : '-- bp';
+        const netColor = (evalRes.net !== null && evalRes.net >= 0) ? '#00d97e' : '#ef4444';
+        const mktObj = BOARD_MARKETS.find(b => b.key === c.market) || { label: c.market, color: '#38bdf8' };
+
+        html += `
+          <tr id="combo-row-${c.id}" style="border-bottom:1px solid #162032; background:${isActive ? '#1e1b4b' : 'transparent'}; cursor:pointer; transition:background 0.2s;" onclick="selectAndPlotCombination('${c.id}')">
+            <td style="padding:6px 8px; font-weight:800; color:${mktObj.color}; white-space:nowrap;">
+              <span style="background:#131d33; padding:2px 6px; border-radius:3px; border:1px solid ${mktObj.color}44;">${mktObj.label}</span>
+            </td>
+            <td style="padding:6px 8px; font-weight:600; color:#f1f5f9; font-size:11px;">
+              ${c.name}
+            </td>
+            <td style="padding:6px 8px; text-align:right; color:#38bdf8; font-family:var(--font-mono);">
+              ${valAStr}
+            </td>
+            <td style="padding:6px 8px; text-align:center; font-family:var(--font-mono); color:#c084fc; font-weight:700;">
+              ${c.multX}x
+            </td>
+            <td style="padding:6px 8px; text-align:right; color:#f59e0b; font-family:var(--font-mono);">
+              ${valBStr}
+            </td>
+            <td style="padding:6px 8px; text-align:right; font-weight:800; color:${netColor}; font-family:var(--font-mono);">
+              ${netStr}
+            </td>
+            <td style="padding:6px 8px; text-align:center;">
+              <button class="btn ${isActive ? 'active' : ''}" style="font-size:10px; padding:2px 6px;" onclick="event.stopPropagation(); selectAndPlotCombination('${c.id}')">
+                <i class="fa-solid fa-chart-line"></i> ${isActive ? 'Viewing' : 'Plot'}
+              </button>
+            </td>
+          </tr>
+        `;
+      });
+      tbody.innerHTML = html;
+    }
+
+    function selectAndPlotCombination(id) {
+      activePlottedComboId = id;
+      renderCombinationsTable();
+      renderPlottedCombinationCurve();
+    }
+
+    function getCombinationTermCurve(combo) {
+      const mkt = combo.market || comboActiveMarket;
+      const mult = combo.multX !== undefined ? combo.multX : 1.0;
+      const xLabels = [];
+      const netCurve = [];
+      const legACurve = [];
+      const legBCurve = [];
+
+      const maxSteps = 10;
+      for (let i = 0; i < maxSteps; i++) {
+        if (i >= BOARD_QUARTERS.length) break;
+        const qShort = BOARD_QUARTERS[i].short;
+        let vA = null, vB = null;
+
+        if (combo.mode === 'TOTAL_SPREAD') {
+          vA = evaluateSingleLeg(mkt, combo.totalType || 'TOTAL_3M', qShort);
+          vB = evaluateSingleLeg(mkt, combo.legBType, qShort);
+        } else {
+          vA = evaluateSingleLeg(mkt, combo.legAType, qShort);
+          vB = evaluateSingleLeg(mkt, combo.legBType, qShort);
+        }
+
+        if (vA !== null && vB !== null) {
+          xLabels.push(qShort);
+          legACurve.push(vA);
+          legBCurve.push(Number((mult * vB).toFixed(2)));
+          let netVal = (combo.mode === 'XAB') ? (mult * vA - vB) : (vA - mult * vB);
+          netCurve.push(Number(netVal.toFixed(2)));
+        }
+      }
+      return { xLabels, netCurve, legACurve, legBCurve, mult };
+    }
+
+    function renderPlottedCombinationCurve() {
+      const plotDiv = document.getElementById('chartCombinationPlotly');
+      const eqCard = document.getElementById('comboEquationCard');
+      const titleEl = document.getElementById('plotComboTitle');
+      if (!plotDiv) return;
+
+      const combo = customCombinationsList.find(c => c.id === activePlottedComboId) || customCombinationsList[0];
+      if (!combo) return;
+
+      if (titleEl) titleEl.innerText = `${combo.market} · ${combo.name}`;
+
+      const { xLabels, netCurve, legACurve, legBCurve, mult } = getCombinationTermCurve(combo);
+      if (xLabels.length === 0) {
+        Plotly.purge(plotDiv);
+        if (eqCard) eqCard.innerHTML = '<div style="color:var(--text-dim);font-size:11px;">Insufficient live data points to construct curve for this combination.</div>';
+        return;
+      }
+
+      const showComponents = document.getElementById('chkShowComponents')?.checked ?? true;
+      const showPolyFit = document.getElementById('chkShowPolynomialFit')?.checked ?? true;
+
+      const traces = [];
+      const xIndices = xLabels.map((_, i) => i);
+
+      // Trace 1: Net Structure Term Points
+      traces.push({
+        x: xIndices,
+        y: netCurve,
+        mode: 'lines+markers',
+        name: `Net Structure: ${combo.name}`,
+        line: { color: '#00d97e', width: 3 },
+        marker: { color: '#00d97e', size: 8, symbol: 'diamond', line: { color: '#ffffff', width: 1.5 } },
+        hovertemplate: '%{text}: <b>%{y:.2f} bp</b><extra></extra>',
+        text: xLabels
+      });
+
+      // Component Traces (Optional)
+      if (showComponents) {
+        traces.push({
+          x: xIndices,
+          y: legACurve,
+          mode: 'lines+markers',
+          name: `Leg A (${combo.legAType || combo.totalType})`,
+          line: { color: '#38bdf8', width: 1.5, dash: 'dot' },
+          marker: { size: 5, color: '#38bdf8' },
+          hovertemplate: 'Leg A: %{y:.2f} bp<extra></extra>'
+        });
+        traces.push({
+          x: xIndices,
+          y: legBCurve,
+          mode: 'lines+markers',
+          name: `Scaled Leg B (${mult}·${combo.legBType})`,
+          line: { color: '#f59e0b', width: 1.5, dash: 'dash' },
+          marker: { size: 5, color: '#f59e0b' },
+          hovertemplate: 'Scaled Leg B: %{y:.2f} bp<extra></extra>'
+        });
+      }
+
+      // Continuous Cubic Polynomial Curve Fit
+      let fitCardHtml = '';
+      if (showPolyFit && xIndices.length >= 3) {
+        const fit = fitPolynomialCoeffs(xIndices, netCurve, Math.min(3, xIndices.length - 1));
+        const denseX = [], denseY = [];
+        const nSteps = 100;
+        const xMax = xIndices.length - 1;
+        for (let s = 0; s <= nSteps; s++) {
+          const xv = s * (xMax / nSteps);
+          denseX.push(xv);
+          let yv = 0;
+          for (let p = 0; p < fit.coeffs.length; p++) yv += fit.coeffs[p] * Math.pow(xv, p);
+          denseY.push(Number(yv.toFixed(2)));
+        }
+
+        traces.push({
+          x: denseX,
+          y: denseY,
+          mode: 'lines',
+          name: 'Continuous Cubic Fit',
+          line: { color: '#c084fc', width: 2, shape: 'spline' },
+          hoverinfo: 'skip'
+        });
+
+        const spotVal = netCurve[0];
+        const endVal = netCurve[netCurve.length - 1];
+        const move1Y = (netCurve.length >= 4) ? (netCurve[3] - spotVal) : (endVal - spotVal);
+
+        fitCardHtml = `
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+            <div>
+              <span style="font-size:10px; color:#c084fc; font-weight:800; text-transform:uppercase;">Live Polynomial Equation:</span>
+              <div style="font-size:12px; font-weight:800; color:#fff; font-family:var(--font-mono); margin-top:2px;">
+                ${fit.eqStr}
+              </div>
+            </div>
+            <div style="text-align:right;">
+              <span style="font-size:10px; color:var(--green); font-weight:800;">Fit R² = ${fit.r2.toFixed(4)}</span>
+              <div style="font-size:11px; color:#94a3b8; font-family:var(--font-mono); margin-top:2px;">
+                Spot: <strong style="color:${spotVal >= 0 ? '#00d97e' : '#ef4444'};">${spotVal > 0 ? '+' : ''}${spotVal.toFixed(2)} bp</strong> | 1Y Shift: <strong style="color:${move1Y >= 0 ? '#00d97e' : '#ef4444'};">${move1Y > 0 ? '+' : ''}${move1Y.toFixed(2)} bp</strong>
+              </div>
+            </div>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:8px; border-top:1px solid #162032; padding-top:6px; font-size:11px; font-family:var(--font-mono);">
+            <div style="color:#38bdf8;"><strong>1st Deriv (Slope):</strong> ${fit.d1Str}</div>
+            <div style="color:#f59e0b;"><strong>2nd Deriv (Curvature):</strong> ${fit.d2Str}</div>
+          </div>
+        `;
+      } else {
+        fitCardHtml = `<div style="color:#94a3b8; font-size:11px; font-family:var(--font-mono);">Spot Value: <strong>${netCurve[0] > 0 ? '+' : ''}${netCurve[0].toFixed(2)} bp</strong> across ${xLabels.join(' → ')}</div>`;
+      }
+
+      if (eqCard) eqCard.innerHTML = fitCardHtml;
+
+      const layout = {
+        title: { text: '', font: { color: '#f8fafc', size: 12 } },
+        margin: { l: 45, r: 25, t: 15, b: 35 },
+        paper_bgcolor: '#070b14',
+        plot_bgcolor: '#070b14',
+        xaxis: {
+          tickvals: xIndices,
+          ticktext: xLabels,
+          gridcolor: '#131d33',
+          tickfont: { color: '#94a3b8', size: 10, family: 'monospace' }
+        },
+        yaxis: {
+          title: { text: 'Net Spread / Structure Value (bp)', font: { color: '#64748b', size: 10 } },
+          gridcolor: '#131d33',
+          zerolinecolor: '#334155',
+          zerolinewidth: 1.5,
+          tickfont: { color: '#94a3b8', size: 10, family: 'monospace' }
+        },
+        legend: { font: { color: '#94a3b8', size: 10 }, orientation: 'h', y: -0.2 },
+        hovermode: 'x unified'
+      };
+
+      Plotly.react(plotDiv, traces, layout, { responsive: true, displayModeBar: false });
+    }
+
+    function updateCombinationsModuleLive() {
+      onComboBuilderChange();
+      renderCombinationsTable();
+      renderPlottedCombinationCurve();
+      const tsEl = document.getElementById('comboLastUpdated');
+      if (tsEl) tsEl.innerText = 'Live updated: ' + new Date().toLocaleTimeString();
+    }
+
     function setFeedMarketFilter(m) {
       feedMarketFilter = m;
       for (const btnId of ['btnFeedAll', 'btnFeedUSD', 'btnFeedEUR', 'btnFeedGBP', 'btnFeedCHF']) {
@@ -3543,6 +4350,7 @@
         renderCurvesTab();
         renderLiveOutrightsFeed();
         renderCurveBoardTables();
+        updateCombinationsModuleLive();
         pendingCurveRedraw = false;
       });
     }
@@ -3735,6 +4543,7 @@
       fetchData().then(() => {
         renderLiveOutrightsFeed();
         renderCurveBoardTables();
+        initCombinationModule();
         initWebSocket();
       });
       updateRefreshInterval();
