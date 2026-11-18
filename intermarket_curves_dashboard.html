@@ -1144,17 +1144,19 @@
       </div>
 
       <!-- ========================================================================= -->
-      <!-- SECTION 05: WHAT-IF CURVE DEDUCTION & PREMIUM TWEAKER STUDIO              -->
+      <!-- SECTION 05: WHAT-IF CURVE DEDUCTION & LIVE COMPARISON STUDIO              -->
       <!-- ========================================================================= -->
       <div class="curve-layer-card" id="section05Card" style="margin-top:24px; border-color:#0284c7; background:linear-gradient(180deg, rgba(2, 132, 199, 0.05) 0%, rgba(13, 20, 36, 0.95) 100%);">
+        
+        <!-- Header Strip -->
         <div class="layer-card-header" style="flex-wrap:wrap; gap:10px; border-bottom:1px solid #1e293b; padding-bottom:12px;">
           <div>
             <div class="layer-title" style="color:#38bdf8; font-size:15px; font-weight:800; display:flex; align-items:center; gap:8px;">
-              <i class="fa-solid fa-wand-magic-sparkles" style="color:#38bdf8;"></i> 05 · What-If Curve Deduction & Premium Tweaker Studio
-              <span class="badge badge-teal" style="font-size:10px; text-transform:uppercase; font-weight:700;"><i class="fa-solid fa-bolt"></i> Live Feed Connected</span>
+              <i class="fa-solid fa-wand-magic-sparkles" style="color:#38bdf8;"></i> 05 · What-If Curve Deduction & Live Comparison Studio
+              <span id="deduceLiveStreamingBadge" class="badge badge-teal" style="font-size:10px; text-transform:uppercase; font-weight:700;"><i class="fa-solid fa-bolt"></i> Live Feed Connected</span>
             </div>
             <div class="layer-subtitle" style="font-size:11px; color:#94a3b8; margin-top:2px;">
-              Manually change spreads, flies, or slope of flies (a - x·b) while keeping total 12M hikes/cuts strictly constant to see how the live outright forward curve changes shape.
+              Separate panels for Live Baseline values and What-If Simulation. Lock live values, manually tweak spreads, flies, or fly slope (a - x·b) keeping 12M hikes constant, and compare the two curves side-by-side.
             </div>
           </div>
           <div style="display:flex; align-items:center; gap:10px; margin-left:auto; flex-wrap:wrap;">
@@ -1187,62 +1189,77 @@
           </div>
         </div>
 
-        <!-- 4-Column Interactive Tweaker Grid -->
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:12px; margin-top:14px;">
-          <!-- Column 1: 3-Month Spreads -->
-          <div style="background:#090e1a; border:1px solid #1a253c; border-radius:8px; padding:12px;">
-            <div style="font-weight:800; font-size:12px; color:#38bdf8; display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1px solid #162035; padding-bottom:6px;">
-              <span><i class="fa-solid fa-arrows-split-up-and-left"></i> 1. Live 3M Spreads (S₀ .. S₃)</span>
-              <span style="font-size:10px; color:#64748b; font-family:var(--font-mono);">Quarterly Legs</span>
+        <!-- 2-PANEL LAYOUT: PANEL A (LIVE BASELINE) vs PANEL B (WHAT-IF TWEAKER) -->
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(440px, 1fr)); gap:14px; margin-top:14px;">
+          
+          <!-- ========================================== -->
+          <!-- PANEL A: LIVE BASELINE & INPUT PANEL       -->
+          <!-- ========================================== -->
+          <div style="background:#090e1a; border:1px solid #1e293b; border-radius:8px; padding:12px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid #162035; padding-bottom:8px;">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span style="font-weight:800; font-size:13px; color:#38bdf8;">
+                  <i class="fa-solid fa-satellite-dish"></i> Panel 1: Live Market Baseline (Benchmark)
+                </span>
+                <span id="deduceLockStatusBadge" class="badge badge-emerald" style="font-size:9px;">
+                  <i class="fa-solid fa-lock"></i> LOCKED BASELINE
+                </span>
+              </div>
+              <div style="display:flex; align-items:center; gap:6px;">
+                <button id="btnToggleBaselineLock" class="btn btn-sm" style="font-size:11px; padding:3px 8px; background:#1e293b; color:#38bdf8; border:1px solid #38bdf8;" onclick="toggleBaselineLock()">
+                  <i class="fa-solid fa-lock"></i> <span id="lblBtnLock">Unlock (Follow Live)</span>
+                </button>
+                <button class="btn btn-sm btn-outline" style="font-size:11px; padding:3px 8px; border-color:#64748b; color:#94a3b8;" onclick="snapshotLiveToBaseline()" title="Re-capture current live feed as baseline">
+                  <i class="fa-solid fa-camera"></i> Snapshot Live
+                </button>
+              </div>
             </div>
-            <div id="deduceSpreadsContainer" style="display:flex; flex-direction:column; gap:10px;">
-              <!-- Populated dynamically with S0, S1, S2, S3 controls -->
+
+            <!-- Panel A Body: Outrights, Spreads, Flies Summary -->
+            <div id="panelLiveBaselineBody">
+              <!-- Dynamically populated with live outrights, spreads, flies, and slopes -->
             </div>
           </div>
 
-          <!-- Column 2: Butterfly Flies -->
-          <div style="background:#090e1a; border:1px solid #1a253c; border-radius:8px; padding:12px;">
-            <div style="font-weight:800; font-size:12px; color:#a855f7; display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1px solid #162035; padding-bottom:6px;">
-              <span><i class="fa-solid fa-cubes"></i> 2. Butterfly Flies (F₀, F₁, F₂, F₆M)</span>
-              <span style="font-size:10px; color:#64748b; font-family:var(--font-mono);">Curvature Wings</span>
+          <!-- ========================================== -->
+          <!-- PANEL B: WHAT-IF SIMULATION & TWEAKER PANEL-->
+          <!-- ========================================== -->
+          <div style="background:#090e1a; border:1px solid #3b82f644; border-radius:8px; padding:12px; position:relative;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom:1px solid #162035; padding-bottom:8px;">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span style="font-weight:800; font-size:13px; color:#fbbf24;">
+                  <i class="fa-solid fa-sliders"></i> Panel 2: What-If Simulation Studio
+                </span>
+                <span id="deduceTweakedBadge" class="badge badge-cyan" style="font-size:9px;">
+                  Unshifted (Identical)
+                </span>
+              </div>
+              <!-- Invariant Lock Switch -->
+              <div style="display:flex; align-items:center; gap:6px; background:#0f172a; padding:3px 8px; border-radius:5px; border:1px solid #334155;">
+                <input type="checkbox" id="chkLock12MSpread" checked onchange="toggleLock12MSpread()" style="width:16px; height:16px; cursor:pointer; accent-color:#10b981;">
+                <label for="chkLock12MSpread" style="font-size:10px; font-weight:700; color:#10b981; cursor:pointer; margin-bottom:0;">
+                  Lock 12M Hikes (Constant Net Move)
+                </label>
+              </div>
             </div>
-            <div id="deduceFliesContainer" style="display:flex; flex-direction:column; gap:10px;">
-              <!-- Populated dynamically with F0, F1, F2, F6M controls -->
+
+            <!-- Panel B Body: Interactive Tweakers Grid -->
+            <div id="panelTweakerBody">
+              <!-- Populated dynamically with Spreads, Flies, Slope, 12M controls -->
             </div>
           </div>
 
-          <!-- Column 3: Slope of Flies & Structure Tweaker (a - x·b) -->
-          <div style="background:#090e1a; border:1px solid #1a253c; border-radius:8px; padding:12px;">
-            <div style="font-weight:800; font-size:12px; color:#f59e0b; display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1px solid #162035; padding-bottom:6px;">
-              <span><i class="fa-solid fa-calculator"></i> 3. Slope of Flies (a - x·b)</span>
-              <span class="badge badge-amber" style="font-size:9px;">Fly Differential</span>
-            </div>
-            <div id="deduceComboContainer" style="display:flex; flex-direction:column; gap:10px;">
-              <!-- Populated dynamically with slope of flies controls -->
-            </div>
-          </div>
-
-          <!-- Column 4: 12-Month Spread & Policy Invariant Lock -->
-          <div style="background:#090e1a; border:1px solid #1a253c; border-radius:8px; padding:12px;">
-            <div style="font-weight:800; font-size:12px; color:#10b981; display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1px solid #162035; padding-bottom:6px;">
-              <span><i class="fa-solid fa-scale-balanced"></i> 4. 12M Spread & Policy Invariant</span>
-              <span id="deduceHikesBadge" class="badge badge-emerald" style="font-size:10px;">1.84 Hikes</span>
-            </div>
-            <div id="deduceHikesContainer" style="display:flex; flex-direction:column; gap:10px;">
-              <!-- Populated dynamically with invariant lock, 12M slider, and hike presets -->
-            </div>
-          </div>
         </div>
 
-        <!-- Chart Container: Live vs My Deduced Curve Overlay -->
+        <!-- VISUAL COMPARISON CHART: LIVE BASELINE VS MY TWEAKED CURVE -->
         <div style="margin-top:14px; background:#070b14; border:1px solid #162032; border-radius:8px; padding:10px;">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; padding:0 6px;">
             <div style="font-size:12px; font-weight:700; color:#e2e8f0; display:flex; align-items:center; gap:8px;">
-              <span id="deduceChartTitle">Live Outright Forward Curve vs. My Deduced Curve</span>
+              <span id="deduceChartTitle">Live Market Forward Curve vs. My Deduced Curve (Continuous Cubic Spline)</span>
               <span id="deduceCurveStatusBadge" class="badge badge-cyan" style="font-size:10px;">Identical (Unshifted)</span>
             </div>
             <div style="display:flex; align-items:center; gap:12px; font-size:11px; font-family:var(--font-mono);">
-              <span style="color:#38bdf8;"><span style="display:inline-block; width:12px; height:3px; background:#38bdf8; vertical-align:middle; margin-right:4px;"></span>Live Market Curve</span>
+              <span style="color:#38bdf8;"><span style="display:inline-block; width:12px; height:3px; background:#38bdf8; vertical-align:middle; margin-right:4px;"></span>Live Market Baseline</span>
               <span style="color:#fbbf24;"><span style="display:inline-block; width:12px; height:3px; background:#fbbf24; border-top:1px dashed #fbbf24; vertical-align:middle; margin-right:4px;"></span>My Deduced Curve</span>
               <span style="color:#64748b;"><span style="display:inline-block; width:12px; height:2px; background:#475569; vertical-align:middle; margin-right:4px;"></span>Linear Baseline</span>
             </div>
@@ -1250,7 +1267,31 @@
           <div id="chartDeducePlotly" style="width:100%; height:340px;"></div>
         </div>
 
-        <!-- Side-by-Side Mathematical Equation Cards & Sensitivity Readout -->
+        <!-- SIDE-BY-SIDE PARAMETER COMPARISON MATRIX TABLE -->
+        <div style="margin-top:14px; background:#080d1a; border:1px solid #1a253c; border-radius:8px; padding:10px;">
+          <div style="font-size:12px; font-weight:800; color:#e2e8f0; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
+            <span><i class="fa-solid fa-table-columns"></i> Side-by-Side Curve & Parameter Comparison Matrix</span>
+            <span style="font-size:10px; color:#64748b; font-family:var(--font-mono);">Real-Time Sensitivity & Delta Analysis</span>
+          </div>
+          <div style="overflow-x:auto;">
+            <table style="width:100%; border-collapse:collapse; font-size:11px; font-family:var(--font-mono);">
+              <thead>
+                <tr style="border-bottom:1px solid #1e293b; color:#94a3b8; text-align:left;">
+                  <th style="padding:6px 8px;">Structure / Tenor</th>
+                  <th style="padding:6px 8px; text-align:right;">Live Baseline</th>
+                  <th style="padding:6px 8px; text-align:right;">My Deduced Curve</th>
+                  <th style="padding:6px 8px; text-align:right;">Delta (Δ Shift)</th>
+                  <th style="padding:6px 8px; text-align:center;">Curve Impact</th>
+                </tr>
+              </thead>
+              <tbody id="tbodyDeduceComparisonMatrix">
+                <!-- Dynamically populated rows -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- SIDE-BY-SIDE CONTINUOUS POLYNOMIAL EQUATIONS & SLOPE CARDS -->
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:12px; margin-top:12px;">
           <!-- Live Curve Equation -->
           <div id="cardDeduceLiveEq" class="eq-card" style="border-left:4px solid #38bdf8;"></div>
@@ -4337,14 +4378,18 @@
 
     
     // ═══════════════════════════════════════════════════════════════════════════
-    // 05 · WHAT-IF CURVE DEDUCTION & PREMIUM TWEAKER STUDIO LOGIC
+    // 05 · WHAT-IF CURVE DEDUCTION & LIVE COMPARISON STUDIO LOGIC
     // ═══════════════════════════════════════════════════════════════════════════
     let deduceActiveMarket = 'USD';
     let deduceViewMode = 'rel_t0';      // 'rel_t0', 'yield', 'spreads', 'flies'
     let deduceLock12MSpread = true;     // Invariant lock: Keep 12M net policy rate move constant
     let deduceActiveSlopeType = 'FLYS_SLOPE_1'; // 'FLYS_SLOPE_1', 'FLY_6M_2X3M', 'FLYS_SLOPE_2', 'SEC04_COMBO'
+    let deduceBaselineIsLocked = true;  // If true, live streaming updates do NOT override the snapshot baseline
 
-    // User tweaks storage (null = identical to live)
+    // Locked baseline snapshot (holds the benchmark live values)
+    let lockedBaseline = null;
+
+    // User tweaks storage (holds user modifications; null = identical to baseline)
     let deducedSpreads = null;          // [S0, S1, S2, S3]
     let deducedFlies = null;            // [F0, F1, F2, F6M]
     let deduced12MSpread = null;        // Delta_12M
@@ -4378,11 +4423,8 @@
       return res;
     }
 
-    // Helper: compute Live Spreads, Flies, and 12M Net Spread from the 5 quarterly prices
-    function getLiveDeduceState(mkt) {
-      const p = getDeduceMarket5QPrices(mkt);
-      // Clean fallback if live feed connecting
-      const basePrices = (p.filter(x => x !== null).length === 5) ? p : [95.7135, 95.4291, 95.2754, 95.2284, 95.2529];
+    // Compute comprehensive state object from 5 prices
+    function computeDeduceStateFromPrices(basePrices) {
       const S0 = Number(((basePrices[0] - basePrices[1]) * 100.0).toFixed(2));
       const S1 = Number(((basePrices[1] - basePrices[2]) * 100.0).toFixed(2));
       const S2 = Number(((basePrices[2] - basePrices[3]) * 100.0).toFixed(2));
@@ -4402,14 +4444,42 @@
       const ratio6M2X3M = Number((F6M - 2.0 * F0).toFixed(2));
 
       // Rate moves vs T0 (bp)
-      const yMoves = [0.0, spreads[0], Number((spreads[0] + spreads[1]).toFixed(2)), Number((spreads[0] + spreads[1] + spreads[2]).toFixed(2)), d12];
+      const yMoves = [
+        0.0,
+        spreads[0],
+        Number((spreads[0] + spreads[1]).toFixed(2)),
+        Number((spreads[0] + spreads[1] + spreads[2]).toFixed(2)),
+        d12
+      ];
       // Implied yields (%)
       const yields = basePrices.map(pr => Number((100.0 - pr).toFixed(4)));
 
       return { p: basePrices, spreads, d12, flies, hikes, yMoves, yields, slope1, slope2, ratio6M2X3M };
     }
 
+    // Helper: compute Live Spreads, Flies, and 12M Net Spread from live feed
+    function getLiveDeduceState(mkt) {
+      const p = getDeduceMarket5QPrices(mkt);
+      const basePrices = (p.filter(x => x !== null).length === 5) ? p : [95.7135, 95.4275, 95.2895, 95.2585, 95.2945];
+      return computeDeduceStateFromPrices(basePrices);
+    }
+
+    // Baseline provider: returns lockedBaseline if locked, or fresh live
+    function getEffectiveBaseline() {
+      if (deduceBaselineIsLocked && lockedBaseline && lockedBaseline.market === deduceActiveMarket) {
+        return lockedBaseline;
+      }
+      const live = getLiveDeduceState(deduceActiveMarket);
+      live.market = deduceActiveMarket;
+      live.timestamp = new Date().toLocaleTimeString();
+      if (!lockedBaseline || lockedBaseline.market !== deduceActiveMarket) {
+        lockedBaseline = live;
+      }
+      return live;
+    }
+
     function initDeduceModule() {
+      snapshotLiveToBaseline();
       setDeduceMarket(deduceActiveMarket);
     }
 
@@ -4423,7 +4493,9 @@
       const ab = document.getElementById(map[m]);
       if (ab) ab.classList.add('active');
 
-      // Reset tweaks when changing market
+      // Capture fresh baseline for newly selected market
+      snapshotLiveToBaseline();
+      // Reset user tweaks
       deducedSpreads = null;
       deducedFlies = null;
       deduced12MSpread = null;
@@ -4444,6 +4516,42 @@
       renderDeduceChart();
     }
 
+    // Toggle baseline lock
+    function toggleBaselineLock() {
+      deduceBaselineIsLocked = !deduceBaselineIsLocked;
+      if (deduceBaselineIsLocked) {
+        snapshotLiveToBaseline();
+      }
+      updateBaselineLockBadges();
+      recalculateAndRenderDeduceStudio();
+    }
+
+    function snapshotLiveToBaseline() {
+      const live = getLiveDeduceState(deduceActiveMarket);
+      live.market = deduceActiveMarket;
+      live.timestamp = new Date().toLocaleTimeString();
+      lockedBaseline = live;
+      updateBaselineLockBadges();
+      recalculateAndRenderDeduceStudio();
+    }
+
+    function updateBaselineLockBadges() {
+      const statusBadge = document.getElementById('deduceLockStatusBadge');
+      const btnLock = document.getElementById('lblBtnLock');
+      if (statusBadge) {
+        if (deduceBaselineIsLocked) {
+          statusBadge.className = 'badge badge-emerald';
+          statusBadge.innerHTML = `<i class="fa-solid fa-lock"></i> LOCKED (${lockedBaseline ? lockedBaseline.timestamp : 'Active'})`;
+        } else {
+          statusBadge.className = 'badge badge-cyan';
+          statusBadge.innerHTML = '<i class="fa-solid fa-bolt"></i> STREAMING LIVE';
+        }
+      }
+      if (btnLock) {
+        btnLock.innerText = deduceBaselineIsLocked ? 'Unlock (Follow Live)' : 'Lock Current as Baseline';
+      }
+    }
+
     function toggleLock12MSpread() {
       const chk = document.getElementById('chkLock12MSpread');
       if (chk) deduceLock12MSpread = chk.checked;
@@ -4455,6 +4563,22 @@
       deducedFlies = null;
       deduced12MSpread = null;
       deducedFlySlopeVal = null;
+      snapshotLiveToBaseline();
+      recalculateAndRenderDeduceStudio();
+    }
+
+    // Manual edit of a baseline outright price
+    function onBaselinePriceEdit(idx, newPriceStr) {
+      const newPrice = parseFloat(newPriceStr);
+      if (isNaN(newPrice)) return;
+      const base = getEffectiveBaseline();
+      const updatedP = [...base.p];
+      updatedP[idx] = Number(newPrice.toFixed(4));
+      lockedBaseline = computeDeduceStateFromPrices(updatedP);
+      lockedBaseline.market = deduceActiveMarket;
+      lockedBaseline.timestamp = new Date().toLocaleTimeString();
+      deduceBaselineIsLocked = true;
+      updateBaselineLockBadges();
       recalculateAndRenderDeduceStudio();
     }
 
@@ -4463,8 +4587,8 @@
       const newVal = parseFloat(newValStr);
       if (isNaN(newVal)) return;
 
-      const live = getLiveDeduceState(deduceActiveMarket);
-      let curSpreads = deducedSpreads ? [...deducedSpreads] : [...live.spreads];
+      const base = getEffectiveBaseline();
+      let curSpreads = deducedSpreads ? [...deducedSpreads] : [...base.spreads];
       const curTarget = curSpreads[idx];
       const delta = newVal - curTarget;
       if (Math.abs(delta) < 0.0001) return;
@@ -4497,10 +4621,9 @@
       const newVal = parseFloat(newValStr);
       if (isNaN(newVal)) return;
 
-      const live = getLiveDeduceState(deduceActiveMarket);
-      let curSpreads = deducedSpreads ? [...deducedSpreads] : [...live.spreads];
-      let curFlies = deducedFlies ? [...deducedFlies] : [...live.flies];
-      let curD12 = (deduced12MSpread !== null) ? deduced12MSpread : live.d12;
+      const base = getEffectiveBaseline();
+      let curSpreads = deducedSpreads ? [...deducedSpreads] : [...base.spreads];
+      let curFlies = deducedFlies ? [...deducedFlies] : [...base.flies];
 
       const delta = newVal - curFlies[flyIdx];
       if (Math.abs(delta) < 0.0001) return;
@@ -4557,8 +4680,8 @@
       const newVal = parseFloat(newValStr);
       if (isNaN(newVal)) return;
 
-      const live = getLiveDeduceState(deduceActiveMarket);
-      let curFlies = deducedFlies ? [...deducedFlies] : [...live.flies];
+      const base = getEffectiveBaseline();
+      let curFlies = deducedFlies ? [...deducedFlies] : [...base.flies];
       let curSlopeVal = 0.0;
       if (slopeType === 'FLYS_SLOPE_1') curSlopeVal = curFlies[1] - curFlies[0];
       else if (slopeType === 'FLYS_SLOPE_2') curSlopeVal = curFlies[2] - curFlies[1];
@@ -4574,7 +4697,6 @@
       deducedFlySlopeVal = Number(newVal.toFixed(2));
 
       if (slopeType === 'FLYS_SLOPE_1') {
-        // Shift F1 by +delta/2, and F0 by -delta/2 (steeper fly slope)
         onFlyTweak(1, (curFlies[1] + delta / 2.0).toFixed(2));
       } else if (slopeType === 'FLYS_SLOPE_2') {
         onFlyTweak(2, (curFlies[2] + delta / 2.0).toFixed(2));
@@ -4594,8 +4716,8 @@
       const newD12 = parseFloat(newD12ValStr);
       if (isNaN(newD12)) return;
 
-      const live = getLiveDeduceState(deduceActiveMarket);
-      let curSpreads = deducedSpreads ? [...deducedSpreads] : [...live.spreads];
+      const base = getEffectiveBaseline();
+      let curSpreads = deducedSpreads ? [...deducedSpreads] : [...base.spreads];
       const curD12 = Number((curSpreads[0] + curSpreads[1] + curSpreads[2] + curSpreads[3]).toFixed(2));
       const delta = newD12 - curD12;
       if (Math.abs(delta) < 0.0001) return;
@@ -4622,217 +4744,347 @@
 
     // Master update and re-render of Section 05
     function recalculateAndRenderDeduceStudio() {
-      const live = getLiveDeduceState(deduceActiveMarket);
+      const base = getEffectiveBaseline();
       const isCustom = (deducedSpreads !== null);
-      const spreads = deducedSpreads || live.spreads;
-      const flies = deducedFlies || live.flies;
-      const d12 = (deduced12MSpread !== null) ? deduced12MSpread : live.d12;
+      const spreads = deducedSpreads || base.spreads;
+      const flies = deducedFlies || base.flies;
+      const d12 = (deduced12MSpread !== null) ? deduced12MSpread : base.d12;
       const hikes = Number((d12 / 25.0).toFixed(2));
 
-      // 1. Render Column 1: 3M Spreads
-      const spreadsContainer = document.getElementById('deduceSpreadsContainer');
-      if (spreadsContainer) {
-        const labels = ['S₀ · Dec26/Mar27', 'S₁ · Mar27/Jun27', 'S₂ · Jun27/Sep27', 'S₃ · Sep27/Dec27'];
-        let html = '';
+      // 1. RENDER PANEL A: LIVE BASELINE & INPUT PANEL
+      const panelABody = document.getElementById('panelLiveBaselineBody');
+      if (panelABody) {
+        const quarterCodes = ['Dec26', 'Mar27', 'Jun27', 'Sep27', 'Dec27'];
+        let outrightsRowsHtml = '';
+        base.p.forEach((price, idx) => {
+          const yieldPct = (100.0 - price).toFixed(4);
+          const relMove = base.yMoves[idx];
+          outrightsRowsHtml += `
+            <div style="display:flex; justify-content:space-between; align-items:center; background:#070b14; padding:4px 8px; border-radius:4px; font-size:11px; margin-bottom:3px;">
+              <span style="font-weight:700; color:#e2e8f0; width:55px;">${quarterCodes[idx]}</span>
+              <span style="color:#64748b; font-family:var(--font-mono);">${yieldPct}%</span>
+              <div style="display:flex; align-items:center; gap:4px;">
+                <input type="number" class="btn" style="width:78px; padding:2px 4px; font-size:10px; text-align:right; font-family:var(--font-mono); background:#0b1325; color:#38bdf8;"
+                       step="0.0005" value="${price.toFixed(4)}" onchange="onBaselinePriceEdit(${idx}, this.value)">
+                <span style="color:#38bdf8; font-weight:700; font-size:10px; width:45px; text-align:right;">${relMove > 0 ? '+' : ''}${relMove.toFixed(1)} bp</span>
+              </div>
+            </div>
+          `;
+        });
+
+        panelABody.innerHTML = `
+          <!-- Outrights Strip -->
+          <div style="margin-bottom:10px;">
+            <div style="font-size:10px; font-weight:700; color:#64748b; text-transform:uppercase; margin-bottom:4px; display:flex; justify-content:space-between;">
+              <span>Outright Contracts (VWAP & Implied Rate)</span>
+              <span style="color:#38bdf8;">Click price to edit base</span>
+            </div>
+            ${outrightsRowsHtml}
+          </div>
+
+          <!-- Spreads & Flies Summary Grid -->
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+            <!-- Live Spreads -->
+            <div style="background:#070b14; border:1px solid #162035; border-radius:6px; padding:8px;">
+              <div style="font-size:10px; font-weight:800; color:#38bdf8; margin-bottom:6px; text-transform:uppercase;">
+                Live 3M Spreads
+              </div>
+              <div style="font-size:11px; line-height:1.6;">
+                <div>S₀ (Z26/H27): <strong style="color:#e2e8f0;">${base.spreads[0] > 0 ? '+' : ''}${base.spreads[0].toFixed(2)} bp</strong></div>
+                <div>S₁ (H27/M27): <strong style="color:#e2e8f0;">${base.spreads[1] > 0 ? '+' : ''}${base.spreads[1].toFixed(2)} bp</strong></div>
+                <div>S₂ (M27/U27): <strong style="color:#e2e8f0;">${base.spreads[2] > 0 ? '+' : ''}${base.spreads[2].toFixed(2)} bp</strong></div>
+                <div>S₃ (U27/Z27): <strong style="color:#e2e8f0;">${base.spreads[3] > 0 ? '+' : ''}${base.spreads[3].toFixed(2)} bp</strong></div>
+              </div>
+              <div style="margin-top:6px; padding-top:4px; border-top:1px dashed #1e293b; font-size:10px; color:#10b981;">
+                12M Net Move: <strong>${base.d12 > 0 ? '+' : ''}${base.d12.toFixed(2)} bp</strong> (${base.hikes.toFixed(2)} Hikes)
+              </div>
+            </div>
+
+            <!-- Live Flies & Slopes -->
+            <div style="background:#070b14; border:1px solid #162035; border-radius:6px; padding:8px;">
+              <div style="font-size:10px; font-weight:800; color:#c084fc; margin-bottom:6px; text-transform:uppercase;">
+                Live Butterflies & Slope
+              </div>
+              <div style="font-size:11px; line-height:1.6;">
+                <div>F₀ (3M Fly): <strong style="color:#e2e8f0;">${base.flies[0] > 0 ? '+' : ''}${base.flies[0].toFixed(2)} bp</strong></div>
+                <div>F₁ (Belly Fly): <strong style="color:#e2e8f0;">${base.flies[1] > 0 ? '+' : ''}${base.flies[1].toFixed(2)} bp</strong></div>
+                <div>F₂ (3M Fly): <strong style="color:#e2e8f0;">${base.flies[2] > 0 ? '+' : ''}${base.flies[2].toFixed(2)} bp</strong></div>
+                <div>F₆M (6M Fly): <strong style="color:#e2e8f0;">${base.flies[3] > 0 ? '+' : ''}${base.flies[3].toFixed(2)} bp</strong></div>
+              </div>
+              <div style="margin-top:6px; padding-top:4px; border-top:1px dashed #1e293b; font-size:10px; color:#f59e0b;">
+                Fly Slope (F₁ - F₀): <strong>${base.slope1 > 0 ? '+' : ''}${base.slope1.toFixed(2)} bp</strong>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      // 2. RENDER PANEL B: WHAT-IF SIMULATION & TWEAKER
+      const panelBBody = document.getElementById('panelTweakerBody');
+      const badgeTweaked = document.getElementById('deduceTweakedBadge');
+      if (badgeTweaked) {
+        if (!isCustom) {
+          badgeTweaked.className = 'badge badge-cyan';
+          badgeTweaked.innerText = 'Unshifted (Identical)';
+        } else {
+          badgeTweaked.className = 'badge badge-amber';
+          badgeTweaked.innerText = `Modified Curve (Δ12M: ${(d12 - base.d12) >= 0 ? '+' : ''}${(d12 - base.d12).toFixed(2)} bp)`;
+        }
+      }
+
+      if (panelBBody) {
+        // Build Spreads Tweakers
+        const spreadLabels = ['S₀ · Dec26/Mar27', 'S₁ · Mar27/Jun27', 'S₂ · Jun27/Sep27', 'S₃ · Sep27/Dec27'];
+        let spreadsSlidersHtml = '';
         spreads.forEach((val, idx) => {
-          const liveVal = live.spreads[idx];
+          const liveVal = base.spreads[idx];
           const diff = Number((val - liveVal).toFixed(2));
           const diffBadge = Math.abs(diff) > 0.01 
             ? `<span class="badge ${diff > 0 ? 'badge-teal' : 'badge-amber'}" style="font-size:9px;">${diff > 0 ? '+' : ''}${diff.toFixed(2)} bp</span>`
             : `<span class="badge badge-indigo" style="font-size:9px;">0.00 bp</span>`;
 
-          html += `
-            <div style="background:#0e1526; border:1px solid #1c2742; border-radius:6px; padding:8px 10px;">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; font-size:11px;">
-                <span style="font-weight:700; color:#e2e8f0;">${labels[idx]}</span>
+          spreadsSlidersHtml += `
+            <div style="background:#070b14; border:1px solid #1a253c; border-radius:5px; padding:6px 8px; margin-bottom:5px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:3px; font-size:11px;">
+                <span style="font-weight:700; color:#e2e8f0;">${spreadLabels[idx]}</span>
                 <div style="display:flex; align-items:center; gap:6px;">
-                  <span style="font-size:10px; color:#64748b;">Live: ${liveVal > 0 ? '+' : ''}${liveVal.toFixed(2)}</span>
+                  <span style="font-size:10px; color:#64748b;">Base: ${liveVal > 0 ? '+' : ''}${liveVal.toFixed(2)}</span>
                   ${diffBadge}
                 </div>
               </div>
               <div style="display:flex; align-items:center; gap:8px;">
                 <input type="range" class="tweaker-slider" min="-30" max="60" step="0.1" value="${val}"
                        oninput="onSpreadTweak(${idx}, this.value)" style="flex:1;">
-                <input type="number" class="btn" style="width:72px; padding:3px 6px; font-size:11px; text-align:right; font-family:var(--font-mono); background:#060a12; color:#38bdf8;"
+                <input type="number" class="btn" style="width:68px; padding:2px 4px; font-size:11px; text-align:right; font-family:var(--font-mono); background:#060a12; color:#38bdf8;"
                        step="0.1" value="${val.toFixed(2)}" onchange="onSpreadTweak(${idx}, this.value)">
               </div>
             </div>
           `;
         });
-        spreadsContainer.innerHTML = html;
-      }
 
-      // 2. Render Column 2: Butterfly Flies
-      const fliesContainer = document.getElementById('deduceFliesContainer');
-      if (fliesContainer) {
-        const flyLabels = ['F₀ · 3M Fly (Dec26)', 'F₁ · 3M Belly Fly (Mar27)', 'F₂ · 3M Fly (Jun27)', 'F₆M · 6M Fly (Dec26)'];
-        let html = '';
+        // Build Flies Tweakers
+        const flyLabels = ['F₀ · Dec26 3M Fly', 'F₁ · Mar27 Belly Fly', 'F₂ · Jun27 3M Fly', 'F₆M · Dec26 6M Fly'];
+        let fliesSlidersHtml = '';
         flies.forEach((val, idx) => {
-          const liveVal = live.flies[idx];
+          const liveVal = base.flies[idx];
           const diff = Number((val - liveVal).toFixed(2));
           const diffBadge = Math.abs(diff) > 0.01 
             ? `<span class="badge ${diff > 0 ? 'badge-teal' : 'badge-amber'}" style="font-size:9px;">${diff > 0 ? '+' : ''}${diff.toFixed(2)} bp</span>`
             : `<span class="badge badge-indigo" style="font-size:9px;">0.00 bp</span>`;
 
-          html += `
-            <div style="background:#0e1526; border:1px solid #1c2742; border-radius:6px; padding:8px 10px;">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; font-size:11px;">
+          fliesSlidersHtml += `
+            <div style="background:#070b14; border:1px solid #1a253c; border-radius:5px; padding:6px 8px; margin-bottom:5px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:3px; font-size:11px;">
                 <span style="font-weight:700; color:#e2e8f0;">${flyLabels[idx]}</span>
                 <div style="display:flex; align-items:center; gap:6px;">
-                  <span style="font-size:10px; color:#64748b;">Live: ${liveVal > 0 ? '+' : ''}${liveVal.toFixed(2)}</span>
+                  <span style="font-size:10px; color:#64748b;">Base: ${liveVal > 0 ? '+' : ''}${liveVal.toFixed(2)}</span>
                   ${diffBadge}
                 </div>
               </div>
               <div style="display:flex; align-items:center; gap:8px;">
                 <input type="range" class="tweaker-slider" min="-30" max="60" step="0.1" value="${val}"
                        oninput="onFlyTweak(${idx}, this.value)" style="flex:1;">
-                <input type="number" class="btn" style="width:72px; padding:3px 6px; font-size:11px; text-align:right; font-family:var(--font-mono); background:#060a12; color:#c084fc;"
+                <input type="number" class="btn" style="width:68px; padding:2px 4px; font-size:11px; text-align:right; font-family:var(--font-mono); background:#060a12; color:#c084fc;"
                        step="0.1" value="${val.toFixed(2)}" onchange="onFlyTweak(${idx}, this.value)">
               </div>
             </div>
           `;
         });
-        fliesContainer.innerHTML = html;
-      }
 
-      // 3. Render Column 3: Slope of Flies & Structure Tweaker (a - x·b)
-      const comboContainer = document.getElementById('deduceComboContainer');
-      if (comboContainer) {
-        let liveVal = 0.0;
-        let titleStr = '';
-        let descStr = '';
-
+        // Slope of Flies setup
+        let curSlopeLive = 0.0;
+        let slopeTitle = '';
         if (deduceActiveSlopeType === 'FLYS_SLOPE_1') {
-          titleStr = 'Belly - Front Slope: F₁ − F₀';
-          liveVal = live.slope1;
-          descStr = 'Slope between Mar27 Belly Fly and Dec26 Front Fly';
+          slopeTitle = 'Belly − Front: F₁ − F₀';
+          curSlopeLive = base.slope1;
         } else if (deduceActiveSlopeType === 'FLY_6M_2X3M') {
-          titleStr = 'Institutional Ratio: 6M Fly − 2·(3M Fly)';
-          liveVal = live.ratio6M2X3M;
-          descStr = 'Dec26 6M Fly − 2·(Dec26 3M Fly) curvature differential';
+          slopeTitle = '6M Fly − 2·(3M Fly)';
+          curSlopeLive = base.ratio6M2X3M;
         } else if (deduceActiveSlopeType === 'FLYS_SLOPE_2') {
-          titleStr = 'Back - Belly Slope: F₂ − F₁';
-          liveVal = live.slope2;
-          descStr = 'Slope between Jun27 Fly and Mar27 Belly Fly';
+          slopeTitle = 'Back − Belly: F₂ − F₁';
+          curSlopeLive = base.slope2;
         } else {
           const activeCombo = customCombinationsList.find(c => c.id === activePlottedComboId) || customCombinationsList[0];
-          titleStr = activeCombo.name;
-          liveVal = getComboNetValue(activeCombo);
-          descStr = `Linked from Sec 04 (${activeCombo.market})`;
+          slopeTitle = activeCombo.name;
+          curSlopeLive = getComboNetValue(activeCombo);
         }
-
-        const curVal = (deducedFlySlopeVal !== null) ? deducedFlySlopeVal : liveVal;
-        const diff = Number((curVal - liveVal).toFixed(2));
-        const diffBadge = Math.abs(diff) > 0.01 
-          ? `<span class="badge ${diff > 0 ? 'badge-teal' : 'badge-amber'}" style="font-size:9px;">${diff > 0 ? '+' : ''}${diff.toFixed(2)} bp</span>`
+        const curSlopeVal = (deducedFlySlopeVal !== null) ? deducedFlySlopeVal : curSlopeLive;
+        const diffSlope = Number((curSlopeVal - curSlopeLive).toFixed(2));
+        const diffSlopeBadge = Math.abs(diffSlope) > 0.01 
+          ? `<span class="badge ${diffSlope > 0 ? 'badge-teal' : 'badge-amber'}" style="font-size:9px;">${diffSlope > 0 ? '+' : ''}${diffSlope.toFixed(2)} bp</span>`
           : `<span class="badge badge-indigo" style="font-size:9px;">0.00 bp</span>`;
 
-        comboContainer.innerHTML = `
-          <div style="background:#0e1526; border:1px solid #1c2742; border-radius:6px; padding:10px;">
-            <div style="margin-bottom:8px;">
-              <select class="btn btn-sm" style="width:100%; font-size:11px; padding:4px 6px; background:#070b14; color:#f59e0b; border-color:#334155;" onchange="setDeduceSlopeType(this.value)">
-                <option value="FLYS_SLOPE_1" ${deduceActiveSlopeType === 'FLYS_SLOPE_1' ? 'selected' : ''}>Fly Slope 1: Belly − Front (F₁ − F₀)</option>
-                <option value="FLY_6M_2X3M" ${deduceActiveSlopeType === 'FLY_6M_2X3M' ? 'selected' : ''}>Institutional: 6M Fly − 2·(3M Fly)</option>
-                <option value="FLYS_SLOPE_2" ${deduceActiveSlopeType === 'FLYS_SLOPE_2' ? 'selected' : ''}>Fly Slope 2: Back − Belly (F₂ − F₁)</option>
-                <option value="SEC04_COMBO" ${deduceActiveSlopeType === 'SEC04_COMBO' ? 'selected' : ''}>Active Structure from Sec 04 (a − x·b)</option>
-              </select>
-            </div>
-            <div style="font-size:11px; font-weight:800; color:#f59e0b; margin-bottom:4px; display:flex; justify-content:space-between; align-items:center;">
-              <span>${titleStr}</span>
-              ${diffBadge}
-            </div>
-            <div style="font-size:10px; color:#94a3b8; font-family:var(--font-mono); margin-bottom:8px;">
-              Live: <strong style="color:#e2e8f0;">${liveVal > 0 ? '+' : ''}${liveVal.toFixed(2)} bp</strong> · ${descStr}
-            </div>
-            <div style="display:flex; align-items:center; gap:8px;">
-              <input type="range" class="tweaker-slider" min="-30" max="60" step="0.1" value="${curVal}"
-                     oninput="onFlySlopeTweak(deduceActiveSlopeType, this.value)" style="flex:1;">
-              <input type="number" class="btn" style="width:72px; padding:3px 6px; font-size:11px; text-align:right; font-family:var(--font-mono); background:#060a12; color:#f59e0b;"
-                     step="0.1" value="${curVal.toFixed(2)}" onchange="onFlySlopeTweak(deduceActiveSlopeType, this.value)">
-            </div>
-            <div style="margin-top:8px; font-size:10px; color:#64748b; line-height:1.4;">
-              Tweaking this slope tilts curvature across the strip; under locked 12M spread, it bends the outright curve with zero policy shift.
-            </div>
-          </div>
-        `;
-      }
-
-      // 4. Render Column 4: 12M Spread & Policy Hikes
-      const hikesContainer = document.getElementById('deduceHikesContainer');
-      const hikesBadge = document.getElementById('deduceHikesBadge');
-      if (hikesBadge) hikesBadge.innerText = `${hikes >= 0 ? '+' : ''}${hikes.toFixed(2)} Hikes (${d12.toFixed(1)} bp)`;
-
-      if (hikesContainer) {
-        const liveD12 = live.d12;
-        const diff = Number((d12 - liveD12).toFixed(2));
-        const diffBadge = Math.abs(diff) > 0.01 
-          ? `<span class="badge ${diff > 0 ? 'badge-teal' : 'badge-amber'}" style="font-size:9px;">${diff > 0 ? '+' : ''}${diff.toFixed(2)} bp</span>`
-          : `<span class="badge badge-indigo" style="font-size:9px;">0.00 bp</span>`;
-
-        hikesContainer.innerHTML = `
-          <!-- Invariant Lock Switch -->
-          <div style="background:#0e1526; border:1px solid ${deduceLock12MSpread ? '#10b981' : '#334155'}; border-radius:6px; padding:8px 10px; display:flex; justify-content:space-between; align-items:center;">
+        panelBBody.innerHTML = `
+          <!-- Tweak Tabs: Spreads vs Flies vs Slope -->
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:8px;">
+            <!-- Column 1: Spreads -->
             <div>
-              <div style="font-size:11px; font-weight:800; color:${deduceLock12MSpread ? '#10b981' : '#94a3b8'};">
-                <i class="fa-solid ${deduceLock12MSpread ? 'fa-lock' : 'fa-lock-open'}"></i> Keep 12M Hikes/Cuts Constant
+              <div style="font-size:10px; font-weight:800; color:#38bdf8; margin-bottom:6px; text-transform:uppercase;">
+                1. Tweak 3M Spreads (S₀ .. S₃)
               </div>
-              <div style="font-size:10px; color:#64748b;">Lock net policy move (pure shape twist)</div>
+              ${spreadsSlidersHtml}
             </div>
-            <input type="checkbox" id="chkLock12MSpread" ${deduceLock12MSpread ? 'checked' : ''} onchange="toggleLock12MSpread()" style="width:18px; height:18px; cursor:pointer; accent-color:#10b981;">
-          </div>
 
-          <!-- 12M Net Spread Slider -->
-          <div style="background:#0e1526; border:1px solid #1c2742; border-radius:6px; padding:8px 10px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; font-size:11px;">
-              <span style="font-weight:700; color:#e2e8f0;">12M Spread (S₀+S₁+S₂+S₃)</span>
-              <div style="display:flex; align-items:center; gap:6px;">
-                <span style="font-size:10px; color:#64748b;">Live: ${liveD12 > 0 ? '+' : ''}${liveD12.toFixed(2)}</span>
-                ${diffBadge}
+            <!-- Column 2: Butterflies -->
+            <div>
+              <div style="font-size:10px; font-weight:800; color:#c084fc; margin-bottom:6px; text-transform:uppercase;">
+                2. Tweak Butterflies (F₀ .. F₆M)
               </div>
-            </div>
-            <div style="display:flex; align-items:center; gap:8px;">
-              <input type="range" class="tweaker-slider" min="-50" max="150" step="0.25" value="${d12}"
-                     oninput="onHikesTweak(this.value)" style="flex:1;">
-              <input type="number" class="btn" style="width:72px; padding:3px 6px; font-size:11px; text-align:right; font-family:var(--font-mono); background:#060a12; color:#10b981;"
-                     step="0.25" value="${d12.toFixed(2)}" onchange="onHikesTweak(this.value)">
+              ${fliesSlidersHtml}
             </div>
           </div>
 
-          <!-- Quick Policy Shift Chips -->
-          <div>
-            <div style="font-size:10px; color:#64748b; font-weight:700; text-transform:uppercase; margin-bottom:4px;">Shift 1Y Hikes:</div>
-            <div style="display:flex; flex-wrap:wrap; gap:5px;">
-              <button class="btn btn-sm btn-outline" style="font-size:10px; padding:2px 6px;" onclick="setHikePreset(0)">Flat (0H)</button>
-              <button class="btn btn-sm btn-outline" style="font-size:10px; padding:2px 6px;" onclick="setHikePreset(1.0)">+1.0 Hike</button>
-              <button class="btn btn-sm btn-outline" style="font-size:10px; padding:2px 6px;" onclick="setHikePreset(2.0)">+2.0 Hikes</button>
-              <button class="btn btn-sm btn-outline" style="font-size:10px; padding:2px 6px;" onclick="setHikePreset(-1.0)">-1.0 Cut</button>
-              <button class="btn btn-sm btn-outline" style="font-size:10px; padding:2px 6px;" onclick="setHikePreset(-2.0)">-2.0 Cuts</button>
+          <!-- Bottom Strip: Slope of Flies & 12M Policy Rate Shift -->
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; background:#070b14; border:1px solid #162035; border-radius:6px; padding:8px;">
+            <!-- Slope of Flies -->
+            <div>
+              <div style="font-size:10px; font-weight:800; color:#f59e0b; margin-bottom:4px; text-transform:uppercase; display:flex; justify-content:space-between;">
+                <span>3. Slope of Flies (a − x·b)</span>
+                ${diffSlopeBadge}
+              </div>
+              <select class="btn btn-sm" style="width:100%; font-size:10px; padding:2px 4px; background:#0c1322; color:#f59e0b; border-color:#334155; margin-bottom:4px;" onchange="setDeduceSlopeType(this.value)">
+                <option value="FLYS_SLOPE_1" ${deduceActiveSlopeType === 'FLYS_SLOPE_1' ? 'selected' : ''}>Fly Slope: Belly − Front (F₁ − F₀)</option>
+                <option value="FLY_6M_2X3M" ${deduceActiveSlopeType === 'FLY_6M_2X3M' ? 'selected' : ''}>Institutional: 6M Fly − 2·(3M Fly)</option>
+                <option value="FLYS_SLOPE_2" ${deduceActiveSlopeType === 'FLYS_SLOPE_2' ? 'selected' : ''}>Fly Slope: Back − Belly (F₂ − F₁)</option>
+                <option value="SEC04_COMBO" ${deduceActiveSlopeType === 'SEC04_COMBO' ? 'selected' : ''}>Structure from Sec 04 (a − x·b)</option>
+              </select>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <input type="range" class="tweaker-slider" min="-30" max="60" step="0.1" value="${curSlopeVal}"
+                       oninput="onFlySlopeTweak(deduceActiveSlopeType, this.value)" style="flex:1;">
+                <input type="number" class="btn" style="width:68px; padding:2px 4px; font-size:11px; text-align:right; font-family:var(--font-mono); background:#060a12; color:#f59e0b;"
+                       step="0.1" value="${curSlopeVal.toFixed(2)}" onchange="onFlySlopeTweak(deduceActiveSlopeType, this.value)">
+              </div>
+            </div>
+
+            <!-- 12M Net Spread & Presets -->
+            <div>
+              <div style="font-size:10px; font-weight:800; color:#10b981; margin-bottom:4px; text-transform:uppercase; display:flex; justify-content:space-between;">
+                <span>4. 12M Spread (${d12.toFixed(1)} bp)</span>
+                <span class="badge badge-emerald" style="font-size:9px;">${hikes.toFixed(2)} Hikes</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
+                <input type="range" class="tweaker-slider" min="-50" max="150" step="0.25" value="${d12}"
+                       oninput="onHikesTweak(this.value)" style="flex:1;">
+                <input type="number" class="btn" style="width:68px; padding:2px 4px; font-size:11px; text-align:right; font-family:var(--font-mono); background:#060a12; color:#10b981;"
+                       step="0.25" value="${d12.toFixed(2)}" onchange="onHikesTweak(this.value)">
+              </div>
+              <div style="display:flex; gap:4px; flex-wrap:wrap;">
+                <button class="btn btn-sm btn-outline" style="font-size:9px; padding:1px 5px;" onclick="setHikePreset(0)">Flat (0H)</button>
+                <button class="btn btn-sm btn-outline" style="font-size:9px; padding:1px 5px;" onclick="setHikePreset(1.0)">+1.0H</button>
+                <button class="btn btn-sm btn-outline" style="font-size:9px; padding:1px 5px;" onclick="setHikePreset(2.0)">+2.0H</button>
+                <button class="btn btn-sm btn-outline" style="font-size:9px; padding:1px 5px;" onclick="setHikePreset(-1.0)">-1.0C</button>
+              </div>
             </div>
           </div>
         `;
       }
 
-      // Update status badge on chart title
-      const statusBadge = document.getElementById('deduceCurveStatusBadge');
-      if (statusBadge) {
-        if (!isCustom) {
-          statusBadge.className = 'badge badge-cyan';
-          statusBadge.innerHTML = '<i class="fa-solid fa-check"></i> Identical to Live Feed';
-        } else {
-          statusBadge.className = 'badge badge-amber';
-          statusBadge.innerHTML = `<i class="fa-solid fa-wand-magic-sparkles"></i> Tweaked Outright Curve (Δ12M: ${(d12 - live.d12) >= 0 ? '+' : ''}${(d12 - live.d12).toFixed(2)} bp)`;
-        }
-      }
+      // 3. RENDER COMPARISON MATRIX TABLE
+      renderComparisonMatrixTable(base, spreads, d12, flies, hikes);
 
-      // 5. Render Comparison Chart & Equation Cards
+      // 4. RENDER COMPARISON CHART
       renderDeduceChart();
-      renderDeduceEquationCards(live, spreads, d12, flies, hikes);
+
+      // 5. RENDER EQUATION CARDS
+      renderDeduceEquationCards(base, spreads, d12, flies, hikes);
+    }
+
+    // Render Side-by-Side Comparison Matrix Table
+    function renderComparisonMatrixTable(base, spreads, d12, flies, hikes) {
+      const tbody = document.getElementById('tbodyDeduceComparisonMatrix');
+      if (!tbody) return;
+
+      const quarterCodes = ['Dec26', 'Mar27', 'Jun27', 'Sep27', 'Dec27'];
+      const myMoves = [
+        0.0,
+        spreads[0],
+        Number((spreads[0] + spreads[1]).toFixed(2)),
+        Number((spreads[0] + spreads[1] + spreads[2]).toFixed(2)),
+        d12
+      ];
+
+      let html = '';
+
+      // Outright rate moves
+      quarterCodes.forEach((q, idx) => {
+        const liveVal = base.yMoves[idx];
+        const myVal = myMoves[idx];
+        const diff = Number((myVal - liveVal).toFixed(2));
+        const impactBadge = (idx === 0) 
+          ? '<span class="badge badge-cyan" style="font-size:9px;">Anchor Point</span>'
+          : (Math.abs(diff) < 0.01)
+            ? '<span class="badge badge-emerald" style="font-size:9px;">Identical</span>'
+            : (diff > 0)
+              ? `<span class="badge badge-teal" style="font-size:9px;">▲ Higher (+${diff.toFixed(2)} bp)</span>`
+              : `<span class="badge badge-amber" style="font-size:9px;">▼ Lower (${diff.toFixed(2)} bp)</span>`;
+
+        html += `
+          <tr style="border-bottom:1px solid #162032;">
+            <td style="padding:5px 8px; color:#e2e8f0; font-weight:700;">${q} (Rate Move vs T₀)</td>
+            <td style="padding:5px 8px; text-align:right; color:#38bdf8;">${liveVal > 0 ? '+' : ''}${liveVal.toFixed(2)} bp</td>
+            <td style="padding:5px 8px; text-align:right; color:#fbbf24; font-weight:700;">${myVal > 0 ? '+' : ''}${myVal.toFixed(2)} bp</td>
+            <td style="padding:5px 8px; text-align:right; color:${diff >= 0 ? '#10b981' : '#f59e0b'}; font-weight:800;">${diff > 0 ? '+' : ''}${diff.toFixed(2)} bp</td>
+            <td style="padding:5px 8px; text-align:center;">${impactBadge}</td>
+          </tr>
+        `;
+      });
+
+      // Spreads
+      const spLabels = ['S₀ (Dec26/Mar27)', 'S₁ (Mar27/Jun27)', 'S₂ (Jun27/Sep27)', 'S₃ (Sep27/Dec27)'];
+      spreads.forEach((val, idx) => {
+        const liveVal = base.spreads[idx];
+        const diff = Number((val - liveVal).toFixed(2));
+        const impactBadge = (Math.abs(diff) < 0.01)
+          ? '<span class="badge badge-emerald" style="font-size:9px;">Unchanged</span>'
+          : (diff > 0)
+            ? `<span class="badge badge-teal" style="font-size:9px;">▲ Steeper (+${diff.toFixed(2)} bp)</span>`
+            : `<span class="badge badge-amber" style="font-size:9px;">▼ Flatter (${diff.toFixed(2)} bp)</span>`;
+
+        html += `
+          <tr style="border-bottom:1px solid #162032; background:#070b14;">
+            <td style="padding:5px 8px; color:#94a3b8;">${spLabels[idx]}</td>
+            <td style="padding:5px 8px; text-align:right; color:#38bdf8;">${liveVal > 0 ? '+' : ''}${liveVal.toFixed(2)} bp</td>
+            <td style="padding:5px 8px; text-align:right; color:#fbbf24;">${val > 0 ? '+' : ''}${val.toFixed(2)} bp</td>
+            <td style="padding:5px 8px; text-align:right; color:${diff >= 0 ? '#10b981' : '#f59e0b'};">${diff > 0 ? '+' : ''}${diff.toFixed(2)} bp</td>
+            <td style="padding:5px 8px; text-align:center;">${impactBadge}</td>
+          </tr>
+        `;
+      });
+
+      // Belly Fly F1 & 12M Net
+      const bellyDiff = Number((flies[1] - base.flies[1]).toFixed(2));
+      html += `
+        <tr style="border-bottom:1px solid #162032; background:#0c1222;">
+          <td style="padding:5px 8px; color:#c084fc; font-weight:800;">F₁ Belly Curvature (Mar27)</td>
+          <td style="padding:5px 8px; text-align:right; color:#38bdf8;">${base.flies[1] > 0 ? '+' : ''}${base.flies[1].toFixed(2)} bp</td>
+          <td style="padding:5px 8px; text-align:right; color:#fbbf24; font-weight:700;">${flies[1] > 0 ? '+' : ''}${flies[1].toFixed(2)} bp</td>
+          <td style="padding:5px 8px; text-align:right; color:#c084fc; font-weight:800;">${bellyDiff > 0 ? '+' : ''}${bellyDiff.toFixed(2)} bp</td>
+          <td style="padding:5px 8px; text-align:center;">
+            <span class="badge ${bellyDiff >= 0 ? 'badge-teal' : 'badge-amber'}" style="font-size:9px;">
+              ${bellyDiff >= 0 ? '▲ Convex Hump' : '▼ Concave Trough'}
+            </span>
+          </td>
+        </tr>
+        <tr style="background:#091224;">
+          <td style="padding:6px 8px; color:#10b981; font-weight:800;">Total 12M Policy Hikes</td>
+          <td style="padding:6px 8px; text-align:right; color:#38bdf8;">${base.hikes.toFixed(2)} Hikes (${base.d12.toFixed(1)} bp)</td>
+          <td style="padding:6px 8px; text-align:right; color:#fbbf24; font-weight:800;">${hikes.toFixed(2)} Hikes (${d12.toFixed(1)} bp)</td>
+          <td style="padding:6px 8px; text-align:right; color:#10b981; font-weight:800;">${(hikes - base.hikes) > 0 ? '+' : ''}${(hikes - base.hikes).toFixed(2)} Hikes</td>
+          <td style="padding:6px 8px; text-align:center;">
+            <span class="badge ${Math.abs(hikes - base.hikes) < 0.01 ? 'badge-emerald' : 'badge-amber'}" style="font-size:9px;">
+              ${Math.abs(hikes - base.hikes) < 0.01 ? 'Strict Invariant Lock' : 'Net Shift'}
+            </span>
+          </td>
+        </tr>
+      `;
+
+      tbody.innerHTML = html;
     }
 
     // Render Side-by-Side Equation Cards
-    function renderDeduceEquationCards(live, deducedSpreads, deducedD12, deducedFlies, deducedHikes) {
+    function renderDeduceEquationCards(base, deducedSpreads, deducedD12, deducedFlies, deducedHikes) {
       const knotX = [0, 1, 2, 3, 4];
-      const liveY = live.yMoves;
+      const liveY = base.yMoves;
       const myY = [
         0.0,
         deducedSpreads[0],
@@ -4851,7 +5103,7 @@
         cardLive.innerHTML = `
           <div class="eq-card-header">
             <span class="eq-card-title" style="color:#38bdf8;">
-              <i class="fa-solid fa-globe"></i> Live Market Outright Curve (${deduceActiveMarket})
+              <i class="fa-solid fa-globe"></i> Live Baseline Curve (${deduceActiveMarket})
             </span>
             <span class="badge badge-teal" style="font-size:9px;">R² = ${fitLive.r2.toFixed(4)}</span>
           </div>
@@ -4868,8 +5120,8 @@
             <span style="color:#a855f7;">${fitLive.d2Str}</span>
           </div>
           <div style="margin-top:8px; padding-top:6px; border-top:1px dashed #1e293b; font-size:10px; color:#94a3b8; display:flex; justify-content:space-between;">
-            <span>12M Move: <strong style="color:#e2e8f0;">${live.d12 > 0 ? '+' : ''}${live.d12.toFixed(2)} bp</strong></span>
-            <span>Implied Hikes: <strong style="color:#10b981;">${live.hikes.toFixed(2)} Hikes</strong></span>
+            <span>12M Move: <strong style="color:#e2e8f0;">${base.d12 > 0 ? '+' : ''}${base.d12.toFixed(2)} bp</strong></span>
+            <span>Implied Hikes: <strong style="color:#10b981;">${base.hikes.toFixed(2)} Hikes</strong></span>
           </div>
         `;
       }
@@ -4906,7 +5158,7 @@
       // Card 3: Shift & Delta Analysis
       const cardDelta = document.getElementById('cardDeduceDeltaEq');
       if (cardDelta) {
-        const deltaLvl = Number((deducedD12 - live.d12).toFixed(2));
+        const deltaLvl = Number((deducedD12 - base.d12).toFixed(2));
         const liveSlope0 = fitLive.coeffs[1] || 0;
         const mySlope0 = fitMy.coeffs[1] || 0;
         const deltaSlope = Number((mySlope0 - liveSlope0).toFixed(2));
@@ -4914,7 +5166,7 @@
         const liveCurvBelly = (6 * (fitLive.coeffs[3] || 0) * 2) + (2 * (fitLive.coeffs[2] || 0));
         const myCurvBelly = (6 * (fitMy.coeffs[3] || 0) * 2) + (2 * (fitMy.coeffs[2] || 0));
         const deltaCurv = Number((myCurvBelly - liveCurvBelly).toFixed(2));
-        const deltaHikes = Number((deducedHikes - live.hikes).toFixed(2));
+        const deltaHikes = Number((deducedHikes - base.hikes).toFixed(2));
 
         cardDelta.innerHTML = `
           <div class="eq-card-header">
@@ -4953,10 +5205,10 @@
       const plotDiv = document.getElementById('chartDeducePlotly');
       if (!plotDiv) return;
 
-      const live = getLiveDeduceState(deduceActiveMarket);
-      const spreads = deducedSpreads || live.spreads;
-      const d12 = (deduced12MSpread !== null) ? deduced12MSpread : live.d12;
-      const flies = deducedFlies || live.flies;
+      const base = getEffectiveBaseline();
+      const spreads = deducedSpreads || base.spreads;
+      const d12 = (deduced12MSpread !== null) ? deduced12MSpread : base.d12;
+      const flies = deducedFlies || base.flies;
 
       const quarterLabels = ['Dec26', 'Mar27', 'Jun27', 'Sep27', 'Dec27'];
       const knotX = [0, 1, 2, 3, 4];
@@ -4966,7 +5218,7 @@
       const traces = [];
 
       if (deduceViewMode === 'rel_t0') {
-        const liveY = live.yMoves;
+        const liveY = base.yMoves;
         const myY = [
           0.0,
           spreads[0],
@@ -4992,7 +5244,7 @@
         traces.push({
           name: 'Zero Curvature Baseline',
           x: [0, 4],
-          y: [0, live.d12],
+          y: [0, base.d12],
           mode: 'lines',
           line: { color: '#475569', width: 1.5, dash: 'dot' },
           hoverinfo: 'skip'
@@ -5000,7 +5252,7 @@
 
         // 2. Continuous Live Market Spline (numeric x = denseX)
         traces.push({
-          name: 'Live Market Spline',
+          name: 'Live Baseline Spline',
           x: denseX,
           y: denseLiveY,
           mode: 'lines',
@@ -5008,9 +5260,9 @@
           hoverinfo: 'skip'
         });
 
-        // 3. Live Market Contract Points (numeric x = [0, 1, 2, 3, 4])
+        // 3. Live Market Contract Points
         traces.push({
-          name: 'Live Market Contracts',
+          name: 'Live Baseline Contracts',
           x: knotX,
           y: liveY,
           mode: 'markers+text',
@@ -5019,7 +5271,7 @@
           textposition: 'top center',
           textfont: { color: '#38bdf8', size: 10, family: 'monospace' },
           customdata: quarterLabels,
-          hovertemplate: '<b>%{customdata} (Live Market)</b>: %{y:.2f} bp<extra></extra>'
+          hovertemplate: '<b>%{customdata} (Live Baseline)</b>: %{y:.2f} bp<extra></extra>'
         });
 
         // 4. Continuous Deduced Curve Spline (numeric x = denseX)
@@ -5032,7 +5284,7 @@
           hoverinfo: 'skip'
         });
 
-        // 5. Deduced Contract Points (numeric x = [0, 1, 2, 3, 4])
+        // 5. Deduced Contract Points
         traces.push({
           name: 'My Deduced Points',
           x: knotX,
@@ -5050,7 +5302,7 @@
         });
 
       } else if (deduceViewMode === 'yield') {
-        const liveYields = live.yields;
+        const liveYields = base.yields;
         const myYields = [
           liveYields[0],
           Number((liveYields[0] + spreads[0] / 100.0).toFixed(4)),
@@ -5067,7 +5319,7 @@
           line: { color: '#38bdf8', width: 2.5 },
           marker: { color: '#38bdf8', size: 9 },
           customdata: quarterLabels,
-          hovertemplate: '<b>%{customdata} Live Yield</b>: %{y:.4f}%<extra></extra>'
+          hovertemplate: '<b>%{customdata} Live Baseline Yield</b>: %{y:.4f}%<extra></extra>'
         });
 
         traces.push({
@@ -5086,11 +5338,11 @@
         traces.push({
           name: 'Live 3M Spreads (bp)',
           x: [0, 1, 2, 3],
-          y: live.spreads,
+          y: base.spreads,
           type: 'bar',
           marker: { color: '#38bdf8', opacity: 0.7 },
           customdata: spreadLabels,
-          hovertemplate: '<b>%{customdata} (Live)</b>: %{y:.2f} bp<extra></extra>'
+          hovertemplate: '<b>%{customdata} (Live Baseline)</b>: %{y:.2f} bp<extra></extra>'
         });
         traces.push({
           name: 'Deduced 3M Spreads (bp)',
@@ -5107,11 +5359,11 @@
         traces.push({
           name: 'Live Flies (bp)',
           x: [0, 1, 2, 3],
-          y: live.flies,
+          y: base.flies,
           type: 'bar',
           marker: { color: '#a855f7', opacity: 0.7 },
           customdata: flyLabels,
-          hovertemplate: '<b>%{customdata} (Live)</b>: %{y:.2f} bp<extra></extra>'
+          hovertemplate: '<b>%{customdata} (Live Baseline)</b>: %{y:.2f} bp<extra></extra>'
         });
         traces.push({
           name: 'Deduced Flies (bp)',
@@ -5158,8 +5410,19 @@
 
     // Called on live WebSocket tick or snapshot update
     function updateDeduceModuleLive() {
-      recalculateAndRenderDeduceStudio();
+      // If baseline is not locked, sync to live feed automatically
+      if (!deduceBaselineIsLocked) {
+        snapshotLiveToBaseline();
+      } else {
+        // If baseline is locked, we still update the status badge to show live stream is alive
+        const badge = document.getElementById('deduceLiveStreamingBadge');
+        if (badge) {
+          badge.innerHTML = '<i class="fa-solid fa-bolt"></i> Live Feed Connected (' + new Date().toLocaleTimeString() + ')';
+        }
+      }
     }
+
+    
 
     
 
