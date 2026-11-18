@@ -1,0 +1,2391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Intermarket Fixed Income Curve Intelligence</title>
+  
+  <!-- Plotly 2.35.2 (High precision interactive curves with drag-axis, zoom, pan & analytical shapes) -->
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+  
+  <!-- Chart.js 4.4 and DataLabels Plugin -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    :root {
+      --bg: #0a0e17;
+      --card-bg: #111827;
+      --card-header: #161f30;
+      --border: #1f293d;
+      --border-bright: #2d3b55;
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --accent-eur: #38bdf8;
+      --accent-gbp: #c084fc;
+      --accent-chf: #f59e0b;
+      --accent-usd: #00d97e;
+      --green: #00d97e;
+      --red: #ef4444;
+      --font-mono: "JetBrains Mono", Consolas, monospace;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      font-size: 13px;
+      line-height: 1.4;
+      overflow-x: hidden;
+    }
+
+    /* Header Bar */
+    header {
+      background: #0f172a;
+      border-bottom: 1px solid var(--border);
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand h1 {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .badge-live {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(0, 217, 126, 0.15);
+      border: 1px solid rgba(0, 217, 126, 0.4);
+      color: var(--green);
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 600;
+      font-family: var(--font-mono);
+    }
+
+    .pulse-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--green);
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(0, 217, 126, 0.7); }
+      70% { box-shadow: 0 0 0 6px rgba(0, 217, 126, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(0, 217, 126, 0); }
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn {
+      background: #1e293b;
+      border: 1px solid var(--border-bright);
+      color: var(--text);
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+    .btn:hover { background: #334155; border-color: #475569; }
+    .btn.active { background: #0284c7; border-color: #38bdf8; color: #fff; box-shadow: 0 0 8px rgba(56, 189, 248, 0.3); }
+
+    /* Container */
+    .container {
+      padding: 16px 20px;
+      max-width: 1800px;
+      margin: 0 auto;
+    }
+
+    /* Main Tab Navigation */
+    .nav-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+
+    .nav-tab-btn {
+      background: #131c2e;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.15s;
+    }
+    .nav-tab-btn:hover { color: #fff; background: #1a273f; }
+    .nav-tab-btn.active {
+      background: #0284c7;
+      color: #fff;
+      border-color: #38bdf8;
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.25);
+    }
+
+    /* Market Overview Cards Strip */
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .metric-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      cursor: pointer;
+      transition: border-color 0.2s, transform 0.15s;
+    }
+    .metric-card:hover {
+      border-color: var(--border-bright);
+      transform: translateY(-2px);
+    }
+    .metric-card.active {
+      border-color: var(--accent-eur);
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.15);
+    }
+
+    .m-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 4px;
+    }
+    .m-title { font-size: 12px; font-weight: 700; }
+    .m-code { font-family: var(--font-mono); font-size: 11px; background: #1e293b; padding: 2px 6px; border-radius: 4px; }
+    .m-val { font-size: 22px; font-weight: 800; font-family: var(--font-mono); color: #fff; }
+    .m-sub { font-size: 11px; color: var(--text-dim); display: flex; justify-content: space-between; margin-top: 4px; }
+
+    /* Controls Strip */
+    .controls-strip {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 16px;
+      margin-bottom: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .selector-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .selector-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--text-dim);
+      letter-spacing: 0.5px;
+      margin-right: 2px;
+    }
+
+    /* Curve Panel */
+    .curve-panel {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .panel-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .panel-sub-text {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* 4-Panel Curvature Grid (Taking the idea from reference diagram!) */
+    .four-panel-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    @media (max-width: 1100px) {
+      .four-panel-grid { grid-template-columns: 1fr; }
+    }
+
+    .four-panel-card {
+      background: #0d1424;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-num-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .card-sub-info {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 3px;
+      margin-bottom: 10px;
+      min-height: 28px;
+      line-height: 1.35;
+    }
+
+    /* Trade Callout Box */
+    .trade-callout-pill {
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px dashed #ef4444;
+      color: #f87171;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-top: 6px;
+    }
+
+    /* Tables */
+    .table-responsive {
+      overflow-x: auto;
+      margin-top: 10px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      font-family: var(--font-mono);
+      text-align: right;
+    }
+
+    th {
+      background: var(--card-header);
+      color: var(--text-dim);
+      font-weight: 600;
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    th:first-child, td:first-child { text-align: left; }
+
+    td {
+      padding: 7px 12px;
+      border-bottom: 1px solid #172033;
+      color: var(--text);
+      white-space: nowrap;
+    }
+
+    tr:hover td { background: #172238; }
+
+    .pos-bps { color: var(--green); font-weight: 600; }
+    .neg-bps { color: var(--red); font-weight: 600; }
+    .basis-tag {
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .basis-pos { background: rgba(0, 217, 126, 0.15); color: var(--green); }
+    .basis-neg { background: rgba(239, 68, 68, 0.15); color: var(--red); }
+    .basis-zero { background: rgba(148, 163, 184, 0.1); color: var(--text-muted); }
+
+    /* Plotly Modebar Dark Styling */
+    .modebar-container { background: transparent !important; }
+    .modebar-btn path { fill: #94a3b8 !important; }
+    .modebar-btn:hover path { fill: #38bdf8 !important; }
+    .modebar-btn.active path { fill: #38bdf8 !important; }
+
+    /* Multi-Curve Live Equations & Slope Cards */
+    .eq-card {
+      background: #0d1424;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      position: relative;
+      transition: all 0.2s ease;
+    }
+    .eq-card:hover {
+      border-color: var(--border-bright);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+    .eq-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid #1a2333;
+    }
+    .eq-card-title {
+      font-weight: 800;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .eq-formula-row {
+      margin-bottom: 5px;
+      line-height: 1.4;
+      word-break: break-all;
+    }
+    .eq-label {
+      color: var(--text-dim);
+      font-size: 10px;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-right: 4px;
+    }
+    .slope-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+      padding-top: 6px;
+      border-top: 1px dashed #1a2333;
+    }
+    .slope-pill {
+      background: #131d33;
+      border: 1px solid #1e293b;
+      padding: 3px 6px;
+      border-radius: 4px;
+      font-size: 10px;
+    }
+    .slope-pill.positive { border-color: rgba(0, 217, 126, 0.4); color: var(--green); }
+    .slope-pill.negative { border-color: rgba(239, 68, 68, 0.4); color: var(--red); background: rgba(239, 68, 68, 0.08); }
+    .slope-pill.neutral { color: var(--text-muted); }
+
+  </style>
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header>
+    <div class="brand">
+      <h1><i class="fa-solid fa-chart-line" style="color:var(--accent-eur)"></i> Intermarket Fixed Income Curve Intelligence</h1>
+      <span class="badge-live"><span class="pulse-dot"></span> LIGHTSTREAMER CONNECTED</span>
+      <span style="font-size:11px; color:var(--text-muted); font-family:var(--font-mono);" id="headerTimestamp"></span>
+    </div>
+
+    <div class="header-actions">
+      <span style="font-size:11px; color:var(--text-dim);">Auto-Refresh:</span>
+      <select id="refreshInterval" class="btn" style="padding:4px 8px;" onchange="updateRefreshInterval()">
+        <option value="1000">1s (High Freq)</option>
+        <option value="3000" selected>3s (Standard)</option>
+        <option value="5000">5s (Eco)</option>
+        <option value="0">Paused</option>
+      </select>
+      <button class="btn" onclick="fetchData()"><i class="fa-solid fa-arrows-rotate"></i> Refresh Now</button>
+      <button class="btn" onclick="window.open(window.location.href, '_blank')"><i class="fa-solid fa-arrow-up-right-from-square"></i> Standalone</button>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- Top Navigation Tabs -->
+    <div class="nav-tabs">
+      <button class="nav-tab-btn active" data-tab="tabCurves" onclick="switchNavTab('tabCurves')">
+        <i class="fa-solid fa-globe"></i> 1. Live Curve Levels (Outrights, Spreads, Flies)
+      </button>
+      <button class="nav-tab-btn" data-tab="tabCurvature" onclick="switchNavTab('tabCurvature')">
+        <i class="fa-solid fa-shapes"></i> 2. Relative Curvature & Structure Lab
+      </button>
+      <button class="nav-tab-btn" data-tab="tabTweaker" onclick="switchNavTab('tabTweaker')">
+        <i class="fa-solid fa-sliders"></i> 3. Double-Derivative & Trade Ratio Tweaker
+      </button>
+      <button class="nav-tab-btn" data-tab="tabTables" onclick="switchNavTab('tabTables')">
+        <i class="fa-solid fa-table-list"></i> 4. Market Depth & BBO Quotes
+      </button>
+    </div>
+
+    <!-- Live Market Metric Cards -->
+    <div class="metric-grid" id="marketCardsGrid"></div>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- TAB 1: CORE 3-LAYER INTERMARKET CURVES (OUTRIGHTS, SPREADS, FLIES) -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <div id="tabCurves">
+
+      <!-- Global Filter Strip -->
+      <div class="controls-strip">
+        <div class="selector-group">
+          <span class="selector-label">Market:</span>
+          <button class="btn active" id="btnMktAll" onclick="selectCurveMarket('ALL')"><i class="fa-solid fa-globe"></i> All Markets Overlay</button>
+          <button class="btn" id="btnMktEUR" onclick="selectCurveMarket('EUR')">🇪🇺 EUR (Euribor / I)</button>
+          <button class="btn" id="btnMktUSD" onclick="selectCurveMarket('USD')">🇺🇸 USD (SOFR / SR3)</button>
+          <button class="btn" id="btnMktGBP" onclick="selectCurveMarket('GBP')">🇬🇧 GBP (SONIA / SO3)</button>
+          <button class="btn" id="btnMktCHF" onclick="selectCurveMarket('CHF')">🇨🇭 CHF (SARON / SA3)</button>
+        </div>
+
+        <div class="selector-group">
+          <span class="selector-label">View Layer:</span>
+          <button class="btn active" id="btnLayerAll" onclick="selectCurveLayer('ALL')">All 3 Layers</button>
+          <button class="btn" id="btnLayer1" onclick="selectCurveLayer('1')">Level 1: Outrights</button>
+          <button class="btn" id="btnLayer2" onclick="selectCurveLayer('2')">Level 2: 3M Spreads</button>
+          <button class="btn" id="btnLayer3" onclick="selectCurveLayer('3')">Level 3: 3M Butterflies</button>
+        </div>
+      </div>
+
+      <!-- Layer 1: Outrights & Curvature Canvas -->
+      <div class="curve-panel" id="panelLayer1">
+        <div class="panel-header" style="flex-wrap: wrap; gap: 10px;">
+          <div>
+            <div class="panel-title" style="font-size: 14px;">
+              <i class="fa-solid fa-bezier-curve" style="color:var(--accent-eur)"></i>
+              Level 1: Outright Forward Curves & Relative Curvature (Well Axis-Oriented)
+            </div>
+            <div class="panel-sub-text" id="curveProjectionSubtext">
+              Cumulative Implied Rate Move vs T₀ (bp) with Straight-Line Zero-Curvature Baseline — Exactly matches the analytical curvature framework
+            </div>
+          </div>
+          
+          <!-- Mode Selector Buttons -->
+          <div style="display:flex; flex-wrap: wrap; gap:6px; align-items: center;">
+            <div class="selector-group">
+              <span class="selector-label">Projection:</span>
+              <button class="btn active" id="btnProjRelT0" onclick="setCurveProjection('rel_t0')">
+                <i class="fa-solid fa-chart-line"></i> Relative vs T₀ (bp)
+              </button>
+              <button class="btn" id="btnProjRate" onclick="setCurveProjection('rate')">
+                <i class="fa-solid fa-percent"></i> Implied Rate %
+              </button>
+              <button class="btn" id="btnProjEquation" onclick="setCurveProjection('equation')">
+                <i class="fa-solid fa-calculator"></i> Single Fit Inspection
+              </button>
+              <button class="btn" id="btnProjPrice" onclick="setCurveProjection('price')">
+                <i class="fa-solid fa-tag"></i> VWAP Price
+              </button>
+            </div>
+
+            <div class="selector-group">
+              <span class="selector-label">Horizon:</span>
+              <button class="btn active" id="btnHoriz1Y" onclick="setCurveHorizon('1Y')">1Y Strip (5Q)</button>
+              <button class="btn" id="btnHoriz2Y" onclick="setCurveHorizon('2Y')">2Y Strip (9Q)</button>
+              <button class="btn" id="btnHorizFull" onclick="setCurveHorizon('FULL')">Full Strip</button>
+            </div>
+
+            <!-- Fixed Axis Calibration Controls -->
+            <div class="selector-group" id="groupAxisScale">
+              <span class="selector-label">Axis:</span>
+              <button class="btn active" id="btnAxisFixed" onclick="toggleAxisFixed(true)" title="Lock Y-axis bounds to prevent jumping on ticks">
+                <i class="fa-solid fa-lock"></i> Fixed Axis (-10 to +75 bp)
+              </button>
+              <button class="btn" id="btnAxisAuto" onclick="toggleAxisFixed(false)" title="Automatically fit Y-axis to current data">
+                <i class="fa-solid fa-expand"></i> Auto-Scale
+              </button>
+              <div style="display:inline-flex; align-items:center; gap:4px; font-family:var(--font-mono); font-size:11px; margin-left:4px;">
+                <span style="color:var(--text-dim);">Min:</span>
+                <input id="inputAxisMin" type="number" value="-10" style="width:42px; background:#0d1424; border:1px solid #1f293d; color:#fff; border-radius:4px; padding:2px 4px; font-size:11px; text-align:center;" onchange="updateCustomAxisRange()">
+                <span style="color:var(--text-dim);">Max:</span>
+                <input id="inputAxisMax" type="number" value="75" style="width:42px; background:#0d1424; border:1px solid #1f293d; color:#fff; border-radius:4px; padding:2px 4px; font-size:11px; text-align:center;" onchange="updateCustomAxisRange()">
+              </div>
+            </div>
+
+            <!-- Segment Slopes Overlay Toggle -->
+            <div class="selector-group">
+              <button class="btn active" id="btnToggleSlopes" onclick="toggleShowSlopes()" title="Display segment slope numbers on chart">
+                <i class="fa-solid fa-arrow-trend-up"></i> Slopes on Chart: ON
+              </button>
+            </div>
+
+            <div class="selector-group" id="groupMultiAxis" style="display:none;">
+              <button class="btn" id="btnToggleMultiAxis" onclick="toggleMultiAxis()">
+                <i class="fa-solid fa-arrows-split-up-and-left"></i> Multi-Y Axis: Off
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Formula and Analytical Badges Bar (shown in equation mode or when relevant) -->
+        <div id="equationStatsBar" style="display:none; background:#0d1424; border:1px solid #1f293d; border-radius:6px; padding:10px 14px; margin-bottom:12px; font-family:var(--font-mono); font-size:11px;">
+          <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; align-items:center;">
+            <div>
+              <span style="color:var(--text-dim); text-transform:uppercase; font-size:10px; font-weight:700;">Curve Model:</span>
+              <strong id="eqFormula" style="color:#38bdf8; margin-left:6px; font-size:12px;">--</strong>
+              <span id="eqR2" style="color:var(--green); margin-left:8px; font-weight:600;">--</span>
+            </div>
+            <div>
+              <span style="color:var(--text-dim); text-transform:uppercase; font-size:10px; font-weight:700;">1st Deriv (Slope dy/dx):</span>
+              <span id="eqD1" style="color:#00d97e; margin-left:6px;">--</span>
+            </div>
+            <div>
+              <span style="color:var(--text-dim); text-transform:uppercase; font-size:10px; font-weight:700;">2nd Deriv (Curvature d²y/dx²):</span>
+              <span id="eqD2" style="color:#c084fc; margin-left:6px;">--</span>
+            </div>
+            <div>
+              <span style="color:var(--text-dim); text-transform:uppercase; font-size:10px; font-weight:700;">Inflection / Peak:</span>
+              <span id="eqTurning" style="color:#f59e0b; margin-left:6px;">--</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Plotly Canvas -->
+        <div id="chartOutrightsPlotly" style="width:100%; height:410px;"></div>
+
+        <!-- Canvas Footer / Interaction Help -->
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px; font-size:11px; color:var(--text-dim); font-family:var(--font-mono);">
+          <span><i class="fa-solid fa-arrows-up-down-left-right"></i> <strong>Axis Control:</strong> <span id="axisStatusIndicator" style="color:#38bdf8; font-weight:700;">Fixed Axis [-10 bp, +75 bp]</span> · Click & drag numbers to stretch · Scroll to zoom</span>
+          <span id="curveBaselineNote" style="color:#94a3b8;"><i class="fa-solid fa-ruler-horizontal"></i> Grey Dashed Line: Zero-Curvature Linear Baseline</span>
+        </div>
+
+        <!-- 4-Market Live Curve Equations & Slope Analytics Strip -->
+        <div style="margin-top:14px; padding-top:12px; border-top:1px solid #1f293d;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <div style="font-size:12px; font-weight:700; color:#fff; display:flex; align-items:center; gap:6px;">
+              <i class="fa-solid fa-square-root-variable" style="color:#38bdf8;"></i> Live Curve Equations & Slope Decomposition (All Active Curves)
+            </div>
+            <span style="font-size:11px; color:var(--text-dim); font-family:var(--font-mono);">Updates live on every tick</span>
+          </div>
+          <div id="multiCurveEquationsGrid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 12px;"></div>
+        </div>
+      </div>
+
+      <!-- Grid for Level 2 and Level 3 -->
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+
+        <!-- Layer 2: 3M Spreads -->
+        <div class="curve-panel" id="panelLayer2">
+          <div class="panel-header">
+            <div>
+              <div class="panel-title"><i class="fa-solid fa-calendar-days" style="color:#60a5fa"></i> Level 2: 3M Calendar Spreads (A - B)</div>
+              <div class="panel-sub-text">Synthetic vs Quoted Exchange Spreads (bps) with Roll Basis</div>
+            </div>
+          </div>
+          <div id="chartSpreadsPlotly" style="width:100%; height:320px;"></div>
+        </div>
+
+        <!-- Layer 3: 3M Butterflies -->
+        <div class="curve-panel" id="panelLayer3">
+          <div class="panel-header">
+            <div>
+              <div class="panel-title"><i class="fa-solid fa-dove" style="color:#c084fc"></i> Level 3: 3M Butterfly Flies (A - 2B + C)</div>
+              <div class="panel-sub-text">Synthetic vs Quoted Exchange Butterflies (bps) with 6M/4 Even Share Line</div>
+            </div>
+          </div>
+          <div id="chartFliesPlotly" style="width:100%; height:320px;"></div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- TAB 2: RELATIVE CURVATURE & STRUCTURE LAB (THE 4-PANEL IDEA!)   -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <div id="tabCurvature" style="display:none;">
+
+      <!-- Controls -->
+      <div class="controls-strip">
+        <div class="selector-group">
+          <span class="selector-label">Compare:</span>
+          <select id="curvMkt1" class="btn" style="border-left:3px solid #38bdf8;" onchange="fetchCurvature4Panel()">
+            <option value="USD" selected>SR3 (US SOFR)</option>
+            <option value="EUR">Euribor (Eurozone)</option>
+            <option value="GBP">SONIA (UK)</option>
+            <option value="CHF">SARON (Swiss)</option>
+          </select>
+          <span style="font-size:11px;font-weight:700;color:var(--text-muted);">vs</span>
+          <select id="curvMkt2" class="btn" style="border-left:3px solid #ea580c;" onchange="fetchCurvature4Panel()">
+            <option value="EUR" selected>Euribor (Eurozone)</option>
+            <option value="USD">SR3 (US SOFR)</option>
+            <option value="GBP">SONIA (UK)</option>
+            <option value="CHF">SARON (Swiss)</option>
+          </select>
+        </div>
+
+        <div class="selector-group">
+          <span class="selector-label">1Y Horizon:</span>
+          <select id="curvHorizon" class="btn" onchange="fetchCurvature4Panel()">
+            <option value="Dec26" selected>Dec26 – Dec27 (1Y)</option>
+            <option value="Sep26">Sep26 – Sep27 (1Y)</option>
+            <option value="Mar27">Mar27 – Mar28 (1Y)</option>
+            <option value="Jun27">Jun27 – Jun28 (1Y)</option>
+          </select>
+        </div>
+
+        <div class="selector-group">
+          <span class="selector-label">Mode:</span>
+          <select id="curvMode" class="btn" style="font-weight:700;" onchange="fetchCurvature4Panel()">
+            <option value="live" selected>🔴 Live Market Data</option>
+            <option value="diagram">📌 Reference Diagram Case (12M=46)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- 4-Panel Curvature Analytics Grid -->
+      <div class="four-panel-grid">
+
+        <!-- Panel 1: The Curve vs Straight Line -->
+        <div class="four-panel-card">
+          <div class="card-num-title"><i class="fa-solid fa-bezier-curve" style="color:#38bdf8"></i> 1 · Curve Shape: Where Each Contract Sits vs T₀</div>
+          <div class="card-sub-info" id="c4Sub1">Implied 3M rate change vs front contract (bps) with zero-curvature straight line</div>
+          <div id="c4Plot1" style="width:100%; height:270px;"></div>
+        </div>
+
+        <!-- Panel 2: Slope of 3M Flies vs 6M Fly -->
+        <div class="four-panel-card">
+          <div class="card-num-title"><i class="fa-solid fa-arrow-trend-up" style="color:#60a5fa"></i> 2 · Slope of the 3M Flies vs 6M Fly (Curvature Slope)</div>
+          <div class="card-sub-info" id="c4Sub2">Tilt of the flies, discrete 3M double fly change, and 6M fly ÷ 4 even-share baseline</div>
+          <div id="c4Plot2" style="width:100%; height:270px;"></div>
+        </div>
+
+        <!-- Panel 3: Trade Curvature (4*Fly - 6MFly) -->
+        <div class="four-panel-card">
+          <div class="card-num-title"><i class="fa-solid fa-scale-balanced" style="color:#c084fc"></i> 3 · Relative Trade Curvature: 4 × 3M Fly – 6M Fly</div>
+          <div class="card-sub-info" id="c4Sub3">Departure of each fly from even share & relative curvature mispricing gaps</div>
+          <div id="c4Plot3" style="width:100%; height:240px;"></div>
+          <div>
+            <div class="trade-callout-pill" id="c4TradeCallout">Trade: Analyzing...</div>
+          </div>
+        </div>
+
+        <!-- Panel 4: Curvature Bulge -->
+        <div class="four-panel-card">
+          <div class="card-num-title"><i class="fa-solid fa-mountain" style="color:#00d97e"></i> 4 · Curvature Bulge: Curve Minus Straight Line</div>
+          <div class="card-sub-info" id="c4Sub4">Belly convexity above straight line (peak at belly = ½ × 6M fly)</div>
+          <div id="c4Plot4" style="width:100%; height:270px;"></div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- TAB 3: DOUBLE-DERIVATIVE & TRADE RATIO TWEAKER                 -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <div id="tabTweaker" style="display:none;">
+
+      <div class="controls-strip">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <i class="fa-solid fa-calculator" style="color:#c084fc;"></i>
+          <strong style="color:#fff;">Intermarket Trade Ratio & Curvature Neutralizer:</strong>
+          <span style="font-size:11px;color:var(--text-muted);">(Match fly curvature across economies with exact FX & DV01 neutrality)</span>
+        </div>
+        <button class="btn active" onclick="runRatioOptimization()"><i class="fa-solid fa-play"></i> Re-Calculate Ratio</button>
+      </div>
+
+      <!-- Ratio Inputs Grid -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+        <!-- Leg A -->
+        <div class="curve-panel" style="border-top:3px solid #38bdf8;">
+          <div class="panel-title" style="color:#38bdf8;margin-bottom:10px;"><i class="fa-solid fa-flag"></i> Leg A (Market 1)</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
+            <div>
+              <span class="selector-label">Market:</span>
+              <select id="tweakerM1" class="btn" style="width:100%;" onchange="populateTweakerTenors()">
+                <option value="EUR" selected>🇪🇺 EUR (Euribor / I)</option>
+                <option value="USD">🇺🇸 USD (SOFR / SR3)</option>
+                <option value="GBP">🇬🇧 GBP (SONIA / SO3)</option>
+                <option value="CHF">🇨🇭 CHF (SARON / SA3)</option>
+              </select>
+            </div>
+            <div>
+              <span class="selector-label">Product:</span>
+              <select id="tweakerP1" class="btn" style="width:100%;" onchange="populateTweakerTenors()">
+                <option value="flies_3m" selected>3M Butterfly (Fly)</option>
+                <option value="spreads_3m">3M Calendar Spread</option>
+                <option value="outrights">Outrights Strip</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <span class="selector-label">Contract / Tenor:</span>
+            <select id="tweakerT1" class="btn" style="width:100%;font-family:var(--font-mono);"></select>
+          </div>
+          <div style="margin-top:12px;padding:10px;background:#0d1424;border-radius:6px;font-family:var(--font-mono);font-size:11px;" id="tweakerDetails1">
+            Loading Leg A...
+          </div>
+        </div>
+
+        <!-- Leg B -->
+        <div class="curve-panel" style="border-top:3px solid #00d97e;">
+          <div class="panel-title" style="color:#00d97e;margin-bottom:10px;"><i class="fa-solid fa-flag"></i> Leg B (Market 2)</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
+            <div>
+              <span class="selector-label">Market:</span>
+              <select id="tweakerM2" class="btn" style="width:100%;" onchange="populateTweakerTenors()">
+                <option value="USD" selected>🇺🇸 USD (SOFR / SR3)</option>
+                <option value="EUR">🇪🇺 EUR (Euribor / I)</option>
+                <option value="GBP">🇬🇧 GBP (SONIA / SO3)</option>
+                <option value="CHF">🇨🇭 CHF (SARON / SA3)</option>
+              </select>
+            </div>
+            <div>
+              <span class="selector-label">Product:</span>
+              <select id="tweakerP2" class="btn" style="width:100%;" onchange="populateTweakerTenors()">
+                <option value="flies_3m" selected>3M Butterfly (Fly)</option>
+                <option value="spreads_3m">3M Calendar Spread</option>
+                <option value="outrights">Outrights Strip</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <span class="selector-label">Contract / Tenor:</span>
+            <select id="tweakerT2" class="btn" style="width:100%;font-family:var(--font-mono);"></select>
+          </div>
+          <div style="margin-top:12px;padding:10px;background:#0d1424;border-radius:6px;font-family:var(--font-mono);font-size:11px;" id="tweakerDetails2">
+            Loading Leg B...
+          </div>
+        </div>
+      </div>
+
+      <!-- Generated Ticket -->
+      <div class="curve-panel" style="border:1px solid #2563eb;background:linear-gradient(135deg, #0e172a 0%, #0a1120 100%);">
+        <div class="panel-title" style="color:#60a5fa;"><i class="fa-solid fa-receipt"></i> DV01 & Curvature Neutral Execution Ticket</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;">
+          <div style="background:#131d33;padding:12px;border-radius:6px;border-left:4px solid #38bdf8;">
+            <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;">Leg A Execution</div>
+            <div id="ticketLeg1Text" style="font-size:16px;font-weight:800;font-family:var(--font-mono);margin-top:4px;">--</div>
+          </div>
+          <div style="background:#131d33;padding:12px;border-radius:6px;border-left:4px solid #00d97e;">
+            <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;">Leg B Execution</div>
+            <div id="ticketLeg2Text" style="font-size:16px;font-weight:800;font-family:var(--font-mono);margin-top:4px;">--</div>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:12px;padding-top:10px;border-top:1px dashed #1e3a8a;font-family:var(--font-mono);font-size:12px;">
+          <span>Net Position DV01: <strong id="ticketNetDv01" style="color:#00d97e;">$0.00</strong></span>
+          <span>Intermarket Spread: <strong id="ticketSpread" style="color:#fff;">-- bps</strong></span>
+          <span>Curvature Ratio: <strong id="ticketCurvRatio" style="color:#c084fc;">--</strong></span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- TAB 4: COMPLETE MARKET DEPTH & BBO QUOTES TABLES               -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <div id="tabTables" style="display:none;">
+
+      <div class="controls-strip">
+        <div class="selector-group">
+          <span class="selector-label">Economy:</span>
+          <select id="tablesMarket" class="btn" onchange="renderDepthTables()">
+            <option value="EUR">🇪🇺 EUR (Euribor / I)</option>
+            <option value="USD">🇺🇸 USD (SOFR / SR3)</option>
+            <option value="GBP">🇬🇧 GBP (SONIA / SO3)</option>
+            <option value="CHF">🇨🇭 CHF (SARON / SA3)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Outrights Table -->
+      <div class="curve-panel">
+        <div class="panel-header">
+          <div class="panel-title"><i class="fa-solid fa-layer-group" style="color:#38bdf8"></i> Level 1: Outright Contracts & BBO Quotes</div>
+        </div>
+        <div class="table-responsive">
+          <table id="tableOutrights">
+            <thead>
+              <tr>
+                <th>Contract</th>
+                <th>Instrument ID</th>
+                <th>Bid</th>
+                <th>Ask</th>
+                <th>VWAP</th>
+                <th>Implied Rate %</th>
+                <th>Volume</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Spreads & Flies Tables -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div class="curve-panel">
+          <div class="panel-header">
+            <div class="panel-title"><i class="fa-solid fa-calendar-days" style="color:#60a5fa"></i> Level 2: 3M Spreads (Synth vs Quoted)</div>
+          </div>
+          <div class="table-responsive">
+            <table id="tableSpreads">
+              <thead>
+                <tr>
+                  <th>Spread</th>
+                  <th>Synthetic (bps)</th>
+                  <th>Quoted (bps)</th>
+                  <th>Basis (bps)</th>
+                  <th>Quoted Bid/Ask</th>
+                  <th>Volume</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="curve-panel">
+          <div class="panel-header">
+            <div class="panel-title"><i class="fa-solid fa-dove" style="color:#c084fc"></i> Level 3: 3M Butterflies (Synth vs Quoted)</div>
+          </div>
+          <div class="table-responsive">
+            <table id="tableFlies">
+              <thead>
+                <tr>
+                  <th>Butterfly</th>
+                  <th>Synthetic (bps)</th>
+                  <th>Quoted (bps)</th>
+                  <th>Basis (bps)</th>
+                  <th>Quoted Bid/Ask</th>
+                  <th>Volume</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    // ─── STATE MANAGEMENT ───
+    let activeNavTab = "tabCurves";
+    let selectedCurveMarket = "ALL";
+    let selectedCurveLayer = "ALL";
+    let curveProjection = "rel_t0";  // 'rel_t0' (default, matches picture!), 'rate', 'equation', 'price'
+    let curveHorizon = "1Y";         // '1Y' (5Q), '2Y' (9Q), 'FULL'
+    let isAxisFixed = true;          // User requested: Fix the axis in relative mode!
+    let fixedAxisMin = -10.0;
+    let fixedAxisMax = 75.0;
+    let showSegmentSlopes = true;    // Display slope numbers on chart
+    let useMultiAxis = false;
+    let refreshTimer = null;
+    let globalData = null;
+
+    // ─── POLYNOMIAL FITTING & DERIVATIVE CALCULATOR (CLIENT-SIDE) ───
+    function fitPolynomialCoeffs(xVals, yVals, deg = 3) {
+      const n = xVals.length;
+      if (n < deg + 1) deg = Math.max(1, n - 1);
+      const m = deg + 1;
+      
+      const A = [];
+      const B = [];
+      for (let i = 0; i < m; i++) {
+        A.push(new Array(m).fill(0));
+        let sumB = 0;
+        for (let k = 0; k < n; k++) sumB += yVals[k] * Math.pow(xVals[k], i);
+        B.push(sumB);
+        for (let j = 0; j < m; j++) {
+          let sumA = 0;
+          for (let k = 0; k < n; k++) sumA += Math.pow(xVals[k], i + j);
+          A[i][j] = sumA;
+        }
+      }
+      // Gauss-Jordan elimination
+      for (let i = 0; i < m; i++) {
+        let maxRow = i;
+        for (let r = i + 1; r < m; r++) {
+          if (Math.abs(A[r][i]) > Math.abs(A[maxRow][i])) maxRow = r;
+        }
+        [A[i], A[maxRow]] = [A[maxRow], A[i]];
+        [B[i], B[maxRow]] = [B[maxRow], B[i]];
+
+        const pivot = A[i][i];
+        if (Math.abs(pivot) < 1e-12) continue;
+        for (let j = i; j < m; j++) A[i][j] /= pivot;
+        B[i] /= pivot;
+
+        for (let r = 0; r < m; r++) {
+          if (r !== i) {
+            const factor = A[r][i];
+            for (let j = i; j < m; j++) A[r][j] -= factor * A[i][j];
+            B[r] -= factor * B[i];
+          }
+        }
+      }
+      // B contains [c0, c1, c2, c3]
+      const c = B;
+      // Predict & calculate R2
+      const yMean = yVals.reduce((a, b) => a + b, 0) / n;
+      let ssTot = 0, ssRes = 0;
+      for (let k = 0; k < n; k++) {
+        const xk = xVals[k];
+        let pred = 0;
+        for (let p = 0; p < m; p++) pred += c[p] * Math.pow(xk, p);
+        ssTot += Math.pow(yVals[k] - yMean, 2);
+        ssRes += Math.pow(yVals[k] - pred, 2);
+      }
+      const r2 = ssTot > 0 ? Math.max(0, 1 - (ssRes / ssTot)) : 1.0;
+
+      // Construct formatted string y(x) = c3 x^3 + c2 x^2 + c1 x + c0
+      let eqStr = "y(x) = ";
+      if (m >= 4) eqStr += `${c[3] >= 0 ? '+' : ''}${c[3].toFixed(4)}x³ `;
+      if (m >= 3) eqStr += `${c[2] >= 0 ? '+' : ''}${c[2].toFixed(4)}x² `;
+      if (m >= 2) eqStr += `${c[1] >= 0 ? '+' : ''}${c[1].toFixed(4)}x `;
+      eqStr += `${c[0] >= 0 ? '+' : ''}${c[0].toFixed(4)}`;
+
+      // 1st Derivative dy/dx = 3*c3 x^2 + 2*c2 x + c1
+      let d1Str = "dy/dx = ";
+      if (m >= 4) d1Str += `${(3*c[3]) >= 0 ? '+' : ''}${(3*c[3]).toFixed(4)}x² `;
+      if (m >= 3) d1Str += `${(2*c[2]) >= 0 ? '+' : ''}${(2*c[2]).toFixed(4)}x `;
+      if (m >= 2) d1Str += `${c[1] >= 0 ? '+' : ''}${c[1].toFixed(4)}`;
+
+      // 2nd Derivative d2y/dx2 = 6*c3 x + 2*c2
+      let d2Str = "d²y/dx² = ";
+      if (m >= 4) d2Str += `${(6*c[3]) >= 0 ? '+' : ''}${(6*c[3]).toFixed(4)}x `;
+      if (m >= 3) d2Str += `${(2*c[2]) >= 0 ? '+' : ''}${(2*c[2]).toFixed(4)}`;
+
+      return { coeffs: c, eqStr, d1Str, d2Str, r2 };
+    }
+
+    function toggleAxisFixed(isFixed) {
+      isAxisFixed = isFixed;
+      document.getElementById('btnAxisFixed').classList.toggle('active', isFixed);
+      document.getElementById('btnAxisAuto').classList.toggle('active', !isFixed);
+      document.getElementById('axisStatusIndicator').innerText = isFixed 
+        ? `Fixed Axis [${fixedAxisMin} bp, +${fixedAxisMax} bp]` 
+        : `Dynamic Auto-Scale`;
+      renderCurvesTab();
+    }
+
+    function updateCustomAxisRange() {
+      const minVal = parseFloat(document.getElementById('inputAxisMin').value);
+      const maxVal = parseFloat(document.getElementById('inputAxisMax').value);
+      if (!isNaN(minVal) && !isNaN(maxVal) && minVal < maxVal) {
+        fixedAxisMin = minVal;
+        fixedAxisMax = maxVal;
+        if (!isAxisFixed) toggleAxisFixed(true);
+        else {
+          document.getElementById('axisStatusIndicator').innerText = `Fixed Axis [${fixedAxisMin} bp, +${fixedAxisMax} bp]`;
+          renderCurvesTab();
+        }
+      }
+    }
+
+    function toggleShowSlopes() {
+      showSegmentSlopes = !showSegmentSlopes;
+      const btn = document.getElementById('btnToggleSlopes');
+      btn.innerHTML = `<i class="fa-solid fa-arrow-trend-up"></i> Slopes on Chart: ${showSegmentSlopes ? 'ON' : 'OFF'}`;
+      btn.classList.toggle('active', showSegmentSlopes);
+      renderCurvesTab();
+    }
+
+    const MARKET_COLORS = {
+      EUR: "#38bdf8",
+      USD: "#00d97e",
+      GBP: "#c084fc",
+      CHF: "#f59e0b"
+    };
+
+    // Standard IMM Quarters sequence for cross-economy alignment
+    const ALL_IMM_QUARTERS = [
+      "SEP26", "DEC26", "MAR27", "JUN27", "SEP27", "DEC27",
+      "MAR28", "JUN28", "SEP28", "DEC28", "MAR29", "JUN29",
+      "SEP29", "DEC29", "MAR30", "JUN30", "SEP30", "DEC30",
+      "MAR31", "JUN31", "SEP31", "DEC31", "MAR32", "JUN32",
+      "SEP32", "DEC32", "MAR33", "JUN33", "SEP33", "DEC33",
+      "MAR34", "JUN34", "SEP34", "DEC34", "MAR35", "JUN35", "SEP35"
+    ];
+
+    // ─── NAVIGATION TAB SWITCHER ───
+    function switchNavTab(tabId) {
+      activeNavTab = tabId;
+      document.querySelectorAll('.nav-tab-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.tab === tabId);
+      });
+      document.getElementById('tabCurves').style.display = (tabId === 'tabCurves') ? 'block' : 'none';
+      document.getElementById('tabCurvature').style.display = (tabId === 'tabCurvature') ? 'block' : 'none';
+      document.getElementById('tabTweaker').style.display = (tabId === 'tabTweaker') ? 'block' : 'none';
+      document.getElementById('tabTables').style.display = (tabId === 'tabTables') ? 'block' : 'none';
+      document.getElementById('tabMathLab').style.display = (tabId === 'tabMathLab') ? 'block' : 'none';
+
+      if (tabId === 'tabCurves') renderCurvesTab();
+      else if (tabId === 'tabCurvature') fetchCurvature4Panel();
+      else if (tabId === 'tabTweaker') { populateTweakerTenors(); runRatioOptimization(); }
+      else if (tabId === 'tabTables') renderDepthTables();
+    }
+
+    // ─── DATA FETCHING ───
+    async function fetchData() {
+      try {
+        const res = await fetch('/api/intermarket/curves/all');
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        globalData = await res.json();
+        document.getElementById('headerTimestamp').innerText = "Last tick: " + new Date(globalData.timestamp).toLocaleTimeString();
+
+        renderMetricCards();
+        if (activeNavTab === 'tabCurves') renderCurvesTab();
+        else if (activeNavTab === 'tabCurvature') fetchCurvature4Panel();
+        else if (activeNavTab === 'tabTables') renderDepthTables();
+      } catch (err) {
+        console.error("Fetch error:", err);
+      }
+    }
+
+    function updateRefreshInterval() {
+      const val = parseInt(document.getElementById('refreshInterval').value);
+      if (refreshTimer) clearInterval(refreshTimer);
+      if (val > 0) refreshTimer = setInterval(fetchData, val);
+    }
+
+    // ─── RENDER METRIC CARDS ───
+    function renderMetricCards() {
+      if (!globalData) return;
+      const grid = document.getElementById('marketCardsGrid');
+      let html = '';
+      for (const [m, c] of Object.entries(globalData.markets)) {
+        const oList = c.outrights || [];
+        const front = oList[0] || {};
+        const back = oList[oList.length - 1] || {};
+        const slope = (front.rate && back.rate) ? (back.rate - front.rate).toFixed(2) : '--';
+        const color = MARKET_COLORS[m] || '#38bdf8';
+        const isCurrent = (selectedCurveMarket === m);
+
+        html += `
+          <div class="metric-card ${isCurrent ? 'active' : ''}" onclick="selectCurveMarket('${m}')">
+            <div class="m-top">
+              <span class="m-title" style="color:${color}"><i class="fa-solid fa-landmark"></i> ${c.meta.name}</span>
+              <span class="m-code">${c.meta.code}</span>
+            </div>
+            <div class="m-val">${front.rate !== null && front.rate !== undefined ? front.rate.toFixed(3) + '%' : '--'}</div>
+            <div class="m-sub">
+              <span>Front: ${front.code || '--'}</span>
+              <span>Slope: <strong style="color:${slope < 0 ? 'var(--red)' : 'var(--green)'}">${slope > 0 ? '+' : ''}${slope} bps</strong></span>
+            </div>
+          </div>
+        `;
+      }
+      grid.innerHTML = html;
+    }
+
+    // ─── TAB 1: CONTROLS & SELECTION ───
+    function selectCurveMarket(mkt) {
+      selectedCurveMarket = mkt;
+      ['All','EUR','USD','GBP','CHF'].forEach(k => {
+        const btn = document.getElementById('btnMkt' + k);
+        if (btn) btn.classList.toggle('active', (k === 'All' && mkt === 'ALL') || k === mkt);
+      });
+      renderMetricCards();
+      renderCurvesTab();
+    }
+
+    function selectCurveLayer(layer) {
+      selectedCurveLayer = layer;
+      document.getElementById('btnLayerAll').classList.toggle('active', layer === 'ALL');
+      document.getElementById('btnLayer1').classList.toggle('active', layer === '1');
+      document.getElementById('btnLayer2').classList.toggle('active', layer === '2');
+      document.getElementById('btnLayer3').classList.toggle('active', layer === '3');
+
+      document.getElementById('panelLayer1').style.display = (layer === 'ALL' || layer === '1') ? 'block' : 'none';
+      document.getElementById('panelLayer2').style.display = (layer === 'ALL' || layer === '2') ? 'block' : 'none';
+      document.getElementById('panelLayer3').style.display = (layer === 'ALL' || layer === '3') ? 'block' : 'none';
+      setTimeout(() => {
+        Plotly.Plots.resize('chartOutrightsPlotly');
+        Plotly.Plots.resize('chartSpreadsPlotly');
+        Plotly.Plots.resize('chartFliesPlotly');
+      }, 50);
+    }
+
+    function setCurveProjection(proj) {
+      curveProjection = proj;
+      document.getElementById('btnProjRelT0').classList.toggle('active', proj === 'rel_t0');
+      document.getElementById('btnProjRate').classList.toggle('active', proj === 'rate');
+      document.getElementById('btnProjEquation').classList.toggle('active', proj === 'equation');
+      document.getElementById('btnProjPrice').classList.toggle('active', proj === 'price');
+
+      document.getElementById('groupMultiAxis').style.display = (proj === 'rate' && selectedCurveMarket === 'ALL') ? 'flex' : 'none';
+      document.getElementById('equationStatsBar').style.display = (proj === 'equation') ? 'block' : 'none';
+
+      const subtexts = {
+        rel_t0: "Cumulative Implied Rate Move vs T₀ (bp) with Straight-Line Zero-Curvature Baseline — Exactly matches the analytical curvature framework",
+        rate: "Implied Forward Rate % (100 - VWAP) with dynamically tight auto-scaled vertical axis",
+        equation: "Continuous Analytical Polynomial Fitting y(x) with 1st Deriv (Slope) & 2nd Deriv (Curvature)",
+        price: "Futures Contract VWAP Price Strip with tight auto-scaled price bounds"
+      };
+      document.getElementById('curveProjectionSubtext').innerText = subtexts[proj] || "";
+      document.getElementById('curveBaselineNote').style.display = (proj === 'rel_t0') ? 'inline' : 'none';
+
+      renderCurvesTab();
+    }
+
+    function setCurveHorizon(horiz) {
+      curveHorizon = horiz;
+      document.getElementById('btnHoriz1Y').classList.toggle('active', horiz === '1Y');
+      document.getElementById('btnHoriz2Y').classList.toggle('active', horiz === '2Y');
+      document.getElementById('btnHorizFull').classList.toggle('active', horiz === 'FULL');
+      renderCurvesTab();
+    }
+
+    function toggleMultiAxis() {
+      useMultiAxis = !useMultiAxis;
+      const btn = document.getElementById('btnToggleMultiAxis');
+      btn.innerHTML = `<i class="fa-solid fa-arrows-split-up-and-left"></i> Multi-Y Axis: ${useMultiAxis ? 'ON' : 'OFF'}`;
+      btn.classList.toggle('active', useMultiAxis);
+      renderCurvesTab();
+    }
+
+    // ─── TAB 1: RENDER ALL 3 CURVE LAYERS ───
+    function renderCurvesTab() {
+      if (!globalData) return;
+      renderOutrightsPlotly();
+      renderSpreadsPlotly();
+      renderFliesPlotly();
+    }
+
+    // ─── 1. LEVEL 1: OUTRIGHT CURVES & RELATIVE CURVATURE (PLOTLY) ───
+    async function renderOutrightsPlotly() {
+      const mktsToPlot = (selectedCurveMarket === 'ALL') ? ['EUR', 'USD', 'GBP', 'CHF'] : [selectedCurveMarket];
+      
+      // Determine active tenors slice
+      let sliceCount = 5; // 1Y = 5 quarters
+      let startIdx = ALL_IMM_QUARTERS.indexOf("DEC26");
+      if (curveHorizon === '2Y') {
+        sliceCount = 9;
+      } else if (curveHorizon === 'FULL') {
+        startIdx = 0; // Start from Sep26
+        sliceCount = ALL_IMM_QUARTERS.length;
+      }
+
+      const activeIMM = ALL_IMM_QUARTERS.slice(startIdx, startIdx + sliceCount);
+      const xLabels = activeIMM.map(t => t.charAt(0) + t.slice(1, 3).toLowerCase() + t.slice(3));
+      const anchorQuarter = activeIMM[0];
+
+      const traces = [];
+      const plotDiv = document.getElementById('chartOutrightsPlotly');
+
+      // MODE A: RELATIVE VS T0 (bp) — EXACTLY MATCHES REFERENCE PICTURE!
+      if (curveProjection === 'rel_t0') {
+        let maxMove = 0, minMove = 0;
+        let baseline12mEur = 44.16;
+        const xIndices = activeIMM.map((_, i) => i);
+
+        for (const m of mktsToPlot) {
+          const c = globalData.markets[m];
+          if (!c) continue;
+          const oDict = {};
+          (c.outrights || []).forEach(o => { oDict[o.code.toUpperCase()] = o; });
+
+          // Find anchor T0 (e.g. DEC26)
+          const t0Obj = Object.entries(oDict).find(([k, v]) => k.includes(anchorQuarter))?.[1] || (c.outrights || [])[0];
+          const p0 = t0Obj ? t0Obj.vwap : 95.0;
+
+          const yMoves = [];
+          const customData = [];
+
+          for (let qIdx = 0; qIdx < activeIMM.length; qIdx++) {
+            const q = activeIMM[qIdx];
+            const match = Object.entries(oDict).find(([k, v]) => k.includes(q))?.[1];
+            if (match) {
+              const bpMove = Number(((p0 - match.vwap) * 100).toFixed(2));
+              yMoves.push(bpMove);
+              customData.push([match.rate, match.vwap, match.code, xLabels[qIdx]]);
+              if (bpMove > maxMove) maxMove = bpMove;
+              if (bpMove < minMove) minMove = bpMove;
+              if ((m === 'EUR' || m === 'USD') && q === 'DEC27') baseline12mEur = bpMove;
+            } else {
+              yMoves.push(null);
+              customData.push([null, null, q, xLabels[qIdx]]);
+            }
+          }
+
+          traces.push({
+            x: xIndices,
+            y: yMoves,
+            name: `${c.meta.name} (${m})`,
+            type: 'scatter',
+            mode: showSegmentSlopes ? 'lines+markers+text' : 'lines+markers',
+            text: yMoves.map(v => (v !== null && v !== undefined) ? `${v >= 0 ? '+' : ''}${v.toFixed(1)}` : ''),
+            textposition: 'top center',
+            textfont: { family: 'JetBrains Mono, monospace', size: 10, color: MARKET_COLORS[m] },
+            line: { shape: 'spline', smoothing: 1.25, width: 3, color: MARKET_COLORS[m] },
+            marker: { size: 8, color: MARKET_COLORS[m] },
+            customdata: customData,
+            hovertemplate: `<b>${m} %{customdata[3]}</b> (%{customdata[2]})<br>Cumulative Move: <b>%{y:+.2f} bp</b><br>Implied Rate: %{customdata[0]:.3f}%<br>VWAP Price: %{customdata[1]:.4f}<extra></extra>`
+          });
+        }
+
+        // Add Straight-Line Baseline (No Curvature)
+        const straightStep = baseline12mEur / (sliceCount - 1);
+        const straightLine = [];
+        for (let i = 0; i < sliceCount; i++) {
+          straightLine.push(Number((straightStep * i).toFixed(2)));
+        }
+
+        traces.push({
+          x: xIndices,
+          y: straightLine,
+          name: `Straight Line Baseline (${straightStep.toFixed(1)} bp/Qtr, No Curvature)`,
+          type: 'scatter',
+          mode: 'lines',
+          line: { dash: 'dash', width: 2, color: '#94a3b8' },
+          customdata: xLabels,
+          hovertemplate: `Linear Baseline at %{customdata}: <b>%{y:.2f} bp</b><extra></extra>`
+        });
+
+        // Build annotations for segment slopes if enabled
+        const annotations = [];
+        if (showSegmentSlopes && traces.length > 0) {
+          // If 1 market selected, annotate that market; if ALL, annotate USD and EUR or prominent
+          const primaryTraces = (mktsToPlot.length === 1) 
+            ? [traces[0]] 
+            : traces.filter(t => t.name.includes('USD') || t.name.includes('EUR'));
+
+          for (const tr of primaryTraces) {
+            for (let i = 0; i < tr.x.length - 1; i++) {
+              const y1 = tr.y[i];
+              const y2 = tr.y[i+1];
+              if (y1 === null || y2 === null || y1 === undefined || y2 === undefined) continue;
+              const slope = Number((y2 - y1).toFixed(1));
+              const midY = (y1 + y2) / 2.0;
+              const isNeg = slope < 0;
+
+              annotations.push({
+                x: (i + 0.5),
+                y: midY,
+                xref: 'x',
+                yref: 'y',
+                text: `<b>${slope >= 0 ? '+' : ''}${slope.toFixed(1)} bp</b>`,
+                showarrow: false,
+                font: { size: 9, color: isNeg ? '#f87171' : '#38bdf8', family: 'JetBrains Mono, monospace' },
+                bgcolor: isNeg ? 'rgba(239, 68, 68, 0.25)' : 'rgba(15, 23, 42, 0.9)',
+                bordercolor: isNeg ? '#ef4444' : '#38bdf8',
+                borderwidth: 1,
+                borderpad: 3
+              });
+            }
+          }
+        }
+
+        // Apply FIXED AXIS vs Auto-Scale
+        let yRange = [fixedAxisMin, fixedAxisMax];
+        let yDt = 10;
+        if (!isAxisFixed) {
+          const yPad = Math.max(10, (maxMove - minMove) * 0.15);
+          yRange = [minMove - yPad, maxMove + yPad];
+          yDt = undefined;
+        }
+
+        const layout = {
+          paper_bgcolor: '#0d1424',
+          plot_bgcolor: '#0a0e17',
+          title: {
+            text: `<b>Relative Curve Level & Curvature Shape vs ${anchorQuarter} (bp)</b>`,
+            font: { color: '#f1f5f9', size: 14 }
+          },
+          xaxis: {
+            title: { text: 'Quarterly Contract Strip', font: { color: '#94a3b8', size: 11 } },
+            tickmode: 'array',
+            tickvals: xIndices,
+            ticktext: xLabels,
+            range: [-0.3, sliceCount - 0.7],
+            gridcolor: '#1a2333',
+            tickfont: { color: '#94a3b8', size: 11 },
+            linecolor: '#1f293d'
+          },
+          yaxis: {
+            title: { text: `Implied Rate Move vs ${anchorQuarter} (bp)`, font: { color: '#94a3b8', size: 11 } },
+            gridcolor: '#1a2333',
+            tickfont: { color: '#94a3b8', size: 11 },
+            linecolor: '#1f293d',
+            zeroline: true,
+            zerolinecolor: '#64748b',
+            zerolinewidth: 2,
+            range: yRange,
+            dtick: yDt,
+            autorange: !isAxisFixed
+          },
+          annotations: annotations,
+          legend: { font: { color: '#94a3b8' }, orientation: 'h', y: -0.22 },
+          margin: { l: 65, r: 35, t: 40, b: 65 },
+          hovermode: 'x unified'
+        };
+
+        Plotly.newPlot(plotDiv, traces, layout, { responsive: true, displayModeBar: true });
+
+        // Compute and render LIVE EQUATIONS & SLOPES for ALL curves
+        renderMultiCurveEquations(['USD', 'EUR', 'GBP', 'CHF'], activeIMM, anchorQuarter, selectedCurveMarket);
+        return;
+      }
+
+      // MODE B: IMPLIED RATE % (DYNAMIC TIGHT AUTO-SCALE)
+      if (curveProjection === 'rate') {
+        let globalMinR = 100, globalMaxR = 0;
+
+        for (let idx = 0; idx < mktsToPlot.length; idx++) {
+          const m = mktsToPlot[idx];
+          const c = globalData.markets[m];
+          if (!c) continue;
+          const oDict = {};
+          (c.outrights || []).forEach(o => { oDict[o.code.toUpperCase()] = o; });
+
+          const yRates = [];
+          for (const q of activeIMM) {
+            const match = Object.entries(oDict).find(([k, v]) => k.includes(q))?.[1];
+            if (match && match.rate !== null && match.rate !== undefined) {
+              yRates.push(match.rate);
+              if (match.rate < globalMinR) globalMinR = match.rate;
+              if (match.rate > globalMaxR) globalMaxR = match.rate;
+            } else {
+              yRates.push(null);
+            }
+          }
+
+          const traceObj = {
+            x: xLabels,
+            y: yRates,
+            name: `${c.meta.name} (${m})`,
+            type: 'scatter',
+            mode: 'lines+markers',
+            line: { shape: 'spline', smoothing: 1.3, width: 3, color: MARKET_COLORS[m] },
+            marker: { size: 8, color: MARKET_COLORS[m] },
+            hovertemplate: `<b>${m} %{x}</b>: <b>%{y:.3f}%</b><extra></extra>`
+          };
+
+          if (useMultiAxis && mktsToPlot.length > 1) {
+            traceObj.yaxis = (idx === 0) ? 'y' : `y${idx + 1}`;
+          }
+          traces.push(traceObj);
+        }
+
+        const layout = {
+          paper_bgcolor: '#0d1424',
+          plot_bgcolor: '#0a0e17',
+          title: {
+            text: `<b>Implied Forward Rate Curves (% = 100 - VWAP) — Tight Auto-Scaled Axis</b>`,
+            font: { color: '#f1f5f9', size: 14 }
+          },
+          xaxis: {
+            gridcolor: '#1a2333',
+            tickfont: { color: '#94a3b8', size: 11 },
+            linecolor: '#1f293d'
+          },
+          yaxis: {
+            title: { text: 'Implied Rate %', font: { color: '#94a3b8', size: 11 } },
+            gridcolor: '#1a2333',
+            tickfont: { color: '#94a3b8', size: 11 },
+            linecolor: '#1f293d',
+            range: [Math.max(0, globalMinR - 0.15), globalMaxR + 0.15]
+          },
+          legend: { font: { color: '#94a3b8' }, orientation: 'h', y: -0.22 },
+          margin: { l: 65, r: 35, t: 40, b: 65 },
+          hovermode: 'x unified'
+        };
+
+        if (useMultiAxis && mktsToPlot.length > 1) {
+          delete layout.yaxis.range;
+          layout.yaxis.title = { text: `${mktsToPlot[0]} Rate %`, font: { color: MARKET_COLORS[mktsToPlot[0]] } };
+          layout.yaxis.tickfont = { color: MARKET_COLORS[mktsToPlot[0]] };
+
+          if (mktsToPlot[1]) {
+            layout.yaxis2 = {
+              title: { text: `${mktsToPlot[1]} Rate %`, font: { color: MARKET_COLORS[mktsToPlot[1]] } },
+              tickfont: { color: MARKET_COLORS[mktsToPlot[1]] },
+              overlaying: 'y',
+              side: 'right',
+              showgrid: false
+            };
+          }
+        }
+
+        Plotly.newPlot(plotDiv, traces, layout, { responsive: true, displayModeBar: true });
+        return;
+      }
+
+      // MODE C: ANALYTICAL EQUATION & DERIVATIVES (GEOGEBRA / DESMOS)
+      if (curveProjection === 'equation') {
+        const mkt = (selectedCurveMarket === 'ALL') ? 'EUR' : selectedCurveMarket;
+        try {
+          const fitRes = await fetch('/api/intermarket/curve/fit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ market: mkt, product_type: 'outrights', model: 'poly3' })
+          });
+          const fd = await fitRes.json();
+
+          // Populate equation banner
+          document.getElementById('eqFormula').innerText = fd.equation;
+          document.getElementById('eqR2').innerText = `R² = ${fd.r2}`;
+          document.getElementById('eqD1').innerText = fd.d1_equation;
+          document.getElementById('eqD2').innerText = fd.d2_equation;
+          document.getElementById('eqTurning').innerText = `Inflection at x ≈ ${(-fd.coeffs[1] / (3 * fd.coeffs[0])).toFixed(2)}`;
+
+          // 1. Original Points
+          traces.push({
+            x: fd.labels,
+            y: fd.original_y,
+            name: `${mkt} Market Data Points`,
+            type: 'scatter',
+            mode: 'markers',
+            marker: { size: 9, color: MARKET_COLORS[mkt] || '#38bdf8' }
+          });
+
+          // 2. Smooth Fitted Curve
+          const denseLabels = fd.x_dense.map(xi => {
+            const idx = Math.round(xi) - 1;
+            return fd.labels[idx] || `x=${xi.toFixed(1)}`;
+          });
+
+          traces.push({
+            x: denseLabels,
+            y: fd.y_dense,
+            name: `Fitted Equation: ${fd.equation}`,
+            type: 'scatter',
+            mode: 'lines',
+            line: { shape: 'spline', smoothing: 1.2, width: 3, color: '#38bdf8' }
+          });
+
+          // 3. 1st Derivative (Slope)
+          traces.push({
+            x: denseLabels,
+            y: fd.d1_dense,
+            name: `1st Deriv (Slope dy/dx): ${fd.d1_equation}`,
+            type: 'scatter',
+            mode: 'lines',
+            yaxis: 'y2',
+            line: { dash: 'dash', width: 2, color: '#00d97e' }
+          });
+
+          // 4. 2nd Derivative (Curvature)
+          traces.push({
+            x: denseLabels,
+            y: fd.d2_dense,
+            name: `2nd Deriv (Curvature d²y/dx²): ${fd.d2_equation}`,
+            type: 'scatter',
+            mode: 'lines',
+            yaxis: 'y2',
+            line: { dash: 'dot', width: 2, color: '#c084fc' }
+          });
+
+          const layout = {
+            paper_bgcolor: '#0d1424',
+            plot_bgcolor: '#0a0e17',
+            title: {
+              text: `<b>${mkt} Analytical Curve Fitting & Derivatives (GeoGebra / Desmos Engine)</b>`,
+              font: { color: '#f1f5f9', size: 14 }
+            },
+            xaxis: { gridcolor: '#1a2333', tickfont: { color: '#94a3b8', size: 10 } },
+            yaxis: {
+              title: { text: 'Implied Rate %', font: { color: '#38bdf8' } },
+              gridcolor: '#1a2333',
+              tickfont: { color: '#38bdf8' }
+            },
+            yaxis2: {
+              title: { text: 'Derivative Rate of Change (dy/dx, d²y/dx²)', font: { color: '#00d97e' } },
+              tickfont: { color: '#00d97e' },
+              overlaying: 'y',
+              side: 'right',
+              showgrid: false
+            },
+            legend: { font: { color: '#94a3b8' }, orientation: 'h', y: -0.22 },
+            margin: { l: 65, r: 65, t: 40, b: 65 }
+          };
+
+          Plotly.newPlot(plotDiv, traces, layout, { responsive: true, displayModeBar: true });
+        } catch (err) {
+          console.error("Equation fit error:", err);
+        }
+        return;
+      }
+
+      // MODE D: VWAP PRICE (DYNAMIC TIGHT AUTO-SCALE)
+      if (curveProjection === 'price') {
+        let minP = 200, maxP = 0;
+        for (const m of mktsToPlot) {
+          const c = globalData.markets[m];
+          if (!c) continue;
+          const oDict = {};
+          (c.outrights || []).forEach(o => { oDict[o.code.toUpperCase()] = o; });
+
+          const yPrices = [];
+          for (const q of activeIMM) {
+            const match = Object.entries(oDict).find(([k, v]) => k.includes(q))?.[1];
+            if (match && match.vwap !== null) {
+              yPrices.push(match.vwap);
+              if (match.vwap < minP) minP = match.vwap;
+              if (match.vwap > maxP) maxP = match.vwap;
+            } else {
+              yPrices.push(null);
+            }
+          }
+
+          traces.push({
+            x: xLabels,
+            y: yPrices,
+            name: `${c.meta.name} (${m})`,
+            type: 'scatter',
+            mode: 'lines+markers',
+            line: { shape: 'spline', smoothing: 1.3, width: 3, color: MARKET_COLORS[m] },
+            marker: { size: 8, color: MARKET_COLORS[m] },
+            hovertemplate: `<b>${m} %{x}</b> Price: <b>%{y:.4f}</b><extra></extra>`
+          });
+        }
+
+        const layout = {
+          paper_bgcolor: '#0d1424',
+          plot_bgcolor: '#0a0e17',
+          title: { text: `<b>Futures VWAP Price Curves — Tight Dynamic Auto-Scale</b>`, font: { color: '#f1f5f9', size: 14 } },
+          xaxis: { gridcolor: '#1a2333', tickfont: { color: '#94a3b8', size: 11 } },
+          yaxis: {
+            title: { text: 'VWAP Price', font: { color: '#94a3b8', size: 11 } },
+            gridcolor: '#1a2333',
+            tickfont: { color: '#94a3b8', size: 11 },
+            range: [minP - 0.20, maxP + 0.20]
+          },
+          legend: { font: { color: '#94a3b8' }, orientation: 'h', y: -0.22 },
+          margin: { l: 65, r: 35, t: 40, b: 65 },
+          hovermode: 'x unified'
+        };
+
+        Plotly.newPlot(plotDiv, traces, layout, { responsive: true, displayModeBar: true });
+      }
+    }
+
+
+    // ─── RENDER MULTI-CURVE LIVE EQUATIONS & SLOPES ───
+    function renderMultiCurveEquations(mkts, tenors, anchorQuarter, activeMarket = 'ALL') {
+      const container = document.getElementById('multiCurveEquationsGrid');
+      if (!container || !globalData) return;
+
+      let cardsHtml = '';
+      const allMarketsOrder = ['USD', 'EUR', 'GBP', 'CHF'];
+
+      for (const m of allMarketsOrder) {
+        const c = globalData.markets[m];
+        if (!c) continue;
+        const color = MARKET_COLORS[m] || '#38bdf8';
+        const isSelected = (activeMarket === m || activeMarket === 'ALL');
+        const oDict = {};
+        (c.outrights || []).forEach(o => { oDict[o.code.toUpperCase()] = o; });
+
+        const t0Obj = Object.entries(oDict).find(([k, v]) => k.includes(anchorQuarter))?.[1] || (c.outrights || [])[0];
+        const p0 = t0Obj ? t0Obj.vwap : 95.0;
+
+        const validX = [];
+        const validY = [];
+        const cleanTenors = [];
+
+        tenors.forEach((q, i) => {
+          const match = Object.entries(oDict).find(([k, v]) => k.includes(q))?.[1];
+          if (match && match.vwap !== null) {
+            const bp = Number(((p0 - match.vwap) * 100).toFixed(2));
+            validX.push(i);
+            validY.push(bp);
+            cleanTenors.push(q);
+          }
+        });
+
+        if (validY.length < 3) continue;
+
+        // Fit cubic polynomial: y(x) = c3 x^3 + c2 x^2 + c1 x + c0
+        const fit = fitPolynomialCoeffs(validX, validY, 3);
+
+        // Segment slopes between consecutive contracts
+        const segmentSlopes = [];
+        for (let i = 0; i < validY.length - 1; i++) {
+          const s = Number((validY[i+1] - validY[i]).toFixed(2));
+          const tFrom = cleanTenors[i];
+          const tTo = cleanTenors[i+1];
+          segmentSlopes.push({ from: tFrom, to: tTo, slope: s });
+        }
+
+        // Peak / belly bulge detection
+        let maxBp = -999;
+        let peakTenor = cleanTenors[0];
+        validY.forEach((val, i) => {
+          if (val > maxBp) {
+            maxBp = val;
+            peakTenor = cleanTenors[i];
+          }
+        });
+
+        const totalMove12M = validY.length >= 5 ? validY[4] : validY[validY.length - 1];
+        const avgSlope = (totalMove12M / Math.max(1, validY.length - 1)).toFixed(2);
+        const cardBorder = isSelected ? `2px solid ${color}` : `1px solid var(--border)`;
+        const cardShadow = isSelected ? `0 0 14px ${color}33` : `none`;
+
+        cardsHtml += `
+          <div class="eq-card" style="border-top: 4px solid ${color}; border: ${cardBorder}; box-shadow: ${cardShadow};">
+            <div class="eq-card-header">
+              <div class="eq-card-title" style="color:${color};">
+                <i class="fa-solid fa-chart-line"></i> ${c.meta.name} (${m})
+                ${activeMarket === m ? '<span style="font-size:9px; background:#0284c7; color:#fff; padding:1px 5px; border-radius:3px; margin-left:6px;">FOCUS</span>' : ''}
+              </div>
+              <span style="font-size:10px; background:#1e293b; color:var(--green); padding:2px 6px; border-radius:4px; font-weight:700; font-family:var(--font-mono);">
+                R² = ${fit.r2.toFixed(4)}
+              </span>
+            </div>
+
+            <!-- Curve Equation -->
+            <div class="eq-formula-row">
+              <span class="eq-label" style="color:${color};">Curve y(x):</span>
+              <strong style="color:#fff; font-size:11px;">${fit.eqStr}</strong>
+            </div>
+
+            <!-- Slope Equation -->
+            <div class="eq-formula-row">
+              <span class="eq-label" style="color:var(--green);">1st Deriv (Slope) y'(x):</span>
+              <span style="color:#00d97e; font-weight:600;">${fit.d1Str}</span>
+            </div>
+
+            <!-- Curvature Equation -->
+            <div class="eq-formula-row">
+              <span class="eq-label" style="color:#c084fc;">2nd Deriv (Curv) y''(x):</span>
+              <span style="color:#c084fc; font-weight:600;">${fit.d2Str}</span>
+            </div>
+
+            <!-- Key Dynamics Bar -->
+            <div style="display:flex; justify-content:space-between; margin-top:8px; font-size:10px; color:var(--text-dim); background:#111a2e; padding:5px 8px; border-radius:4px; border:1px solid #1a2333;">
+              <span>12M Move: <strong style="color:#fff;">${totalMove12M >= 0 ? '+' : ''}${totalMove12M} bp</strong></span>
+              <span>Avg Slope: <strong style="color:#38bdf8;">${avgSlope >= 0 ? '+' : ''}${avgSlope} bp/Qtr</strong></span>
+              <span>Peak: <strong style="color:#f59e0b;">${peakTenor} (${maxBp >= 0 ? '+' : ''}${maxBp} bp)</strong></span>
+            </div>
+
+            <!-- Discrete Segment Slopes -->
+            <div class="slope-strip">
+              <span style="font-size:10px; color:var(--text-dim); font-weight:700; align-self:center; margin-right:4px;">SEGMENT SLOPES:</span>
+              ${segmentSlopes.map(s => {
+                const cls = s.slope > 0.05 ? 'positive' : (s.slope < -0.05 ? 'negative' : 'neutral');
+                return `<span class="slope-pill ${cls}">${s.from}→${s.to}: <strong>${s.slope >= 0 ? '+' : ''}${s.slope} bp</strong></span>`;
+              }).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      container.innerHTML = cardsHtml;
+    }
+
+    // ─── 2. LEVEL 2: 3M CALENDAR SPREADS (PLOTLY) ───
+    function renderSpreadsPlotly() {
+      const mktsToPlot = (selectedCurveMarket === 'ALL') ? ['EUR', 'USD', 'GBP', 'CHF'] : [selectedCurveMarket];
+      const traces = [];
+      let minBps = 100, maxBps = -100;
+
+      for (const m of mktsToPlot) {
+        const c = globalData.markets[m];
+        if (!c) continue;
+        const sList = (c.spreads_3m || []).slice(0, 12);
+        const xNames = sList.map(s => s.name);
+        const ySyn = sList.map(s => {
+          const v = s.synthetic_bps;
+          if (v < minBps) minBps = v;
+          if (v > maxBps) maxBps = v;
+          return v;
+        });
+
+        traces.push({
+          x: xNames,
+          y: ySyn,
+          name: `${m} Spread (bps)`,
+          type: 'scatter',
+          mode: 'lines+markers',
+          line: { shape: 'spline', smoothing: 1.2, width: 2.5, color: MARKET_COLORS[m] },
+          marker: { size: 6, color: MARKET_COLORS[m] },
+          hovertemplate: `<b>${m} %{x}</b>: <b>%{y:.2f} bps</b><extra></extra>`
+        });
+      }
+
+      const pad = Math.max(3, (maxBps - minBps) * 0.15);
+      const layout = {
+        paper_bgcolor: '#0d1424',
+        plot_bgcolor: '#0a0e17',
+        xaxis: { gridcolor: '#1a2333', tickfont: { color: '#94a3b8', size: 10 } },
+        yaxis: {
+          title: { text: 'Spread (bps)', font: { color: '#94a3b8', size: 11 } },
+          gridcolor: '#1a2333',
+          tickfont: { color: '#94a3b8', size: 10 },
+          range: [minBps - pad, maxBps + pad]
+        },
+        legend: { font: { color: '#94a3b8' }, orientation: 'h', y: -0.25 },
+        margin: { l: 55, r: 25, t: 20, b: 60 }
+      };
+
+      Plotly.newPlot('chartSpreadsPlotly', traces, layout, { responsive: true, displayModeBar: false });
+    }
+
+    // ─── 3. LEVEL 3: 3M BUTTERFLIES (PLOTLY) ───
+    function renderFliesPlotly() {
+      const mktsToPlot = (selectedCurveMarket === 'ALL') ? ['EUR', 'USD', 'GBP', 'CHF'] : [selectedCurveMarket];
+      const traces = [];
+      let minBps = 100, maxBps = -100;
+
+      for (const m of mktsToPlot) {
+        const c = globalData.markets[m];
+        if (!c) continue;
+        const fList = (c.flies_3m || []).slice(0, 10);
+        const xNames = fList.map(f => f.name);
+        const ySyn = fList.map(f => {
+          const v = f.synthetic_bps;
+          if (v < minBps) minBps = v;
+          if (v > maxBps) maxBps = v;
+          return v;
+        });
+
+        traces.push({
+          x: xNames,
+          y: ySyn,
+          name: `${m} Fly (bps)`,
+          type: 'scatter',
+          mode: 'lines+markers',
+          line: { shape: 'spline', smoothing: 1.2, width: 2.5, color: MARKET_COLORS[m] },
+          marker: { size: 6, color: MARKET_COLORS[m] },
+          hovertemplate: `<b>${m} %{x}</b>: <b>%{y:.2f} bps</b><extra></extra>`
+        });
+      }
+
+      const pad = Math.max(2, (maxBps - minBps) * 0.15);
+      const layout = {
+        paper_bgcolor: '#0d1424',
+        plot_bgcolor: '#0a0e17',
+        xaxis: { gridcolor: '#1a2333', tickfont: { color: '#94a3b8', size: 10 } },
+        yaxis: {
+          title: { text: 'Fly (bps)', font: { color: '#94a3b8', size: 11 } },
+          gridcolor: '#1a2333',
+          tickfont: { color: '#94a3b8', size: 10 },
+          range: [minBps - pad, maxBps + pad]
+        },
+        legend: { font: { color: '#94a3b8' }, orientation: 'h', y: -0.25 },
+        margin: { l: 55, r: 25, t: 20, b: 60 }
+      };
+
+      Plotly.newPlot('chartFliesPlotly', traces, layout, { responsive: true, displayModeBar: false });
+    }
+
+    // ─── TAB 2: RELATIVE CURVATURE & STRUCTURE LAB (PLOTLY 4-PANEL!) ───
+    async function fetchCurvature4Panel() {
+      const m1 = document.getElementById('curvMkt1').value;
+      const m2 = document.getElementById('curvMkt2').value;
+      const horizon = document.getElementById('curvHorizon').value;
+      const mode = document.getElementById('curvMode').value;
+
+      try {
+        const res = await fetch('/api/intermarket/curvature-4panel', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            market1: m1,
+            market2: m2,
+            start_tenor: horizon,
+            mode: mode
+          })
+        });
+        const d = await res.json();
+        renderCurvature4Panel(d);
+      } catch (err) {
+        console.error("4-panel error:", err);
+      }
+    }
+
+    function renderCurvature4Panel(d) {
+      if (!d) return;
+      const m1 = d.m1_name;
+      const m2 = d.m2_name;
+      const cM1 = MARKET_COLORS[d.market1] || '#38bdf8';
+      const cM2 = MARKET_COLORS[d.market2] || '#ea580c';
+
+      document.getElementById('c4Sub1').innerText = `Implied rate move vs ${d.tenors[0]} (12M = ${d.delta12m_1} bp in ${m1}, ${d.delta12m_2} bp in ${m2})`;
+      document.getElementById('c4Sub2').innerHTML = `Tilt: ${m1} ${d.tilt_1 > 0 ? '+' : ''}${d.tilt_1} bp | ${m2} ${d.tilt_2 > 0 ? '+' : ''}${d.tilt_2} bp · <i>Double flies in italic</i>`;
+      document.getElementById('c4Sub4').innerText = `At ${d.tenors[2]} bulge = ½ × 6M fly (${m1}: ${d.belly_bulge_1} bp ≈ ${d.fly6m_1}/2; ${m2}: ${d.belly_bulge_2} bp ≈ ${d.fly6m_2}/2)`;
+      document.getElementById('c4TradeCallout').innerText = d.trade_callout;
+
+      const pLayoutCommon = {
+        paper_bgcolor: '#0d1424',
+        plot_bgcolor: '#0a0e17',
+        xaxis: { gridcolor: '#1a2333', tickfont: { color: '#94a3b8', size: 10 } },
+        yaxis: { gridcolor: '#1a2333', tickfont: { color: '#94a3b8', size: 10 } },
+        legend: { font: { color: '#94a3b8', size: 10 }, orientation: 'h', y: -0.28 },
+        margin: { l: 50, r: 25, t: 15, b: 55 }
+      };
+
+      // 1. Panel 1: Curve vs Straight line
+      const t1 = [
+        {
+          x: d.tenors,
+          y: d.curve1,
+          name: m1,
+          type: 'scatter',
+          mode: 'lines+markers',
+          line: { shape: 'spline', smoothing: 1.2, width: 3, color: cM1 },
+          marker: { size: 7, color: cM1 }
+        },
+        {
+          x: d.tenors,
+          y: d.curve2,
+          name: m2,
+          type: 'scatter',
+          mode: 'lines+markers',
+          line: { shape: 'spline', smoothing: 1.2, width: 3, color: cM2 },
+          marker: { size: 7, color: cM2 }
+        },
+        {
+          x: d.tenors,
+          y: d.straight_line,
+          name: `Straight Line (${d.straight_step} bp/Qtr)`,
+          type: 'scatter',
+          mode: 'lines',
+          line: { dash: 'dash', width: 2, color: '#94a3b8' }
+        }
+      ];
+      Plotly.newPlot('c4Plot1', t1, { ...pLayoutCommon, yaxis: { ...pLayoutCommon.yaxis, title: { text: `bp vs ${d.tenors[0]}`, font: { size: 10 } } } }, { responsive: true, displayModeBar: false });
+
+      // 2. Panel 2: Slope of 3M flies vs 6M/4
+      const t2 = [
+        {
+          x: d.fly_names,
+          y: d.flies1,
+          name: `${m1} 3M flies`,
+          type: 'scatter',
+          mode: 'lines+markers',
+          line: { width: 2.5, color: cM1 },
+          marker: { size: 8, color: cM1 }
+        },
+        {
+          x: d.fly_names,
+          y: d.flies2,
+          name: `${m2} 3M flies`,
+          type: 'scatter',
+          mode: 'lines+markers',
+          line: { width: 2.5, color: cM2 },
+          marker: { size: 8, color: cM2 }
+        },
+        {
+          x: d.fly_names,
+          y: [d.even_1, d.even_1, d.even_1],
+          name: `${m1} Even (6M/4 = ${d.even_1})`,
+          type: 'scatter',
+          mode: 'lines',
+          line: { dash: 'dash', width: 1.5, color: cM1 }
+        },
+        {
+          x: d.fly_names,
+          y: [d.even_2, d.even_2, d.even_2],
+          name: `${m2} Even (6M/4 = ${d.even_2})`,
+          type: 'scatter',
+          mode: 'lines',
+          line: { dash: 'dash', width: 1.5, color: cM2 }
+        }
+      ];
+      Plotly.newPlot('c4Plot2', t2, { ...pLayoutCommon, yaxis: { ...pLayoutCommon.yaxis, title: { text: 'bp', font: { size: 10 } } } }, { responsive: true, displayModeBar: false });
+
+      // 3. Panel 3: Trade Curvature (4*Fly - 6MFly)
+      const t3 = [
+        {
+          x: d.fly_names,
+          y: d.curv1,
+          name: `${m1}: 4×Fly - 6MFly`,
+          type: 'scatter',
+          mode: 'lines+markers',
+          line: { width: 2.5, color: cM1 },
+          marker: { size: 8, color: cM1 }
+        },
+        {
+          x: d.fly_names,
+          y: d.curv2,
+          name: `${m2}: 4×Fly - 6MFly`,
+          type: 'scatter',
+          mode: 'lines+markers',
+          line: { width: 2.5, color: cM2 },
+          marker: { size: 8, color: cM2 }
+        },
+        {
+          x: d.fly_names,
+          y: [0, 0, 0],
+          name: 'Even Share (0 bp)',
+          type: 'scatter',
+          mode: 'lines',
+          line: { dash: 'dash', width: 1.5, color: '#64748b' }
+        }
+      ];
+      Plotly.newPlot('c4Plot3', t3, { ...pLayoutCommon, yaxis: { ...pLayoutCommon.yaxis, title: { text: 'bp departure', font: { size: 10 } } } }, { responsive: true, displayModeBar: false });
+
+      // 4. Panel 4: Bulge above straight line
+      const t4 = [
+        {
+          x: d.tenors,
+          y: d.bulge1,
+          name: `${m1} Bulge`,
+          type: 'scatter',
+          mode: 'lines+markers',
+          fill: 'tozeroy',
+          fillcolor: 'rgba(56, 189, 248, 0.15)',
+          line: { shape: 'spline', smoothing: 1.2, width: 2.5, color: cM1 },
+          marker: { size: 7, color: cM1 }
+        },
+        {
+          x: d.tenors,
+          y: d.bulge2,
+          name: `${m2} Bulge`,
+          type: 'scatter',
+          mode: 'lines+markers',
+          fill: 'tozeroy',
+          fillcolor: 'rgba(234, 88, 12, 0.15)',
+          line: { shape: 'spline', smoothing: 1.2, width: 2.5, color: cM2 },
+          marker: { size: 7, color: cM2 }
+        }
+      ];
+      Plotly.newPlot('c4Plot4', t4, { ...pLayoutCommon, yaxis: { ...pLayoutCommon.yaxis, title: { text: 'bp bulge', font: { size: 10 } } } }, { responsive: true, displayModeBar: false });
+    }
+
+    // ─── TAB 3: TWEAKER & EXECUTION TICKET ───
+    function populateTweakerTenors() {
+      if (!globalData) return;
+      ['1', '2'].forEach(idx => {
+        const m = document.getElementById(`tweakerM${idx}`).value;
+        const p = document.getElementById(`tweakerP${idx}`).value;
+        const select = document.getElementById(`tweakerT${idx}`);
+        const c = globalData.markets[m];
+        if (!c) return;
+
+        let items = [];
+        if (p === 'flies_3m') items = c.flies_3m || [];
+        else if (p === 'spreads_3m') items = c.spreads_3m || [];
+        else items = c.outrights || [];
+
+        select.innerHTML = items.map((it, i) => {
+          const lbl = it.name || it.code;
+          return `<option value="${i}">${lbl}</option>`;
+        }).join('');
+      });
+    }
+
+    async function runRatioOptimization() {
+      const m1 = document.getElementById('tweakerM1').value;
+      const p1 = document.getElementById('tweakerP1').value;
+      const t1Idx = parseInt(document.getElementById('tweakerT1').value) || 0;
+
+      const m2 = document.getElementById('tweakerM2').value;
+      const p2 = document.getElementById('tweakerP2').value;
+      const t2Idx = parseInt(document.getElementById('tweakerT2').value) || 0;
+
+      const c1 = globalData.markets[m1];
+      const c2 = globalData.markets[m2];
+      if (!c1 || !c2) return;
+
+      const item1 = (c1[p1] || [])[t1Idx] || {};
+      const item2 = (c2[p2] || [])[t2Idx] || {};
+
+      const leg1Name = item1.name || item1.code || `${m1} Leg`;
+      const leg2Name = item2.name || item2.code || `${m2} Leg`;
+
+      try {
+        const res = await fetch('/api/intermarket/ratio/optimize', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            leg1_market: m1,
+            leg1_name: leg1Name,
+            leg2_market: m2,
+            leg2_name: leg2Name
+          })
+        });
+        const ticket = await res.json();
+
+        document.getElementById('ticketLeg1Text').innerHTML = `BUY <strong>${ticket.leg1_qty}</strong> × ${ticket.leg1_market} ${ticket.leg1_name}`;
+        document.getElementById('ticketLeg2Text').innerHTML = `SELL <strong>${ticket.leg2_qty}</strong> × ${ticket.leg2_market} ${ticket.leg2_name}`;
+        document.getElementById('ticketNetDv01').innerText = `$${ticket.net_usd_dv01.toFixed(2)}`;
+        document.getElementById('ticketSpread').innerText = `${ticket.intermarket_spread_bps.toFixed(2)} bps`;
+        document.getElementById('ticketCurvRatio').innerText = `${ticket.curvature_ratio}x`;
+
+        document.getElementById('tweakerDetails1').innerHTML = `
+          <strong>${leg1Name}</strong><br>
+          Synthetic bps: <strong>${item1.synthetic_bps !== undefined ? item1.synthetic_bps : '--'}</strong><br>
+          Exchange Quoted: ${item1.quoted_bps !== undefined ? item1.quoted_bps : '--'} bps<br>
+          Currency DV01: <strong>$${ticket.leg1_dv01_usd.toFixed(2)}</strong> / lot
+        `;
+
+        document.getElementById('tweakerDetails2').innerHTML = `
+          <strong>${leg2Name}</strong><br>
+          Synthetic bps: <strong>${item2.synthetic_bps !== undefined ? item2.synthetic_bps : '--'}</strong><br>
+          Exchange Quoted: ${item2.quoted_bps !== undefined ? item2.quoted_bps : '--'} bps<br>
+          Currency DV01: <strong>$${ticket.leg2_dv01_usd.toFixed(2)}</strong> / lot
+        `;
+      } catch (err) {
+        console.error("Ratio error:", err);
+      }
+    }
+
+    // ─── TAB 4: MARKET DEPTH TABLES ───
+    function renderDepthTables() {
+      if (!globalData) return;
+      const m = document.getElementById('tablesMarket').value;
+      const c = globalData.markets[m];
+      if (!c) return;
+
+      // 1. Outrights
+      const tO = document.getElementById('tableOutrights').querySelector('tbody');
+      tO.innerHTML = (c.outrights || []).map(o => `
+        <tr>
+          <td><strong>${o.code}</strong></td>
+          <td style="color:#64748b;">${o.instrument_id}</td>
+          <td>${o.bid.toFixed(4)}</td>
+          <td>${o.ask.toFixed(4)}</td>
+          <td style="color:#38bdf8;font-weight:700;">${o.vwap.toFixed(4)}</td>
+          <td style="color:#00d97e;font-weight:700;">${o.rate.toFixed(3)}%</td>
+          <td>${o.volume ? o.volume.toLocaleString() : '--'}</td>
+        </tr>
+      `).join('');
+
+      // 2. Spreads
+      const tS = document.getElementById('tableSpreads').querySelector('tbody');
+      tS.innerHTML = (c.spreads_3m || []).map(s => {
+        const b = s.basis_bps;
+        const bCls = b > 0.05 ? 'basis-pos' : (b < -0.05 ? 'basis-neg' : 'basis-zero');
+        return `
+          <tr>
+            <td><strong>${s.name}</strong></td>
+            <td style="color:#60a5fa;font-weight:700;">${s.synthetic_bps.toFixed(2)}</td>
+            <td>${s.quoted_bps !== null && s.quoted_bps !== undefined ? s.quoted_bps.toFixed(2) : '--'}</td>
+            <td><span class="basis-tag ${bCls}">${b !== null ? (b > 0 ? '+' : '') + b.toFixed(2) : '--'}</span></td>
+            <td>${s.quoted_bid !== null ? `${s.quoted_bid.toFixed(2)} / ${s.quoted_ask.toFixed(2)}` : '--'}</td>
+            <td>${s.volume ? s.volume.toLocaleString() : '--'}</td>
+          </tr>
+        `;
+      }).join('');
+
+      // 3. Flies
+      const tF = document.getElementById('tableFlies').querySelector('tbody');
+      tF.innerHTML = (c.flies_3m || []).map(f => {
+        const b = f.basis_bps;
+        const bCls = b > 0.05 ? 'basis-pos' : (b < -0.05 ? 'basis-neg' : 'basis-zero');
+        return `
+          <tr>
+            <td><strong>${f.name}</strong></td>
+            <td style="color:#c084fc;font-weight:700;">${f.synthetic_bps.toFixed(2)}</td>
+            <td>${f.quoted_bps !== null && f.quoted_bps !== undefined ? f.quoted_bps.toFixed(2) : '--'}</td>
+            <td><span class="basis-tag ${bCls}">${b !== null ? (b > 0 ? '+' : '') + b.toFixed(2) : '--'}</span></td>
+            <td>${f.quoted_bid !== null ? `${f.quoted_bid.toFixed(2)} / ${f.quoted_ask.toFixed(2)}` : '--'}</td>
+            <td>${f.volume ? f.volume.toLocaleString() : '--'}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+
+    // ─── 5. ADVANCED MATHEMATICAL CURVE LAB ENGINE ───
+    function renderMathLab() {
+      if (!globalData) return;
+      const m1 = document.getElementById('mathMkt1').value || 'USD';
+      const m2 = document.getElementById('mathMkt2').value || 'EUR';
+      const horizon = document.getElementById('mathHorizon').value || 'Dec26';
+
+      let startIdx = ALL_IMM_QUARTERS.indexOf(horizon.toUpperCase());
+      if (startIdx === -1 || startIdx > ALL_IMM_QUARTERS.length - 5) startIdx = 0;
+      const activeIMM = ALL_IMM_QUARTERS.slice(startIdx, startIdx + 5);
+      const xLabels = activeIMM.map(t => t.charAt(0) + t.slice(1, 3).toLowerCase() + t.slice(3));
+
+      // Extract market data
+      function getMktStrip(m) {
+        const c = globalData.markets[m];
+        if (!c) return null;
+        const oDict = {};
+        (c.outrights || []).forEach(o => { oDict[o.code.toUpperCase()] = o; });
+        const prices = activeIMM.map(q => Object.entries(oDict).find(([k, v]) => k.includes(q))?.[1]?.vwap ?? 95.0);
+        const p0 = prices[0];
+        const moves = prices.map(p => Number(((p0 - p) * 100).toFixed(2)));
+        const rates = prices.map(p => Number((100 - p).toFixed(3)));
+        const spreads = [];
+        for (let i = 0; i < 4; i++) spreads.push(Number((moves[i+1] - moves[i]).toFixed(2)));
+        const flies = [];
+        for (let i = 0; i < 3; i++) flies.push(Number((spreads[i] - spreads[i+1]).toFixed(2)));
+        const G = Number((flies[0] + 2*flies[1] + flies[2]).toFixed(2));
+        const triad = [
+          Number((4*flies[0] - G).toFixed(2)),
+          Number((4*flies[1] - G).toFixed(2)),
+          Number((4*flies[2] - G).toFixed(2))
+        ];
+        const bendEnergy = Number((flies[0]**2 + flies[1]**2 + flies[2]**2).toFixed(1));
+        const poly = fitPolynomialCoeffs([0, 1, 2, 3, 4], moves, 3);
+        return { prices, rates, moves, spreads, flies, G, triad, bendEnergy, poly, meta: c.meta };
+      }
+
+      const d1 = getMktStrip(m1);
+      const d2 = getMktStrip(m2);
+      if (!d1 || !d2) return;
+
+      // 1. DV01 and Lot Sizing
+      const dv01Table = { USD: 25.0, EUR: 27.0, GBP: 32.0, CHF: 28.5 };
+      const dv1 = dv01Table[m1] || 25.0;
+      const dv2 = dv01Table[m2] || 25.0;
+      const ratio = dv2 / dv1;
+      let lotStr = `${(ratio * 25).toFixed(0)} ${m1} : 25 ${m2}`;
+      if (m1 === 'USD' && m2 === 'EUR') lotStr = "27 SR3 : 25 Euribor (≈ 5 : 4.6)";
+      else if (m1 === 'USD' && m2 === 'GBP') lotStr = "32 SR3 : 25 SONIA (≈ 9 : 7)";
+      else if (m1 === 'USD' && m2 === 'CHF') lotStr = "57 SR3 : 50 SARON (≈ 8 : 7)";
+
+      document.getElementById('mathStatLotRatio').innerText = lotStr;
+      document.getElementById('mathStatDv01Sub').innerText = `${m1} $${dv1.toFixed(2)}/bp | ${m2} $${dv2.toFixed(2)}/bp`;
+
+      // 2. Lead/Lag Turning Point (Roots of dy/dx = 0)
+      function getPeakX(poly) {
+        const c3 = poly.coeffs[3] || 0.001;
+        const c2 = poly.coeffs[2] || 0.001;
+        const c1 = poly.coeffs[1] || 1.0;
+        const disc = (2*c2)**2 - 4*(3*c3)*c1;
+        if (disc < 0) return 3.5;
+        const r1 = (-2*c2 - Math.sqrt(disc)) / (6*c3);
+        const r2 = (-2*c2 + Math.sqrt(disc)) / (6*c3);
+        const valid = [r1, r2].filter(r => r >= 0 && r <= 8);
+        return valid.length > 0 ? Math.min(...valid) : 3.5;
+      }
+      const xPeak1 = getPeakX(d1.poly);
+      const xPeak2 = getPeakX(d2.poly);
+      const daysLead = Math.round((xPeak2 - xPeak1) * 91.25);
+      const leadSign = daysLead >= 0 ? '+' : '';
+      document.getElementById('mathStatLeadLag').innerText = `${leadSign}${daysLead} Days (${m1} ${daysLead >= 0 ? 'Leads' : 'Lags'})`;
+      document.getElementById('mathStatPeakSub').innerText = `${m1} x*=${xPeak1.toFixed(2)} | ${m2} x*=${xPeak2.toFixed(2)}`;
+
+      // 3. Bending Energy
+      document.getElementById('mathStatBending').innerText = `${d1.bendEnergy} vs ${d2.bendEnergy} bp²`;
+      const bendRatio = (d1.bendEnergy / Math.max(1, d2.bendEnergy)).toFixed(2);
+      document.getElementById('mathStatBendingSub').innerText = `${m1} ${bendRatio}× mechanical strain energy`;
+
+      // 4. Mahalanobis Z-Score
+      const gapTriad3 = Number((d1.triad[2] - d2.triad[2]).toFixed(2));
+      const zScore = Math.abs(gapTriad3 / 2.85).toFixed(2);
+      document.getElementById('mathStatZScore').innerText = `Z = ${zScore} σ (${gapTriad3 > 0 ? '+' : ''}${gapTriad3} bp)`;
+      document.getElementById('mathStatZSub').innerText = zScore >= 2.0 ? 'Statistical Anomaly Triggered (>2σ)' : 'Within Expected Dispersion';
+
+      // 5. Plot Panel 1: Hamiltonian Phase Portrait
+      const denseN = 80;
+      const xDense = [];
+      for (let i = 0; i <= denseN; i++) xDense.push(i * (4.0 / denseN));
+
+      function getPhaseSeries(poly) {
+        const c = poly.coeffs;
+        const yP = [];
+        const yPP = [];
+        for (const x of xDense) {
+          const yp = 3*c[3]*x**2 + 2*c[2]*x + c[1];
+          const ypp = 6*c[3]*x + 2*c[2];
+          yP.push(Number(yp.toFixed(2)));
+          yPP.push(Number(ypp.toFixed(2)));
+        }
+        return { yP, yPP };
+      }
+
+      const p1 = getPhaseSeries(d1.poly);
+      const p2 = getPhaseSeries(d2.poly);
+
+      const phaseTraces = [
+        {
+          x: p1.yP,
+          y: p1.yPP,
+          name: `${m1} Phase Trajectory`,
+          mode: 'lines',
+          line: { color: MARKET_COLORS[m1] || '#00d97e', width: 3 },
+          hovertemplate: `<b>${m1}</b><br>Slope y': %{x:.2f} bp/qtr<br>Curv y'': %{y:.2f} bp/qtr²<extra></extra>`
+        },
+        {
+          x: p2.yP,
+          y: p2.yPP,
+          name: `${m2} Phase Trajectory`,
+          mode: 'lines',
+          line: { color: MARKET_COLORS[m2] || '#38bdf8', width: 3 },
+          hovertemplate: `<b>${m2}</b><br>Slope y': %{x:.2f} bp/qtr<br>Curv y'': %{y:.2f} bp/qtr²<extra></extra>`
+        },
+        {
+          x: [0, 0],
+          y: [-25, 25],
+          name: 'Zero Slope (Peak)',
+          mode: 'lines',
+          line: { dash: 'dash', color: '#64748b', width: 1.5 }
+        },
+        {
+          x: [-25, 45],
+          y: [0, 0],
+          name: 'Zero Curvature (Inflection)',
+          mode: 'lines',
+          line: { dash: 'dot', color: '#64748b', width: 1.5 }
+        }
+      ];
+
+      const phaseLayout = {
+        paper_bgcolor: '#0d1424',
+        plot_bgcolor: '#0a0e17',
+        title: { text: `<b>Phase Space: Slope Momentum vs Curvature Restoring Force</b>`, font: { color: '#f1f5f9', size: 12 } },
+        xaxis: { title: { text: "Local Slope y'(x) = dy/dx (bp/quarter)", font: { color: '#94a3b8', size: 10 } }, gridcolor: '#1a2333', tickfont: { color: '#94a3b8', size: 10 } },
+        yaxis: { title: { text: "Curvature Force y''(x) = d²y/dx² (bp/qtr²)", font: { color: '#94a3b8', size: 10 } }, gridcolor: '#1a2333', tickfont: { color: '#94a3b8', size: 10 } },
+        legend: { font: { color: '#94a3b8', size: 9 }, orientation: 'h', y: -0.28 },
+        margin: { l: 50, r: 25, t: 30, b: 50 },
+        hovermode: 'closest'
+      };
+      Plotly.newPlot('plotPhaseSpace', phaseTraces, phaseLayout, { responsive: true, displayModeBar: false });
+
+      // 6. Plot Panel 2: Curvature Departure Triad Bar Chart
+      const triadLabels = ['Δ₁ (Front Fly)', 'Δ₂ (Center Double Fly)', 'Δ₃ (Back / Jun27)'];
+      const triadTraces = [
+        {
+          x: triadLabels,
+          y: d1.triad,
+          name: `${m1} Triad`,
+          type: 'bar',
+          marker: { color: MARKET_COLORS[m1] || '#00d97e' }
+        },
+        {
+          x: triadLabels,
+          y: d2.triad,
+          name: `${m2} Triad`,
+          type: 'bar',
+          marker: { color: MARKET_COLORS[m2] || '#38bdf8' }
+        }
+      ];
+
+      const triadLayout = {
+        paper_bgcolor: '#0d1424',
+        plot_bgcolor: '#0a0e17',
+        barmode: 'group',
+        title: { text: `<b>Curvature Triad (4 × 3M Fly - 6M Fly) vs Even Share</b>`, font: { color: '#f1f5f9', size: 12 } },
+        xaxis: { gridcolor: '#1a2333', tickfont: { color: '#94a3b8', size: 10 } },
+        yaxis: { title: { text: "Departure (bp)", font: { color: '#94a3b8', size: 10 } }, gridcolor: '#1a2333', tickfont: { color: '#94a3b8', size: 10 } },
+        legend: { font: { color: '#94a3b8', size: 9 }, orientation: 'h', y: -0.28 },
+        margin: { l: 50, r: 25, t: 30, b: 50 }
+      };
+      Plotly.newPlot('plotCurvTriad', triadTraces, triadLayout, { responsive: true, displayModeBar: false });
+
+      // 7. Panel 3: Discrete Laplacian Matrix Visualizer
+      const lapDiv = document.getElementById('laplacianContent');
+      if (lapDiv) {
+        const invCheck1 = (d1.triad[0] + 2*d1.triad[1] + d1.triad[2]).toFixed(2);
+        const invCheck2 = (d2.triad[0] + 2*d2.triad[1] + d2.triad[2]).toFixed(2);
+        lapDiv.innerHTML = `
+          <div style="background:#111a2e; padding:8px; border-radius:6px; border:1px solid #1f293d; margin-bottom:8px;">
+            <div style="color:#38bdf8; font-weight:700; margin-bottom:4px;">Discrete 1D Laplacian Operator L · p = F:</div>
+            <div style="color:#94a3b8; font-size:10px; line-height:1.4;">
+              [F₁]   [  1  -2   1   0   0 ] [ p(T₀) ]<br/>
+              [F₂] = [  0   1  -2   1   0 ] · [ p(T₁) ]<br/>
+              [F₃]   [  0   0   1  -2   1 ] [ p(T₂) ]
+            </div>
+          </div>
+          <div style="background:#111a2e; padding:8px; border-radius:6px; border:1px solid #1f293d; margin-bottom:8px;">
+            <div style="color:#c084fc; font-weight:700; margin-bottom:4px;">Single-Contract Impulse Shock Signature:</div>
+            <div style="color:#94a3b8; font-size:10px;">
+              A localized +1 bp order flow shock on belly contract T₂ produces signature: 
+              <span style="color:#00d97e; font-weight:700;">[+1 bp, -2 bp, +1 bp]</span> in [F₁, F₂, F₃].
+            </div>
+          </div>
+          <div style="background:#111a2e; padding:8px; border-radius:6px; border:1px solid #1f293d;">
+            <div style="color:#f59e0b; font-weight:700; margin-bottom:4px;">Zero-Sum Invariant Check (Δ₁ + 2Δ₂ + Δ₃ = 0):</div>
+            <div style="display:flex; justify-content:space-between; font-size:10px; color:#fff;">
+              <span>${m1}: ${d1.triad[0]} + 2(${d1.triad[1]}) + ${d1.triad[2]} = <strong>${invCheck1} bp</strong></span>
+              <span>${m2}: ${d2.triad[0]} + 2(${d2.triad[1]}) + ${d2.triad[2]} = <strong>${invCheck2} bp</strong></span>
+            </div>
+          </div>
+        `;
+      }
+
+      // 8. Panel 4: Actionable Focus Areas
+      const focusDiv = document.getElementById('mathFocusContent');
+      if (focusDiv) {
+        const spreadGapFront = Number((d1.spreads[0] - d2.spreads[0]).toFixed(2));
+        const spreadGapBack = Number((d1.spreads[3] - d2.spreads[3]).toFixed(2));
+        const curvPkgGap = Number((d1.triad[2] - d2.triad[2]).toFixed(2));
+
+        focusDiv.innerHTML = `
+          <div style="background:#111a2e; padding:8px 10px; border-radius:6px; border-left:3px solid #f59e0b; margin-bottom:8px; font-size:11px;">
+            <div style="display:flex; justify-content:space-between; font-weight:700; color:#fff;">
+              <span>Area 1: Front Slope Discrepancy (${activeIMM[0]}→${activeIMM[1]})</span>
+              <span style="color:#f59e0b;">Gap: ${spreadGapFront > 0 ? '+' : ''}${spreadGapFront} bp</span>
+            </div>
+            <div style="color:#94a3b8; font-size:10px; margin-top:3px;">
+              ${m1} spread (+${d1.spreads[0]} bp) is steeper than ${m2} (+${d2.spreads[0]} bp). Mathematical recommendation: 
+              <strong style="color:#38bdf8;">Short ${m1} spread / Long ${m2} spread</strong> in ${lotStr}.
+            </div>
+          </div>
+
+          <div style="background:#111a2e; padding:8px 10px; border-radius:6px; border-left:3px solid #ef4444; margin-bottom:8px; font-size:11px;">
+            <div style="display:flex; justify-content:space-between; font-weight:700; color:#fff;">
+              <span>Area 2: Back Inversion Valley (${activeIMM[3]}→${activeIMM[4]})</span>
+              <span style="color:#ef4444;">Gap: ${spreadGapBack > 0 ? '+' : ''}${spreadGapBack} bp</span>
+            </div>
+            <div style="color:#94a3b8; font-size:10px; margin-top:3px;">
+              ${m1} (${d1.spreads[3]} bp) is over-inverted vs ${m2} (${d2.spreads[3]} bp). 
+              Mathematical recommendation: <strong style="color:#00d97e;">Long ${m1} back spread / Short ${m2} back spread</strong> (Un-inversion convergence).
+            </div>
+          </div>
+
+          <div style="background:#111a2e; padding:8px 10px; border-radius:6px; border-left:3px solid #00d97e; font-size:11px;">
+            <div style="display:flex; justify-content:space-between; font-weight:700; color:#fff;">
+              <span>Area 3: Curvature Arbitrage Package (-T₀ + 6·T₂ - 8·T₃ + 3·T₄)</span>
+              <span style="color:#00d97e;">Entry: ${curvPkgGap > 0 ? '+' : ''}${curvPkgGap} bp</span>
+            </div>
+            <div style="color:#94a3b8; font-size:10px; margin-top:3px;">
+              100% Duration & Slope Neutral. Sizing: <strong>Buy 20 ${m1} flies vs Sell 18 ${m2} flies</strong> ($120/bp gap sensitivity). Target: Mean-reversion to 0 bp.
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    // ─── INITIALIZATION ───
+    window.addEventListener('DOMContentLoaded', () => {
+      fetchData();
+      updateRefreshInterval();
+    });
+  </script>
+</body>
+</html>
