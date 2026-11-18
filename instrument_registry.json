@@ -1,0 +1,5186 @@
+[
+  {
+    "name": "SR3 Mar 2026",
+    "raw_code": "SR3H26",
+    "code": "SFRH26",
+    "id": "2264814074172926158",
+    "type": "SR3",
+    "kind": "outright"
+  },
+  {
+    "name": "SR3 Jun26",
+    "raw_code": "SR3M26",
+    "code": "SFRM26",
+    "id": "2518875037886751798",
+    "type": "SR3",
+    "kind": "outright"
+  },
+  {
+    "name": "SR3 Sep26",
+    "raw_code": "SR3U26",
+    "code": "SFRU26",
+    "id": "10056698436755136015",
+    "type": "SR3",
+    "kind": "outright"
+  },
+  {
+    "name": "SR3 Dec26",
+    "raw_code": "SR3Z26",
+    "code": "SFRZ26",
+    "id": "3761391845186607269",
+    "type": "SR3",
+    "kind": "outright"
+  },
+  {
+    "name": "SR3 Mar27",
+    "raw_code": "SR3H27",
+    "code": "SFRH27",
+    "id": "8786029629332899618",
+    "type": "SR3",
+    "kind": "outright"
+  },
+  {
+    "name": "SR3 Jun27",
+    "raw_code": "SR3M27",
+    "code": "SFRM27",
+    "id": "6064266935547558467",
+    "type": "SR3",
+    "kind": "outright"
+  },
+  {
+    "name": "SR3 Sep27",
+    "raw_code": "SR3U27",
+    "code": "SFRU27",
+    "id": "10582686653072545408",
+    "type": "SR3",
+    "kind": "outright"
+  },
+  {
+    "name": "SR3 Dec27",
+    "raw_code": "SR3Z27",
+    "code": "SFRZ27",
+    "id": "17925935412019565973",
+    "type": "SR3",
+    "kind": "outright"
+  },
+  {
+    "name": "SR3 Mar28",
+    "raw_code": "SR3H28",
+    "code": "SFRH28",
+    "id": "3822227243959035490",
+    "type": "SR3",
+    "kind": "outright"
+  },
+  {
+    "name": "SR3 Jun28",
+    "raw_code": "SR3M28",
+    "code": "SFRM28",
+    "id": "12741923103719175711",
+    "type": "SR3",
+    "kind": "outright"
+  },
+  {
+    "name": "SR3 Sep28",
+    "raw_code": "SR3U28",
+    "code": "SFRU28",
+    "id": "16673841811510079166",
+    "type": "SR3",
+    "kind": "outright"
+  },
+  {
+    "name": "SR3 Dec28",
+    "raw_code": "SR3Z28",
+    "code": "SFRZ28",
+    "id": "7359239446017790966",
+    "type": "SR3",
+    "kind": "outright"
+  },
+  {
+    "name": "SR3 Mar29",
+    "raw_code": "SR3H29",
+    "code": "SFRH29",
+    "id": "4211986922965728750",
+    "type": "SR3",
+    "kind": "outright"
+  },
+  {
+    "name": "SR3 Jun29",
+    "raw_code": "SR3M29",
+    "code": "SFRM29",
+    "id": "11432813735419224277",
+    "type": "SR3",
+    "kind": "outright"
+  },
+  {
+    "name": "SR3 Sep29",
+    "raw_code": "SR3U29",
+    "code": "SFRU29",
+    "id": "9909662404632894188",
+    "type": "SR3",
+    "kind": "outright"
+  },
+  {
+    "name": "SR3 Dec29",
+    "raw_code": "SR3Z29",
+    "code": "SFRZ29",
+    "id": "12350987571259131621",
+    "type": "SR3",
+    "kind": "outright"
+  },
+  {
+    "name": "SR3 Mar30",
+    "raw_code": "SR3H30",
+    "code": "SFRH30",
+    "id": "11906745505255579027",
+    "type": "SR3",
+    "kind": "outright"
+  },
+  {
+    "name": "SR3 Jun30",
+    "raw_code": "SR3M30",
+    "code": "SFRM30",
+    "id": "8236602463566917986",
+    "type": "SR3",
+    "kind": "outright"
+  },
+  {
+    "name": "SR3 Sep30",
+    "raw_code": "SR3U30",
+    "code": "SFRU30",
+    "id": "13762141828290349231",
+    "type": "SR3",
+    "kind": "outright"
+  },
+  {
+    "name": "SR3 Dec30",
+    "raw_code": "SR3Z30",
+    "code": "SFRZ30",
+    "id": "5899392161601857848",
+    "type": "SR3",
+    "kind": "outright"
+  },
+  {
+    "name": "SR3 Mar31",
+    "raw_code": "SR3H31",
+    "code": "SFRH31",
+    "id": "1445113220851198574",
+    "type": "SR3",
+    "kind": "outright"
+  },
+  {
+    "name": "SR3 Jun31",
+    "raw_code": "SR3M31",
+    "code": "SFRM31",
+    "id": "9218462374027862637",
+    "type": "SR3",
+    "kind": "outright"
+  },
+  {
+    "name": "SR3 Sep31",
+    "raw_code": "SR3U31",
+    "code": "SFRU31",
+    "id": "8069871726958016254",
+    "type": "SR3",
+    "kind": "outright"
+  },
+  {
+    "name": "SR3 Dec31",
+    "raw_code": "SR3Z31",
+    "code": "SFRZ31",
+    "id": "2798056836424267605",
+    "type": "SR3",
+    "kind": "outright"
+  },
+  {
+    "name": "SR3 Mar32",
+    "raw_code": "SR3H32",
+    "code": "SFRH32",
+    "id": "11954488268734512343",
+    "type": "SR3",
+    "kind": "outright"
+  },
+  {
+    "name": "SR3 Jun32",
+    "raw_code": "SR3M32",
+    "code": "SFRM32",
+    "id": "6204560621208996869",
+    "type": "SR3",
+    "kind": "outright"
+  },
+  {
+    "name": "SR3 Sep32",
+    "raw_code": "SR3U32",
+    "code": "SFRU32",
+    "id": "17212894833985105419",
+    "type": "SR3",
+    "kind": "outright"
+  },
+  {
+    "name": "SR3 Dec32",
+    "raw_code": "SR3Z32",
+    "code": "SFRZ32",
+    "id": "10241537521014524327",
+    "type": "SR3",
+    "kind": "outright"
+  },
+  {
+    "name": "SR3 Mar33",
+    "raw_code": "SR3H33",
+    "code": "SFRH33",
+    "id": "7360078977550351458",
+    "type": "SR3",
+    "kind": "outright"
+  },
+  {
+    "name": "SR3 Jun 2033",
+    "raw_code": "SR3M33",
+    "code": "SFRM33",
+    "id": "5041065051227808850",
+    "type": "SR3",
+    "kind": "outright"
+  },
+  {
+    "name": "SR3 Sep 2033",
+    "raw_code": "SR3U33",
+    "code": "SFRU33",
+    "id": "9178350052927455015",
+    "type": "SR3",
+    "kind": "outright"
+  },
+  {
+    "name": "SR3 Dec 2033",
+    "raw_code": "SR3Z33",
+    "code": "SFRZ33",
+    "id": "16459884184739629382",
+    "type": "SR3",
+    "kind": "outright"
+  },
+  {
+    "name": "SR3 Mar 2034",
+    "raw_code": "SR3H34",
+    "code": "SFRH34",
+    "id": "13324951648701379285",
+    "type": "SR3",
+    "kind": "outright"
+  },
+  {
+    "name": "SR3 Jun 2034",
+    "raw_code": "SR3M34",
+    "code": "SFRM34",
+    "id": "9851658394070976661",
+    "type": "SR3",
+    "kind": "outright"
+  },
+  {
+    "name": "SR3 Sep 2034",
+    "raw_code": "SR3U34",
+    "code": "SFRU34",
+    "id": "12908187035571820810",
+    "type": "SR3",
+    "kind": "outright"
+  },
+  {
+    "name": "SR3 Dec 2034",
+    "raw_code": "SR3Z34",
+    "code": "SFRZ34",
+    "id": "5896245512282895151",
+    "type": "SR3",
+    "kind": "outright"
+  },
+  {
+    "name": "SR3 Mar 2035",
+    "raw_code": "SR3H35",
+    "code": "SFRH35",
+    "id": "2796187793176174532",
+    "type": "SR3",
+    "kind": "outright"
+  },
+  {
+    "name": "SR3 Jun 2035",
+    "raw_code": "SR3M35",
+    "code": "SFRM35",
+    "id": "2367818401900168421",
+    "type": "SR3",
+    "kind": "outright"
+  },
+  {
+    "name": "SR3 Sep 2035",
+    "raw_code": "SR3U35",
+    "code": "SFRU35",
+    "id": "17876686184322071202",
+    "type": "SR3",
+    "kind": "outright"
+  },
+  {
+    "name": "ZQ May26",
+    "raw_code": "ZQK26",
+    "code": "MAY26",
+    "id": "13509294969420576563",
+    "type": "ZQ",
+    "kind": "outright"
+  },
+  {
+    "name": "ZQ Jun26",
+    "raw_code": "ZQM26",
+    "code": "JUN26",
+    "id": "1173228227003061405",
+    "type": "ZQ",
+    "kind": "outright"
+  },
+  {
+    "name": "ZQ Jul26",
+    "raw_code": "ZQN26",
+    "code": "JUL26",
+    "id": "11804036294809825783",
+    "type": "ZQ",
+    "kind": "outright"
+  },
+  {
+    "name": "ZQ Aug26",
+    "raw_code": "ZQQ26",
+    "code": "AUG26",
+    "id": "8298997090319007208",
+    "type": "ZQ",
+    "kind": "outright"
+  },
+  {
+    "name": "ZQ Sep26",
+    "raw_code": "ZQU26",
+    "code": "SEP26",
+    "id": "7551864584289735302",
+    "type": "ZQ",
+    "kind": "outright"
+  },
+  {
+    "name": "ZQ Oct26",
+    "raw_code": "ZQV26",
+    "code": "OCT26",
+    "id": "7772853716872034867",
+    "type": "ZQ",
+    "kind": "outright"
+  },
+  {
+    "name": "ZQ Nov26",
+    "raw_code": "ZQX26",
+    "code": "NOV26",
+    "id": "13208077381270415860",
+    "type": "ZQ",
+    "kind": "outright"
+  },
+  {
+    "name": "ZQ Dec26",
+    "raw_code": "ZQZ26",
+    "code": "DEC26",
+    "id": "14618707670258439481",
+    "type": "ZQ",
+    "kind": "outright"
+  },
+  {
+    "name": "ZQ Jan27",
+    "raw_code": "ZQF27",
+    "code": "JAN27",
+    "id": "10173148798524565647",
+    "type": "ZQ",
+    "kind": "outright"
+  },
+  {
+    "name": "ZQ Feb27",
+    "raw_code": "ZQG27",
+    "code": "FEB27",
+    "id": "880647980586631019",
+    "type": "ZQ",
+    "kind": "outright"
+  },
+  {
+    "name": "ZQ Mar27",
+    "raw_code": "ZQH27",
+    "code": "MAR27",
+    "id": "887816061348387785",
+    "type": "ZQ",
+    "kind": "outright"
+  },
+  {
+    "name": "ZQ Apr27",
+    "raw_code": "ZQJ27",
+    "code": "APR27",
+    "id": "410715719020149495",
+    "type": "ZQ",
+    "kind": "outright"
+  },
+  {
+    "name": "ZQ May27",
+    "raw_code": "ZQK27",
+    "code": "MAY27",
+    "id": "6196921965222780943",
+    "type": "ZQ",
+    "kind": "outright"
+  },
+  {
+    "name": "ZQ Jun27",
+    "raw_code": "ZQM27",
+    "code": "JUN27",
+    "id": "690279264195766323",
+    "type": "ZQ",
+    "kind": "outright"
+  },
+  {
+    "name": "ZQ Jul27",
+    "raw_code": "ZQN27",
+    "code": "JUL27",
+    "id": "2334564383434255324",
+    "type": "ZQ",
+    "kind": "outright"
+  },
+  {
+    "name": "ZQ Aug27",
+    "raw_code": "ZQQ27",
+    "code": "AUG27",
+    "id": "11729320422875922731",
+    "type": "ZQ",
+    "kind": "outright"
+  },
+  {
+    "name": "ZQ Sep27",
+    "raw_code": "ZQU27",
+    "code": "SEP27",
+    "id": "3324241383996491464",
+    "type": "ZQ",
+    "kind": "outright"
+  },
+  {
+    "name": "ZQ Oct27",
+    "raw_code": "ZQV27",
+    "code": "OCT27",
+    "id": "3627732870844351558",
+    "type": "ZQ",
+    "kind": "outright"
+  },
+  {
+    "name": "ZQ Nov27",
+    "raw_code": "ZQX27",
+    "code": "NOV27",
+    "id": "10620117733411968864",
+    "type": "ZQ",
+    "kind": "outright"
+  },
+  {
+    "name": "ZQ Dec27",
+    "raw_code": "ZQZ27",
+    "code": "DEC27",
+    "id": "696286304630187001",
+    "type": "ZQ",
+    "kind": "outright"
+  },
+  {
+    "name": "SR1 May26",
+    "raw_code": "SR1K26",
+    "code": "SR1:MAY26",
+    "id": "8541084758762950878",
+    "type": "SR1",
+    "kind": "outright"
+  },
+  {
+    "name": "SR1 Jun26",
+    "raw_code": "SR1M26",
+    "code": "SR1:JUN26",
+    "id": "17580263644204615428",
+    "type": "SR1",
+    "kind": "outright"
+  },
+  {
+    "name": "SR1 Jul26 - ZQ Jul26 Inter-Product",
+    "raw_code": "SR1N26",
+    "code": "SR1:JUL26",
+    "id": "251958250236661865",
+    "type": "SR1",
+    "kind": "outright"
+  },
+  {
+    "name": "SR1 Aug26 - ZQ Aug26 Inter-Product",
+    "raw_code": "SR1Q26",
+    "code": "SR1:AUG26",
+    "id": "3787246620537445909",
+    "type": "SR1",
+    "kind": "outright"
+  },
+  {
+    "name": "SR1 Sep26 - ZQ Sep26 Inter-Product",
+    "raw_code": "SR1U26",
+    "code": "SR1:SEP26",
+    "id": "4527157313805673452",
+    "type": "SR1",
+    "kind": "outright"
+  },
+  {
+    "name": "SR1 Oct26 - ZQ Oct26 Inter-Product",
+    "raw_code": "SR1V26",
+    "code": "SR1:OCT26",
+    "id": "12154507094034498637",
+    "type": "SR1",
+    "kind": "outright"
+  },
+  {
+    "name": "SR1 Nov26 - ZQ Nov26 Inter-Product",
+    "raw_code": "SR1X26",
+    "code": "SR1:NOV26",
+    "id": "5119470236208447680",
+    "type": "SR1",
+    "kind": "outright"
+  },
+  {
+    "name": "SR1 Dec26 - ZQ Dec26 Inter-Product",
+    "raw_code": "SR1Z26",
+    "code": "SR1:DEC26",
+    "id": "13078851335309038386",
+    "type": "SR1",
+    "kind": "outright"
+  },
+  {
+    "name": "SR1 Jan27 - ZQ Jan27 Inter-Product",
+    "raw_code": "SR1F27",
+    "code": "SR1:JAN27",
+    "id": "7597510151731391400",
+    "type": "SR1",
+    "kind": "outright"
+  },
+  {
+    "name": "SR1 Feb27 - ZQ Feb27 Inter-Product",
+    "raw_code": "SR1G27",
+    "code": "SR1:FEB27",
+    "id": "7402157535874790260",
+    "type": "SR1",
+    "kind": "outright"
+  },
+  {
+    "name": "SR1 Mar27 - ZQ Mar27 Inter-Product",
+    "raw_code": "SR1H27",
+    "code": "SR1:MAR27",
+    "id": "17007138046782216141",
+    "type": "SR1",
+    "kind": "outright"
+  },
+  {
+    "name": "SR1 Apr27 - ZQ Apr27 Inter-Product",
+    "raw_code": "SR1J27",
+    "code": "SR1:APR27",
+    "id": "8617466471501250173",
+    "type": "SR1",
+    "kind": "outright"
+  },
+  {
+    "name": "SR1 May27 - ZQ May27 Inter-Product",
+    "raw_code": "SR1K27",
+    "code": "SR1:MAY27",
+    "id": "480168149768728059",
+    "type": "SR1",
+    "kind": "outright"
+  },
+  {
+    "name": "SR1 Jun27 - ZQ Jun27 Inter-Product",
+    "raw_code": "SR1M27",
+    "code": "SR1:JUN27",
+    "id": "5657939970180195561",
+    "type": "SR1",
+    "kind": "outright"
+  },
+  {
+    "name": "SR1 Jul27 - ZQ Jul27 Inter-Product",
+    "raw_code": "SR1N27",
+    "code": "SR1:JUL27",
+    "id": "4010232106506488948",
+    "type": "SR1",
+    "kind": "outright"
+  },
+  {
+    "name": "SR1 Aug27 - ZQ Aug27 Inter-Product",
+    "raw_code": "SR1Q27",
+    "code": "SR1:AUG27",
+    "id": "14768945144009265459",
+    "type": "SR1",
+    "kind": "outright"
+  },
+  {
+    "name": "SR1 Sep27 - ZQ Sep27 Inter-Product",
+    "raw_code": "SR1U27",
+    "code": "SR1:SEP27",
+    "id": "11643226899376081414",
+    "type": "SR1",
+    "kind": "outright"
+  },
+  {
+    "name": "SR1 Oct27 - ZQ Oct27 Inter-Product",
+    "raw_code": "SR1V27",
+    "code": "SR1:OCT27",
+    "id": "10431527069241159433",
+    "type": "SR1",
+    "kind": "outright"
+  },
+  {
+    "name": "SR1 Nov27 - ZQ Nov27 Inter-Product",
+    "raw_code": "SR1X27",
+    "code": "SR1:NOV27",
+    "id": "5978889064509525830",
+    "type": "SR1",
+    "kind": "outright"
+  },
+  {
+    "name": "SR1 Dec27 - ZQ Dec27 Inter-Product",
+    "raw_code": "SR1Z27",
+    "code": "SR1:DEC27",
+    "id": "17879027016443975613",
+    "type": "SR1",
+    "kind": "outright"
+  },
+  {
+    "name": "SR1 Jan28 - ZQ Jan28 Inter-Product",
+    "raw_code": "SR1F28",
+    "code": "SR1:JAN28",
+    "id": "12074794742753330972",
+    "type": "SR1",
+    "kind": "outright"
+  },
+  {
+    "name": "SR1 Feb28",
+    "raw_code": "SR1G28",
+    "code": "SR1:FEB28",
+    "id": "10241486646796050041",
+    "type": "SR1",
+    "kind": "outright"
+  },
+  {
+    "name": "SR1 Mar28",
+    "raw_code": "SR1H28",
+    "code": "SR1:MAR28",
+    "id": "6487686802813338854",
+    "type": "SR1",
+    "kind": "outright"
+  },
+  {
+    "name": "SR1 Apr28",
+    "raw_code": "SR1J28",
+    "code": "SR1:APR28",
+    "id": "13346310367929210094",
+    "type": "SR1",
+    "kind": "outright"
+  },
+  {
+    "name": "SR1 May28",
+    "raw_code": "SR1K28",
+    "code": "SR1:MAY28",
+    "id": "12251358383342834993",
+    "type": "SR1",
+    "kind": "outright"
+  },
+  {
+    "name": "SR1-ZQ May 2026",
+    "raw_code": "SR1K26-ZQK26",
+    "code": "SR1_ZQ_MAY26",
+    "id": "11041933593641959527",
+    "type": "SR1_ZQ",
+    "kind": "spread"
+  },
+  {
+    "name": "SR1-ZQ Jun 2026",
+    "raw_code": "SR1M26-ZQM26",
+    "code": "SR1_ZQ_JUN26",
+    "id": "5191397520103784040",
+    "type": "SR1_ZQ",
+    "kind": "spread"
+  },
+  {
+    "name": "SR1-ZQ Jul 2026",
+    "raw_code": "SR1N26-ZQN26",
+    "code": "SR1_ZQ_JUL26",
+    "id": "251958250236661865",
+    "type": "SR1_ZQ",
+    "kind": "spread"
+  },
+  {
+    "name": "SR1-ZQ Aug 2026",
+    "raw_code": "SR1Q26-ZQQ26",
+    "code": "SR1_ZQ_AUG26",
+    "id": "3787246620537445909",
+    "type": "SR1_ZQ",
+    "kind": "spread"
+  },
+  {
+    "name": "SR1-ZQ Sep 2026",
+    "raw_code": "SR1U26-ZQU26",
+    "code": "SR1_ZQ_SEP26",
+    "id": "4527157313805673452",
+    "type": "SR1_ZQ",
+    "kind": "spread"
+  },
+  {
+    "name": "SR1-ZQ Oct 2026",
+    "raw_code": "SR1V26-ZQV26",
+    "code": "SR1_ZQ_OCT26",
+    "id": "12154507094034498637",
+    "type": "SR1_ZQ",
+    "kind": "spread"
+  },
+  {
+    "name": "SR1-ZQ Nov 2026",
+    "raw_code": "SR1X26-ZQX26",
+    "code": "SR1_ZQ_NOV26",
+    "id": "5119470236208447680",
+    "type": "SR1_ZQ",
+    "kind": "spread"
+  },
+  {
+    "name": "SR1-ZQ Dec 2026",
+    "raw_code": "SR1Z26-ZQZ26",
+    "code": "SR1_ZQ_DEC26",
+    "id": "13078851335309038386",
+    "type": "SR1_ZQ",
+    "kind": "spread"
+  },
+  {
+    "name": "SR1-ZQ Jan 2027",
+    "raw_code": "SR1F27-ZQF27",
+    "code": "SR1_ZQ_JAN27",
+    "id": "7597510151731391400",
+    "type": "SR1_ZQ",
+    "kind": "spread"
+  },
+  {
+    "name": "SR1-ZQ Feb 2027",
+    "raw_code": "SR1G27-ZQG27",
+    "code": "SR1_ZQ_FEB27",
+    "id": "7402157535874790260",
+    "type": "SR1_ZQ",
+    "kind": "spread"
+  },
+  {
+    "name": "SR1-ZQ Mar 2027",
+    "raw_code": "SR1H27-ZQH27",
+    "code": "SR1_ZQ_MAR27",
+    "id": "17007138046782216141",
+    "type": "SR1_ZQ",
+    "kind": "spread"
+  },
+  {
+    "name": "SR1-ZQ Apr 2027",
+    "raw_code": "SR1J27-ZQJ27",
+    "code": "SR1_ZQ_APR27",
+    "id": "8617466471501250173",
+    "type": "SR1_ZQ",
+    "kind": "spread"
+  },
+  {
+    "name": "SR1-ZQ Jun 2027",
+    "raw_code": "SR1M27-ZQM27",
+    "code": "SR1_ZQ_JUN27",
+    "id": "480168149768728059",
+    "type": "SR1_ZQ",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar26-Jun26 Calendar",
+    "raw_code": "SR3H26-M26",
+    "code": "SFRH26-SFRM26",
+    "id": "564618620093690082",
+    "type": "SR3_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26-Sep26 Calendar",
+    "raw_code": "SR3M26-U26",
+    "code": "SFRM26-SFRU26",
+    "id": "10613911634636906096",
+    "type": "SR3_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep26-Dec26 Calendar",
+    "raw_code": "SR3U26-Z26",
+    "code": "SFRU26-SFRZ26",
+    "id": "10538177603741347940",
+    "type": "SR3_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec26-Mar27 Calendar",
+    "raw_code": "SR3Z26-H27",
+    "code": "SFRZ26-SFRH27",
+    "id": "15292306285496321895",
+    "type": "SR3_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar27-Jun27 Calendar",
+    "raw_code": "SR3H27-M27",
+    "code": "SFRH27-SFRM27",
+    "id": "9440282357390122061",
+    "type": "SR3_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "SR1 May26-Jun26 Calendar",
+    "raw_code": "SR1K26-M26",
+    "code": "SR1:MAY26-SR1:JUN26",
+    "id": "15745885509306629599",
+    "type": "SR1_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "SR1 Jun26-Jul26 Calendar",
+    "raw_code": "SR1M26-N26",
+    "code": "SR1:JUN26-SR1:JUL26",
+    "id": "15767378803720753279",
+    "type": "SR1_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "SR1 Jul26-Aug26 Calendar",
+    "raw_code": "SR1N26-Q26",
+    "code": "SR1:JUL26-SR1:AUG26",
+    "id": "4015656432059122413",
+    "type": "SR1_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "SR1 Aug26-Sep26 Calendar",
+    "raw_code": "SR1Q26-U26",
+    "code": "SR1:AUG26-SR1:SEP26",
+    "id": "7718124655953422407",
+    "type": "SR1_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "SR1 Sep26-Oct26 Calendar",
+    "raw_code": "SR1U26-V26",
+    "code": "SR1:SEP26-SR1:OCT26",
+    "id": "5492723043307110541",
+    "type": "SR1_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "SR1 Oct26-Nov26 Calendar",
+    "raw_code": "SR1V26-X26",
+    "code": "SR1:OCT26-SR1:NOV26",
+    "id": "8996551703128906315",
+    "type": "SR1_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "SR1 Nov26-Dec26 Calendar",
+    "raw_code": "SR1X26-Z26",
+    "code": "SR1:NOV26-SR1:DEC26",
+    "id": "2216588982056690892",
+    "type": "SR1_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "SR1 Dec26-Jan27 Calendar",
+    "raw_code": "SR1Z26-F27",
+    "code": "SR1:DEC26-SR1:JAN27",
+    "id": "2409711417919059455",
+    "type": "SR1_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "SR1 Jan27-Feb27 Calendar",
+    "raw_code": "SR1F27-G27",
+    "code": "SR1:JAN27-SR1:FEB27",
+    "id": "12228369049613188961",
+    "type": "SR1_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "SR1 Feb27-Mar27 Calendar",
+    "raw_code": "SR1G27-H27",
+    "code": "SR1:FEB27-SR1:MAR27",
+    "id": "16907957579567992414",
+    "type": "SR1_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "SR1 Mar27-Apr27 Calendar",
+    "raw_code": "SR1H27-J27",
+    "code": "SR1:MAR27-SR1:APR27",
+    "id": "5420432677409583940",
+    "type": "SR1_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "SR1 Apr27-May27 Calendar",
+    "raw_code": "SR1J27-K27",
+    "code": "SR1:APR27-SR1:MAY27",
+    "id": "6560076189519706458",
+    "type": "SR1_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "SR1 May27-Jun27 Calendar",
+    "raw_code": "SR1K27-M27",
+    "code": "SR1:MAY27-SR1:JUN27",
+    "id": "17972087681739579572",
+    "type": "SR1_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "SR1 Jun27-Jul27 Calendar",
+    "raw_code": "SR1M27-N27",
+    "code": "SR1:JUN27-SR1:JUL27",
+    "id": "6183496775728805741",
+    "type": "SR1_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "SR1 Jul27-Aug27 Calendar",
+    "raw_code": "SR1N27-Q27",
+    "code": "SR1:JUL27-SR1:AUG27",
+    "id": "7272821776963659085",
+    "type": "SR1_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "SR1 Aug27-Sep27 Calendar",
+    "raw_code": "SR1Q27-U27",
+    "code": "SR1:AUG27-SR1:SEP27",
+    "id": "2929088271161098381",
+    "type": "SR1_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "SR1 Sep27-Oct27 Calendar",
+    "raw_code": "SR1U27-V27",
+    "code": "SR1:SEP27-SR1:OCT27",
+    "id": "275737528750325618",
+    "type": "SR1_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "SR1 Oct27-Nov27 Calendar",
+    "raw_code": "SR1V27-X27",
+    "code": "SR1:OCT27-SR1:NOV27",
+    "id": "6106453655226032956",
+    "type": "SR1_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "SR1 Nov27-Dec27 Calendar",
+    "raw_code": "SR1X27-Z27",
+    "code": "SR1:NOV27-SR1:DEC27",
+    "id": "15629405729215780443",
+    "type": "SR1_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "SR1 Dec27-Jan28 Calendar",
+    "raw_code": "SR1Z27-F28",
+    "code": "SR1:DEC27-SR1:JAN28",
+    "id": "6664951870929581515",
+    "type": "SR1_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "SR1 Jan28-Feb28 Calendar",
+    "raw_code": "SR1F28-G28",
+    "code": "SR1:JAN28-SR1:FEB28",
+    "id": "4699980375395756994",
+    "type": "SR1_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "SR1 Feb28-Mar28 Calendar",
+    "raw_code": "SR1G28-H28",
+    "code": "SR1:FEB28-SR1:MAR28",
+    "id": "14619430770285495631",
+    "type": "SR1_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "SR1 Mar28-Apr28 Calendar",
+    "raw_code": "SR1H28-J28",
+    "code": "SR1:MAR28-SR1:APR28",
+    "id": "2001596611221684165",
+    "type": "SR1_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "SR1 Apr28-May28 Calendar",
+    "raw_code": "SR1J28-K28",
+    "code": "SR1:APR28-SR1:MAY28",
+    "id": "11908100932989153166",
+    "type": "SR1_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "ZQ May26-Jun26 Calendar",
+    "raw_code": "ZQK26-M26",
+    "code": "MAY26-JUN26",
+    "id": "16193127862887055592",
+    "type": "ZQ_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "ZQ Jun26-Jul26 Calendar",
+    "raw_code": "ZQM26-N26",
+    "code": "JUN26-JUL26",
+    "id": "16570306448119085892",
+    "type": "ZQ_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "ZQ Jul26-Aug26 Calendar",
+    "raw_code": "ZQN26-Q26",
+    "code": "JUL26-AUG26",
+    "id": "12082270800607194710",
+    "type": "ZQ_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "ZQ Aug26-Sep26 Calendar",
+    "raw_code": "ZQQ26-U26",
+    "code": "AUG26-SEP26",
+    "id": "11934199095509631040",
+    "type": "ZQ_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "ZQ Sep26-Oct26 Calendar",
+    "raw_code": "ZQU26-V26",
+    "code": "SEP26-OCT26",
+    "id": "16060484131625816941",
+    "type": "ZQ_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "ZQ Oct26-Nov26 Calendar",
+    "raw_code": "ZQV26-X26",
+    "code": "OCT26-NOV26",
+    "id": "10544706520320006277",
+    "type": "ZQ_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "ZQ Nov26-Dec26 Calendar",
+    "raw_code": "ZQX26-Z26",
+    "code": "NOV26-DEC26",
+    "id": "8635258259652346913",
+    "type": "ZQ_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "ZQ Dec26-Jan27 Calendar",
+    "raw_code": "ZQZ26-F27",
+    "code": "DEC26-JAN27",
+    "id": "2126405006982897812",
+    "type": "ZQ_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "ZQ Jan27-Feb27 Calendar",
+    "raw_code": "ZQF27-G27",
+    "code": "JAN27-FEB27",
+    "id": "12923396090304791527",
+    "type": "ZQ_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "ZQ Feb27-Mar27 Calendar",
+    "raw_code": "ZQG27-H27",
+    "code": "FEB27-MAR27",
+    "id": "10033083667537347220",
+    "type": "ZQ_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "ZQ Mar27-Apr27 Calendar",
+    "raw_code": "ZQH27-J27",
+    "code": "MAR27-APR27",
+    "id": "2249776569556383862",
+    "type": "ZQ_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "ZQ Apr27-May27 Calendar",
+    "raw_code": "ZQJ27-K27",
+    "code": "APR27-MAY27",
+    "id": "3744068180779531100",
+    "type": "ZQ_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "ZQ May27-Jun27 Calendar",
+    "raw_code": "ZQK27-M27",
+    "code": "MAY27-JUN27",
+    "id": "3532151017793131935",
+    "type": "ZQ_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "ZQ Jun27-Jul27 Calendar",
+    "raw_code": "ZQM27-N27",
+    "code": "JUN27-JUL27",
+    "id": "6546675369042727122",
+    "type": "ZQ_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "ZQ Jul27-Aug27 Calendar",
+    "raw_code": "ZQN27-Q27",
+    "code": "JUL27-AUG27",
+    "id": "8238209401317660287",
+    "type": "ZQ_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "ZQ Aug27-Sep27 Calendar",
+    "raw_code": "ZQQ27-U27",
+    "code": "AUG27-SEP27",
+    "id": "4553286254424730619",
+    "type": "ZQ_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "ZQ Sep27-Oct27 Calendar",
+    "raw_code": "ZQU27-V27",
+    "code": "SEP27-OCT27",
+    "id": "9838351070764408582",
+    "type": "ZQ_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "ZQ Oct27-Nov27 Calendar",
+    "raw_code": "ZQV27-X27",
+    "code": "OCT27-NOV27",
+    "id": "1593101935173506965",
+    "type": "ZQ_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "ZQ Nov27-Dec27 Calendar",
+    "raw_code": "ZQX27-Z27",
+    "code": "NOV27-DEC27",
+    "id": "15788530128446135611",
+    "type": "ZQ_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "ZQ Dec27-Jan28 Calendar",
+    "raw_code": "ZQZ27-F28",
+    "code": "DEC27-JAN28",
+    "id": "16563862998761573735",
+    "type": "ZQ_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "ZQ Jan28-Feb28 Calendar",
+    "raw_code": "ZQF28-G28",
+    "code": "JAN28-FEB28",
+    "id": "6404360323351342032",
+    "type": "ZQ_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "ZQ Feb28-Mar28 Calendar",
+    "raw_code": "ZQG28-H28",
+    "code": "FEB28-MAR28",
+    "id": "6533011954735049417",
+    "type": "ZQ_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "ZQ Mar28-Apr28 Calendar",
+    "raw_code": "ZQH28-J28",
+    "code": "MAR28-APR28",
+    "id": "17384144148733601506",
+    "type": "ZQ_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "ZQ Apr28-May28 Calendar",
+    "raw_code": "ZQJ28-K28",
+    "code": "APR28-MAY28",
+    "id": "15904299605719152064",
+    "type": "ZQ_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "ZQ Jan28",
+    "raw_code": "ZQF28",
+    "code": "JAN28",
+    "id": "9891412297684821778",
+    "type": "ZQ",
+    "kind": "outright"
+  },
+  {
+    "name": "ZQ Feb28",
+    "raw_code": "ZQG28",
+    "code": "FEB28",
+    "id": "1695354907379889564",
+    "type": "ZQ",
+    "kind": "outright"
+  },
+  {
+    "name": "ZQ Mar28",
+    "raw_code": "ZQH28",
+    "code": "MAR28",
+    "id": "14572363000348805813",
+    "type": "ZQ",
+    "kind": "outright"
+  },
+  {
+    "name": "ZQ Apr28",
+    "raw_code": "ZQJ28",
+    "code": "APR28",
+    "id": "6862360263444804728",
+    "type": "ZQ",
+    "kind": "outright"
+  },
+  {
+    "name": "ZQ May28",
+    "raw_code": "ZQK28",
+    "code": "MAY28",
+    "id": "13368823166533849471",
+    "type": "ZQ",
+    "kind": "outright"
+  },
+  {
+    "name": "ZQ Jun28",
+    "raw_code": "ZQM28",
+    "code": "JUN28",
+    "id": "4387333885454320786",
+    "type": "ZQ",
+    "kind": "outright"
+  },
+  {
+    "name": "ZQ Jul28",
+    "raw_code": "ZQN28",
+    "code": "JUL28",
+    "id": "10087078140157008388",
+    "type": "ZQ",
+    "kind": "outright"
+  },
+  {
+    "name": "ZQ Aug28",
+    "raw_code": "ZQQ28",
+    "code": "AUG28",
+    "id": "13850377235190334937",
+    "type": "ZQ",
+    "kind": "outright"
+  },
+  {
+    "name": "SR3 Apr26",
+    "raw_code": "SR3J26",
+    "code": "SFRJ26",
+    "id": "3860555631428247134",
+    "type": "SR3",
+    "kind": "outright"
+  },
+  {
+    "name": "SR3 May26",
+    "raw_code": "SR3K26",
+    "code": "SFRK26",
+    "id": "17143513614131107440",
+    "type": "SR3",
+    "kind": "outright"
+  },
+  {
+    "name": "SR3 Jul26",
+    "raw_code": "SR3N26",
+    "code": "SFRN26",
+    "id": "14679849899374661935",
+    "type": "SR3",
+    "kind": "outright"
+  },
+  {
+    "name": "SR3 Aug26",
+    "raw_code": "SR3Q26",
+    "code": "SFRQ26",
+    "id": "8777243675036447958",
+    "type": "SR3",
+    "kind": "outright"
+  },
+  {
+    "name": "SR3 Oct26",
+    "raw_code": "SR3V26",
+    "code": "SFRV26",
+    "id": "8756116789917700189",
+    "type": "SR3",
+    "kind": "outright"
+  },
+  {
+    "name": "SR3 Nov26",
+    "raw_code": "SR3X26",
+    "code": "SFRX26",
+    "id": "8968307452552941278",
+    "type": "SR3",
+    "kind": "outright"
+  },
+  {
+    "name": "SR1 Jul26",
+    "raw_code": "SR1 Jul26",
+    "code": "SR1 Jul26",
+    "id": "3880399603150483481",
+    "type": "SR1",
+    "kind": "outright"
+  },
+  {
+    "name": "SR1 Aug26",
+    "raw_code": "SR1 Aug26",
+    "code": "SR1 Aug26",
+    "id": "1431239809246394376",
+    "type": "SR1",
+    "kind": "outright"
+  },
+  {
+    "name": "SR1 Sep26",
+    "raw_code": "SR1 Sep26",
+    "code": "SR1 Sep26",
+    "id": "9309381137161962615",
+    "type": "SR1",
+    "kind": "outright"
+  },
+  {
+    "name": "SR1 Oct26",
+    "raw_code": "SR1 Oct26",
+    "code": "SR1 Oct26",
+    "id": "11434035541700322135",
+    "type": "SR1",
+    "kind": "outright"
+  },
+  {
+    "name": "SR1 Nov26",
+    "raw_code": "SR1 Nov26",
+    "code": "SR1 Nov26",
+    "id": "8373859479390367820",
+    "type": "SR1",
+    "kind": "outright"
+  },
+  {
+    "name": "SR1 Dec26",
+    "raw_code": "SR1 Dec26",
+    "code": "SR1 Dec26",
+    "id": "638935919762336382",
+    "type": "SR1",
+    "kind": "outright"
+  },
+  {
+    "name": "SR1 Jan27",
+    "raw_code": "SR1 Jan27",
+    "code": "SR1 Jan27",
+    "id": "12267711630185759080",
+    "type": "SR1",
+    "kind": "outright"
+  },
+  {
+    "name": "SR1 Feb27",
+    "raw_code": "SR1 Feb27",
+    "code": "SR1 Feb27",
+    "id": "11818438006115878869",
+    "type": "SR1",
+    "kind": "outright"
+  },
+  {
+    "name": "SR1 Mar27",
+    "raw_code": "SR1 Mar27",
+    "code": "SR1 Mar27",
+    "id": "11368534221547994415",
+    "type": "SR1",
+    "kind": "outright"
+  },
+  {
+    "name": "SR1 Apr27",
+    "raw_code": "SR1 Apr27",
+    "code": "SR1 Apr27",
+    "id": "10267416492962537231",
+    "type": "SR1",
+    "kind": "outright"
+  },
+  {
+    "name": "SR1 May27",
+    "raw_code": "SR1 May27",
+    "code": "SR1 May27",
+    "id": "13003456520956211336",
+    "type": "SR1",
+    "kind": "outright"
+  },
+  {
+    "name": "SR1 Jun27",
+    "raw_code": "SR1 Jun27",
+    "code": "SR1 Jun27",
+    "id": "7274681043862095283",
+    "type": "SR1",
+    "kind": "outright"
+  },
+  {
+    "name": "SR1 Jul27",
+    "raw_code": "SR1 Jul27",
+    "code": "SR1 Jul27",
+    "id": "17587746350868461658",
+    "type": "SR1",
+    "kind": "outright"
+  },
+  {
+    "name": "SR1 Aug27",
+    "raw_code": "SR1 Aug27",
+    "code": "SR1 Aug27",
+    "id": "15982701712321206525",
+    "type": "SR1",
+    "kind": "outright"
+  },
+  {
+    "name": "SR1 Sep27",
+    "raw_code": "SR1 Sep27",
+    "code": "SR1 Sep27",
+    "id": "4652571663407480418",
+    "type": "SR1",
+    "kind": "outright"
+  },
+  {
+    "name": "SR1 Oct27",
+    "raw_code": "SR1 Oct27",
+    "code": "SR1 Oct27",
+    "id": "1383735921659243123",
+    "type": "SR1",
+    "kind": "outright"
+  },
+  {
+    "name": "SR1 Nov27",
+    "raw_code": "SR1 Nov27",
+    "code": "SR1 Nov27",
+    "id": "7870360088204015982",
+    "type": "SR1",
+    "kind": "outright"
+  },
+  {
+    "name": "SR1 Dec27",
+    "raw_code": "SR1 Dec27",
+    "code": "SR1 Dec27",
+    "id": "12003865359272718488",
+    "type": "SR1",
+    "kind": "outright"
+  },
+  {
+    "name": "SR1 Jan28",
+    "raw_code": "SR1 Jan28",
+    "code": "SR1 Jan28",
+    "id": "10475581751236764690",
+    "type": "SR1",
+    "kind": "outright"
+  },
+  {
+    "name": "ZQQ6-ZQV6",
+    "raw_code": "ZQQ6-ZQV6",
+    "code": "ZQQ6-ZQV6",
+    "id": "7399630420570501092",
+    "type": "ZQ_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "ZQX6-ZQF7",
+    "raw_code": "ZQX6-ZQF7",
+    "code": "ZQX6-ZQF7",
+    "id": "8792228160823726282",
+    "type": "ZQ_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "ZQG7-ZQJ7",
+    "raw_code": "ZQG7-ZQJ7",
+    "code": "ZQG7-ZQJ7",
+    "id": "16612610081924999085",
+    "type": "ZQ_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "ZQK7-ZQN7",
+    "raw_code": "ZQK7-ZQN7",
+    "code": "ZQK7-ZQN7",
+    "id": "4185657970561955484",
+    "type": "ZQ_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "ZQQ7-ZQV7",
+    "raw_code": "ZQQ7-ZQV7",
+    "code": "ZQQ7-ZQV7",
+    "id": "2666970297548562676",
+    "type": "ZQ_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "ZQX7-ZQF8",
+    "raw_code": "ZQX7-ZQF8",
+    "code": "ZQX7-ZQF8",
+    "id": "9361590052822065481",
+    "type": "ZQ_CAL",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Apr26-May26 Calendar",
+    "raw_code": "SR3 Apr26-May26 Calendar",
+    "code": "SFRJ26-SFRK26",
+    "id": "14201932942201515408",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Apr26-Jun26 Calendar",
+    "raw_code": "SR3 Apr26-Jun26 Calendar",
+    "code": "SFRJ26-SFRM26",
+    "id": "10055872183977312228",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Apr26-Jul26 Calendar",
+    "raw_code": "SR3 Apr26-Jul26 Calendar",
+    "code": "SFRJ26-SFRN26",
+    "id": "10354271434063747648",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Apr26-Aug26 Calendar",
+    "raw_code": "SR3 Apr26-Aug26 Calendar",
+    "code": "SFRJ26-SFRQ26",
+    "id": "16517865352707643842",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Apr26-Sep26 Calendar",
+    "raw_code": "SR3 Apr26-Sep26 Calendar",
+    "code": "SFRJ26-SFRU26",
+    "id": "12647340873456967728",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Apr26-Oct26 Calendar",
+    "raw_code": "SR3 Apr26-Oct26 Calendar",
+    "code": "SFRJ26-SFRV26",
+    "id": "1584405004593642473",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Apr26-Nov26 Calendar",
+    "raw_code": "SR3 Apr26-Nov26 Calendar",
+    "code": "SFRJ26-SFRX26",
+    "id": "16178898601835302156",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Apr26-Dec26 Calendar",
+    "raw_code": "SR3 Apr26-Dec26 Calendar",
+    "code": "SFRJ26-SFRZ26",
+    "id": "9776704702040846487",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Apr26-Jan27 Calendar",
+    "raw_code": "SR3 Apr26-Jan27 Calendar",
+    "code": "SFRJ26-SFRF27",
+    "id": "2806755844069869090",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Apr26 3mo Butterfly",
+    "raw_code": "SR3 Apr26 3mo Butterfly",
+    "code": "SR3_Apr26_3mo_Butterfly",
+    "id": "10479195183458767231",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 May26-Jun26 Calendar",
+    "raw_code": "SR3 May26-Jun26 Calendar",
+    "code": "SFRK26-SFRM26",
+    "id": "6473871775880748486",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 May26-Jul26 Calendar",
+    "raw_code": "SR3 May26-Jul26 Calendar",
+    "code": "SFRK26-SFRN26",
+    "id": "16811219306112734913",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 May26-Aug26 Calendar",
+    "raw_code": "SR3 May26-Aug26 Calendar",
+    "code": "SFRK26-SFRQ26",
+    "id": "7342903663601856046",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 May26-Sep26 Calendar",
+    "raw_code": "SR3 May26-Sep26 Calendar",
+    "code": "SFRK26-SFRU26",
+    "id": "7387814176573184628",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 May26-Oct26 Calendar",
+    "raw_code": "SR3 May26-Oct26 Calendar",
+    "code": "SFRK26-SFRV26",
+    "id": "3623199040910784151",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 May26-Nov26 Calendar",
+    "raw_code": "SR3 May26-Nov26 Calendar",
+    "code": "SFRK26-SFRX26",
+    "id": "15334320192962056533",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 May26-Dec26 Calendar",
+    "raw_code": "SR3 May26-Dec26 Calendar",
+    "code": "SFRK26-SFRZ26",
+    "id": "377709960960233978",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 May26-Jan27 Calendar",
+    "raw_code": "SR3 May26-Jan27 Calendar",
+    "code": "SFRK26-SFRF27",
+    "id": "18078110265023941882",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 May26 3mo Butterfly",
+    "raw_code": "SR3 May26 3mo Butterfly",
+    "code": "SR3_May26_3mo_Butterfly",
+    "id": "9165678714569502432",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26-Jul26 Calendar",
+    "raw_code": "SR3 Jun26-Jul26 Calendar",
+    "code": "SFRM26-SFRN26",
+    "id": "12575961698017296592",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26-Aug26 Calendar",
+    "raw_code": "SR3 Jun26-Aug26 Calendar",
+    "code": "SFRM26-SFRQ26",
+    "id": "16631238372367046157",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26-Oct26 Calendar",
+    "raw_code": "SR3 Jun26-Oct26 Calendar",
+    "code": "SFRM26-SFRV26",
+    "id": "452535189441768828",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26-Nov26 Calendar",
+    "raw_code": "SR3 Jun26-Nov26 Calendar",
+    "code": "SFRM26-SFRX26",
+    "id": "12524296436748983021",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26-Dec26 Calendar",
+    "raw_code": "SR3 Jun26-Dec26 Calendar",
+    "code": "SFRM26-SFRZ26",
+    "id": "16287914367671165382",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26-Jan27 Calendar",
+    "raw_code": "SR3 Jun26-Jan27 Calendar",
+    "code": "SFRM26-SFRF27",
+    "id": "12336751027732863916",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26-Mar27 Calendar",
+    "raw_code": "SR3 Jun26-Mar27 Calendar",
+    "code": "SFRM26-SFRH27",
+    "id": "1173958137973425696",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26-Jun27 Calendar",
+    "raw_code": "SR3 Jun26-Jun27 Calendar",
+    "code": "SFRM26-SFRM27",
+    "id": "18442037589349065734",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26-Sep27 Calendar",
+    "raw_code": "SR3 Jun26-Sep27 Calendar",
+    "code": "SFRM26-SFRU27",
+    "id": "5711517603439163353",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26-Dec27 Calendar",
+    "raw_code": "SR3 Jun26-Dec27 Calendar",
+    "code": "SFRM26-SFRZ27",
+    "id": "1187220998852801100",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26-Mar28 Calendar",
+    "raw_code": "SR3 Jun26-Mar28 Calendar",
+    "code": "SFRM26-SFRH28",
+    "id": "8423124443765444470",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26-Jun28 Calendar",
+    "raw_code": "SR3 Jun26-Jun28 Calendar",
+    "code": "SFRM26-SFRM28",
+    "id": "12889857035729467321",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26-Sep28 Calendar",
+    "raw_code": "SR3 Jun26-Sep28 Calendar",
+    "code": "SFRM26-SFRU28",
+    "id": "11605283567891004176",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26-Dec28 Calendar",
+    "raw_code": "SR3 Jun26-Dec28 Calendar",
+    "code": "SFRM26-SFRZ28",
+    "id": "5500037841453356762",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26-Mar29 Calendar",
+    "raw_code": "SR3 Jun26-Mar29 Calendar",
+    "code": "SFRM26-SFRH29",
+    "id": "13378984154694267632",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26-Jun29 Calendar",
+    "raw_code": "SR3 Jun26-Jun29 Calendar",
+    "code": "SFRM26-SFRM29",
+    "id": "15145642814204526745",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26-Sep29 Calendar",
+    "raw_code": "SR3 Jun26-Sep29 Calendar",
+    "code": "SFRM26-SFRU29",
+    "id": "18293267415494315365",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26-Dec29 Calendar",
+    "raw_code": "SR3 Jun26-Dec29 Calendar",
+    "code": "SFRM26-SFRZ29",
+    "id": "2842534245769274593",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26-Mar30 Calendar",
+    "raw_code": "SR3 Jun26-Mar30 Calendar",
+    "code": "SFRM26-SFRH30",
+    "id": "5565781923412569515",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26-Jun30 Calendar",
+    "raw_code": "SR3 Jun26-Jun30 Calendar",
+    "code": "SFRM26-SFRM30",
+    "id": "532925470102722009",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26-Sep30 Calendar",
+    "raw_code": "SR3 Jun26-Sep30 Calendar",
+    "code": "SFRM26-SFRU30",
+    "id": "4191140400709724307",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26-Dec30 Calendar",
+    "raw_code": "SR3 Jun26-Dec30 Calendar",
+    "code": "SFRM26-SFRZ30",
+    "id": "1926515177240046301",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26-Mar31 Calendar",
+    "raw_code": "SR3 Jun26-Mar31 Calendar",
+    "code": "SFRM26-SFRH31",
+    "id": "9130410331314069871",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26-Jun31 Calendar",
+    "raw_code": "SR3 Jun26-Jun31 Calendar",
+    "code": "SFRM26-SFRM31",
+    "id": "8766390988732747866",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26 3mo Butterfly",
+    "raw_code": "SR3 Jun26 3mo Butterfly",
+    "code": "SR3_Jun26_3mo_Butterfly",
+    "id": "16669549749400149193",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26 6mo Butterfly",
+    "raw_code": "SR3 Jun26 6mo Butterfly",
+    "code": "SR3_Jun26_6mo_Butterfly",
+    "id": "6463568789433457502",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26 9mo Butterfly",
+    "raw_code": "SR3 Jun26 9mo Butterfly",
+    "code": "SR3_Jun26_9mo_Butterfly",
+    "id": "17788250872765525064",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26 12mo Butterfly",
+    "raw_code": "SR3 Jun26 12mo Butterfly",
+    "code": "SR3_Jun26_12mo_Butterfly",
+    "id": "7292442455721349318",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26 3mo Condor",
+    "raw_code": "SR3 Jun26 3mo Condor",
+    "code": "SR3_Jun26_3mo_Condor",
+    "id": "7437550053778974431",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26 6mo Condor",
+    "raw_code": "SR3 Jun26 6mo Condor",
+    "code": "SR3_Jun26_6mo_Condor",
+    "id": "5414444441213681787",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26 12mo Condor",
+    "raw_code": "SR3 Jun26 12mo Condor",
+    "code": "SR3_Jun26_12mo_Condor",
+    "id": "11187273375167787769",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26 Pack",
+    "raw_code": "SR3 Jun26 Pack",
+    "code": "SR3_Jun26_Pack",
+    "id": "5040028068315285323",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26 2yr Bundle",
+    "raw_code": "SR3 Jun26 2yr Bundle",
+    "code": "SR3_Jun26_2yr_Bundle",
+    "id": "8776751115749607415",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26 3yr Bundle",
+    "raw_code": "SR3 Jun26 3yr Bundle",
+    "code": "SR3_Jun26_3yr_Bundle",
+    "id": "9809374364050467513",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26 4yr Bundle",
+    "raw_code": "SR3 Jun26 4yr Bundle",
+    "code": "SR3_Jun26_4yr_Bundle",
+    "id": "655807289904787490",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26 5yr Bundle",
+    "raw_code": "SR3 Jun26 5yr Bundle",
+    "code": "SR3_Jun26_5yr_Bundle",
+    "id": "7773983293730567498",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26 6yr Bundle",
+    "raw_code": "SR3 Jun26 6yr Bundle",
+    "code": "SR3_Jun26_6yr_Bundle",
+    "id": "13703863202881522374",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26 7yr Bundle",
+    "raw_code": "SR3 Jun26 7yr Bundle",
+    "code": "SR3_Jun26_7yr_Bundle",
+    "id": "16245471615420047180",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26 8yr Bundle",
+    "raw_code": "SR3 Jun26 8yr Bundle",
+    "code": "SR3_Jun26_8yr_Bundle",
+    "id": "16521028611057514128",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26 9yr Bundle",
+    "raw_code": "SR3 Jun26 9yr Bundle",
+    "code": "SR3_Jun26_9yr_Bundle",
+    "id": "3979970704596791675",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26 3mo Double Butterfly",
+    "raw_code": "SR3 Jun26 3mo Double Butterfly",
+    "code": "SR3_Jun26_3mo_Double_Butterfly",
+    "id": "16932509579880023185",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26 6mo Double Butterfly",
+    "raw_code": "SR3 Jun26 6mo Double Butterfly",
+    "code": "SR3_Jun26_6mo_Double_Butterfly",
+    "id": "17430050378020344943",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26 9mo Double Butterfly",
+    "raw_code": "SR3 Jun26 9mo Double Butterfly",
+    "code": "SR3_Jun26_9mo_Double_Butterfly",
+    "id": "402021539498462449",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26 12mo Double Butterfly",
+    "raw_code": "SR3 Jun26 12mo Double Butterfly",
+    "code": "SR3_Jun26_12mo_Double_Butterfly",
+    "id": "15146762905628560909",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26-Jun27 4mo Balanced Strip",
+    "raw_code": "SR3 Jun26-Jun27 4mo Balanced Strip",
+    "code": "SR3_Jun26-Jun27_4mo_Balanced_Strip",
+    "id": "9996922286035509919",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26-Jun28 4mo Balanced Strip",
+    "raw_code": "SR3 Jun26-Jun28 4mo Balanced Strip",
+    "code": "SR3_Jun26-Jun28_4mo_Balanced_Strip",
+    "id": "285389583785523314",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26-Jun28 8mo Balanced Strip",
+    "raw_code": "SR3 Jun26-Jun28 8mo Balanced Strip",
+    "code": "SR3_Jun26-Jun28_8mo_Balanced_Strip",
+    "id": "7369708593267166651",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26-Jun29 12mo Balanced Strip",
+    "raw_code": "SR3 Jun26-Jun29 12mo Balanced Strip",
+    "code": "SR3_Jun26-Jun29_12mo_Balanced_Strip",
+    "id": "16522821471281820701",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26-Jun29 4mo Balanced Strip",
+    "raw_code": "SR3 Jun26-Jun29 4mo Balanced Strip",
+    "code": "SR3_Jun26-Jun29_4mo_Balanced_Strip",
+    "id": "11230725913325453265",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26-Jun30 16mo Balanced Strip",
+    "raw_code": "SR3 Jun26-Jun30 16mo Balanced Strip",
+    "code": "SR3_Jun26-Jun30_16mo_Balanced_Strip",
+    "id": "12524185935775576331",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun26-Jun30 4mo Balanced Strip",
+    "raw_code": "SR3 Jun26-Jun30 4mo Balanced Strip",
+    "code": "SR3_Jun26-Jun30_4mo_Balanced_Strip",
+    "id": "16096482629252026825",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "+1xSR3 Jun26:+1xSR3 Sep26:+1xSR3",
+    "raw_code": "+1xSR3 Jun26:+1xSR3 Sep26:+1xSR3",
+    "code": "+1xSR3_Jun26:+1xSR3_Sep26:+1xSR3",
+    "id": "17462154981330389794",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "+1xSR3 Jun26:+1xSR3 Sep26:+1xSR3",
+    "raw_code": "+1xSR3 Jun26:+1xSR3 Sep26:+1xSR3",
+    "code": "+1xSR3_Jun26:+1xSR3_Sep26:+1xSR3_2380",
+    "id": "588986465398862380",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "+1xSR3 Jun26:+1xSR3 Sep26:+1xSR3",
+    "raw_code": "+1xSR3 Jun26:+1xSR3 Sep26:+1xSR3",
+    "code": "+1xSR3_Jun26:+1xSR3_Sep26:+1xSR3_3920",
+    "id": "14058585619993920",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jul26-Aug26 Calendar",
+    "raw_code": "SR3 Jul26-Aug26 Calendar",
+    "code": "SFRN26-SFRQ26",
+    "id": "1878054530743014422",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jul26-Sep26 Calendar",
+    "raw_code": "SR3 Jul26-Sep26 Calendar",
+    "code": "SFRN26-SFRU26",
+    "id": "16052434107491107488",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jul26-Oct26 Calendar",
+    "raw_code": "SR3 Jul26-Oct26 Calendar",
+    "code": "SFRN26-SFRV26",
+    "id": "14916777374783692104",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jul26-Nov26 Calendar",
+    "raw_code": "SR3 Jul26-Nov26 Calendar",
+    "code": "SFRN26-SFRX26",
+    "id": "1972984216158409358",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jul26-Dec26 Calendar",
+    "raw_code": "SR3 Jul26-Dec26 Calendar",
+    "code": "SFRN26-SFRZ26",
+    "id": "2846359297496981829",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jul26-Jan27 Calendar",
+    "raw_code": "SR3 Jul26-Jan27 Calendar",
+    "code": "SFRN26-SFRF27",
+    "id": "9420143695494769395",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jul26 3mo Butterfly",
+    "raw_code": "SR3 Jul26 3mo Butterfly",
+    "code": "SR3_Jul26_3mo_Butterfly",
+    "id": "17982403949153132446",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Aug26-Sep26 Calendar",
+    "raw_code": "SR3 Aug26-Sep26 Calendar",
+    "code": "SFRQ26-SFRU26",
+    "id": "12169783189615757010",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Aug26-Oct26 Calendar",
+    "raw_code": "SR3 Aug26-Oct26 Calendar",
+    "code": "SFRQ26-SFRV26",
+    "id": "16266952251333170713",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Aug26-Nov26 Calendar",
+    "raw_code": "SR3 Aug26-Nov26 Calendar",
+    "code": "SFRQ26-SFRX26",
+    "id": "9542682002107011071",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Aug26-Dec26 Calendar",
+    "raw_code": "SR3 Aug26-Dec26 Calendar",
+    "code": "SFRQ26-SFRZ26",
+    "id": "16767263120206305090",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Aug26-Jan27 Calendar",
+    "raw_code": "SR3 Aug26-Jan27 Calendar",
+    "code": "SFRQ26-SFRF27",
+    "id": "8261107021189224977",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep26-Oct26 Calendar",
+    "raw_code": "SR3 Sep26-Oct26 Calendar",
+    "code": "SFRU26-SFRV26",
+    "id": "14566490055519242726",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep26-Nov26 Calendar",
+    "raw_code": "SR3 Sep26-Nov26 Calendar",
+    "code": "SFRU26-SFRX26",
+    "id": "11282649536995794966",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep26-Jan27 Calendar",
+    "raw_code": "SR3 Sep26-Jan27 Calendar",
+    "code": "SFRU26-SFRF27",
+    "id": "2395149659232781099",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep26-Mar27 Calendar",
+    "raw_code": "SR3 Sep26-Mar27 Calendar",
+    "code": "SFRU26-SFRH27",
+    "id": "7323749054963010611",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep26-Jun27 Calendar",
+    "raw_code": "SR3 Sep26-Jun27 Calendar",
+    "code": "SFRU26-SFRM27",
+    "id": "4858903560593408056",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep26-Sep27 Calendar",
+    "raw_code": "SR3 Sep26-Sep27 Calendar",
+    "code": "SFRU26-SFRU27",
+    "id": "11024253132052665575",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep26-Dec27 Calendar",
+    "raw_code": "SR3 Sep26-Dec27 Calendar",
+    "code": "SFRU26-SFRZ27",
+    "id": "12650136213899477796",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep26-Mar28 Calendar",
+    "raw_code": "SR3 Sep26-Mar28 Calendar",
+    "code": "SFRU26-SFRH28",
+    "id": "15301813230396265351",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep26-Jun28 Calendar",
+    "raw_code": "SR3 Sep26-Jun28 Calendar",
+    "code": "SFRU26-SFRM28",
+    "id": "2969026627107542627",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep26-Sep28 Calendar",
+    "raw_code": "SR3 Sep26-Sep28 Calendar",
+    "code": "SFRU26-SFRU28",
+    "id": "8589195726874121779",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep26-Dec28 Calendar",
+    "raw_code": "SR3 Sep26-Dec28 Calendar",
+    "code": "SFRU26-SFRZ28",
+    "id": "5621295716710584414",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep26-Mar29 Calendar",
+    "raw_code": "SR3 Sep26-Mar29 Calendar",
+    "code": "SFRU26-SFRH29",
+    "id": "7348598094430938352",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep26-Jun29 Calendar",
+    "raw_code": "SR3 Sep26-Jun29 Calendar",
+    "code": "SFRU26-SFRM29",
+    "id": "592779765829987672",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep26-Sep29 Calendar",
+    "raw_code": "SR3 Sep26-Sep29 Calendar",
+    "code": "SFRU26-SFRU29",
+    "id": "14384014237682762170",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep26-Dec29 Calendar",
+    "raw_code": "SR3 Sep26-Dec29 Calendar",
+    "code": "SFRU26-SFRZ29",
+    "id": "17178297662496996453",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep26-Jun30 Calendar",
+    "raw_code": "SR3 Sep26-Jun30 Calendar",
+    "code": "SFRU26-SFRM30",
+    "id": "10416096239682154873",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep26-Sep30 Calendar",
+    "raw_code": "SR3 Sep26-Sep30 Calendar",
+    "code": "SFRU26-SFRU30",
+    "id": "592995829496223058",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep26-Dec30 Calendar",
+    "raw_code": "SR3 Sep26-Dec30 Calendar",
+    "code": "SFRU26-SFRZ30",
+    "id": "1750246408619505198",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep26-Sep31 Calendar",
+    "raw_code": "SR3 Sep26-Sep31 Calendar",
+    "code": "SFRU26-SFRU31",
+    "id": "15973406213496385771",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep26 9mo Butterfly",
+    "raw_code": "SR3 Sep26 9mo Butterfly",
+    "code": "SR3_Sep26_9mo_Butterfly",
+    "id": "14847795165969572433",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep26 Jun27 Dec28 Butterfly",
+    "raw_code": "SR3 Sep26 Jun27 Dec28 Butterfly",
+    "code": "SR3_Sep26_Jun27_Dec28_Butterfly",
+    "id": "8542375327795842902",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep26 Jun27 Jun29 Butterfly",
+    "raw_code": "SR3 Sep26 Jun27 Jun29 Butterfly",
+    "code": "SR3_Sep26_Jun27_Jun29_Butterfly",
+    "id": "15090671787025409388",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep26 3mo Condor",
+    "raw_code": "SR3 Sep26 3mo Condor",
+    "code": "SR3_Sep26_3mo_Condor",
+    "id": "13079715952278861765",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep26 12mo Condor",
+    "raw_code": "SR3 Sep26 12mo Condor",
+    "code": "SR3_Sep26_12mo_Condor",
+    "id": "4187976676843832439",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep26 Pack",
+    "raw_code": "SR3 Sep26 Pack",
+    "code": "SR3_Sep26_Pack",
+    "id": "10182935424581197845",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep26 2yr Bundle",
+    "raw_code": "SR3 Sep26 2yr Bundle",
+    "code": "SR3_Sep26_2yr_Bundle",
+    "id": "12850821807589765593",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep26 4yr Bundle",
+    "raw_code": "SR3 Sep26 4yr Bundle",
+    "code": "SR3_Sep26_4yr_Bundle",
+    "id": "19399124490823589739",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep26 Syr Bundle",
+    "raw_code": "SR3 Sep26 Syr Bundle",
+    "code": "SR3_Sep26_Syr_Bundle",
+    "id": "7064127210375177963",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep26 6yr Bundle",
+    "raw_code": "SR3 Sep26 6yr Bundle",
+    "code": "SR3_Sep26_6yr_Bundle",
+    "id": "10487527192007717457",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep26 7yr Bundle",
+    "raw_code": "SR3 Sep26 7yr Bundle",
+    "code": "SR3_Sep26_7yr_Bundle",
+    "id": "11744598156583206783",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep26 8yr Bundle",
+    "raw_code": "SR3 Sep26 8yr Bundle",
+    "code": "SR3_Sep26_8yr_Bundle",
+    "id": "11458833979172651765",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep26 9yr Bundle",
+    "raw_code": "SR3 Sep26 9yr Bundle",
+    "code": "SR3_Sep26_9yr_Bundle",
+    "id": "13134620090715425835",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep26 3mo Double Butterfly",
+    "raw_code": "SR3 Sep26 3mo Double Butterfly",
+    "code": "SR3_Sep26_3mo_Double_Butterfly",
+    "id": "17314498434865010307",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep26 12mo Double Butterfly",
+    "raw_code": "SR3 Sep26 12mo Double Butterfly",
+    "code": "SR3_Sep26_12mo_Double_Butterfly",
+    "id": "7770682188388169763",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep26-Sep27 4mo Balanced Strip",
+    "raw_code": "SR3 Sep26-Sep27 4mo Balanced Strip",
+    "code": "SR3_Sep26-Sep27_4mo_Balanced_Strip",
+    "id": "18154351212863299743",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep26-Sep28 4mo Balanced Strip",
+    "raw_code": "SR3 Sep26-Sep28 4mo Balanced Strip",
+    "code": "SR3_Sep26-Sep28_4mo_Balanced_Strip",
+    "id": "12716127571104876402",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep26-Sep28 8mo Balanced Strip",
+    "raw_code": "SR3 Sep26-Sep28 8mo Balanced Strip",
+    "code": "SR3_Sep26-Sep28_8mo_Balanced_Strip",
+    "id": "14649690431912859447",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep26-Sep29 12mo Balanced Stri",
+    "raw_code": "SR3 Sep26-Sep29 12mo Balanced Stri",
+    "code": "SR3_Sep26-Sep29_12mo_Balanced_Stri",
+    "id": "3555936048743735919",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep26-Sep29 4mo Balanced Strip",
+    "raw_code": "SR3 Sep26-Sep29 4mo Balanced Strip",
+    "code": "SR3_Sep26-Sep29_4mo_Balanced_Strip",
+    "id": "10441226951290042652",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep26-Sep30 16mo Balanced Stri",
+    "raw_code": "SR3 Sep26-Sep30 16mo Balanced Stri",
+    "code": "SR3_Sep26-Sep30_16mo_Balanced_Stri",
+    "id": "17155923721743468647",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep26-Sep30 4mo Balanced Strip",
+    "raw_code": "SR3 Sep26-Sep30 4mo Balanced Strip",
+    "code": "SR3_Sep26-Sep30_4mo_Balanced_Strip",
+    "id": "9580637310753963677",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep26:+1xSR3 Dec26:+1xSR3",
+    "raw_code": "SR3 Sep26:+1xSR3 Dec26:+1xSR3",
+    "code": "SR3_Sep26:+1xSR3_Dec26:+1xSR3",
+    "id": "12931328157648677657",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep26:+1xSR3 Dec26:+1xSR3",
+    "raw_code": "SR3 Sep26:+1xSR3 Dec26:+1xSR3",
+    "code": "SR3_Sep26:+1xSR3_Dec26:+1xSR3_9815",
+    "id": "15717896826440039815",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep26:+ 1xSR3 Dec26:+1xSR3",
+    "raw_code": "SR3 Sep26:+ 1xSR3 Dec26:+1xSR3",
+    "code": "SR3_Sep26:+_1xSR3_Dec26:+1xSR3",
+    "id": "1629276819664389353",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Oct26-Jan27 Calendar",
+    "raw_code": "SR3 Oct26-Jan27 Calendar",
+    "code": "SFRV26-SFRF27",
+    "id": "4120005529996047689",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Nov26-Dec26 Calendar",
+    "raw_code": "SR3 Nov26-Dec26 Calendar",
+    "code": "SFRX26-SFRZ26",
+    "id": "5582457503868406195",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Nov26-Jan27 Calendar",
+    "raw_code": "SR3 Nov26-Jan27 Calendar",
+    "code": "SFRX26-SFRF27",
+    "id": "7121367935363883466",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec26-Mar27 Calendar",
+    "raw_code": "SR3 Dec26-Mar27 Calendar",
+    "code": "SFRZ26-SFRH27_1895",
+    "id": "115292306285496321895",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec26-Jun27 Calendar",
+    "raw_code": "SR3 Dec26-Jun27 Calendar",
+    "code": "SFRZ26-SFRM27",
+    "id": "6229851979892159244",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec26-Sep27 Calendar",
+    "raw_code": "SR3 Dec26-Sep27 Calendar",
+    "code": "SFRZ26-SFRU27",
+    "id": "10826083190117399285",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec26-Mar29 Calendar",
+    "raw_code": "SR3 Dec26-Mar29 Calendar",
+    "code": "SFRZ26-SFRH29",
+    "id": "4307337901095189790",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec26-Jun29 Calendar",
+    "raw_code": "SR3 Dec26-Jun29 Calendar",
+    "code": "SFRZ26-SFRM29",
+    "id": "114258309073374998051",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec26-Dec29 Calendar",
+    "raw_code": "SR3 Dec26-Dec29 Calendar",
+    "code": "SFRZ26-SFRZ29",
+    "id": "11518175449985850624",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec26-Jun30 Calendar",
+    "raw_code": "SR3 Dec26-Jun30 Calendar",
+    "code": "SFRZ26-SFRM30",
+    "id": "19967693188649539092",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec26-Sep30 Calendar",
+    "raw_code": "SR3 Dec26-Sep30 Calendar",
+    "code": "SFRZ26-SFRU30",
+    "id": "12800084106764990710",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec26-Dec30 Calendar",
+    "raw_code": "SR3 Dec26-Dec30 Calendar",
+    "code": "SFRZ26-SFRZ30",
+    "id": "13744103187504265899",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec26-Mar31 Calendar",
+    "raw_code": "SR3 Dec26-Mar31 Calendar",
+    "code": "SFRZ26-SFRH31",
+    "id": "11509509482926103300",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec26-Jun31 Calendar",
+    "raw_code": "SR3 Dec26-Jun31 Calendar",
+    "code": "SFRZ26-SFRM31",
+    "id": "11623157406753586376",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec26-Sep31 Calendar",
+    "raw_code": "SR3 Dec26-Sep31 Calendar",
+    "code": "SFRZ26-SFRU31",
+    "id": "2715560045490252382",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec26 3mo Butterfly",
+    "raw_code": "SR3 Dec26 3mo Butterfly",
+    "code": "SR3_Dec26_3mo_Butterfly",
+    "id": "1694217178440827148",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec26 6mo Butterfly",
+    "raw_code": "SR3 Dec26 6mo Butterfly",
+    "code": "SR3_Dec26_6mo_Butterfly",
+    "id": "1131390630980463121",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec26 9mo Butterfly",
+    "raw_code": "SR3 Dec26 9mo Butterfly",
+    "code": "SR3_Dec26_9mo_Butterfly",
+    "id": "17983796168957201062",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec26 12mo Butterfly",
+    "raw_code": "SR3 Dec26 12mo Butterfly",
+    "code": "SR3_Dec26_12mo_Butterfly",
+    "id": "4722771218489278615",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec26 12mo Condor",
+    "raw_code": "SR3 Dec26 12mo Condor",
+    "code": "SR3_Dec26_12mo_Condor",
+    "id": "17238628126983305579",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec26 Pack",
+    "raw_code": "SR3 Dec26 Pack",
+    "code": "SR3_Dec26_Pack",
+    "id": "10708320196123620237",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec26 Syr Bundle",
+    "raw_code": "SR3 Dec26 Syr Bundle",
+    "code": "SR3_Dec26_Syr_Bundle",
+    "id": "5167164416988691848",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec26 7yr Bundle",
+    "raw_code": "SR3 Dec26 7yr Bundle",
+    "code": "SR3_Dec26_7yr_Bundle",
+    "id": "12341354188138209826",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec26 8yr Bundle",
+    "raw_code": "SR3 Dec26 8yr Bundle",
+    "code": "SR3_Dec26_8yr_Bundle",
+    "id": "10545439722882297209",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec26 9yr Bundle",
+    "raw_code": "SR3 Dec26 9yr Bundle",
+    "code": "SR3_Dec26_9yr_Bundle",
+    "id": "2166480874379418956",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec26-Dec27 4mo Balanced Strip",
+    "raw_code": "SR3 Dec26-Dec27 4mo Balanced Strip",
+    "code": "SR3_Dec26-Dec27_4mo_Balanced_Strip",
+    "id": "8339177641869241053",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec26-Dec28 4mo Balanced Strip",
+    "raw_code": "SR3 Dec26-Dec28 4mo Balanced Strip",
+    "code": "SR3_Dec26-Dec28_4mo_Balanced_Strip",
+    "id": "13608797955118825008",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec26-Dec28 8mo Balanced Strip",
+    "raw_code": "SR3 Dec26-Dec28 8mo Balanced Strip",
+    "code": "SR3_Dec26-Dec28_8mo_Balanced_Strip",
+    "id": "14302409504341951346",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec26-Dec29 12mo Balanced Stri",
+    "raw_code": "SR3 Dec26-Dec29 12mo Balanced Stri",
+    "code": "SR3_Dec26-Dec29_12mo_Balanced_Stri",
+    "id": "10662815038948794000",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec26-Dec29 4mo Balanced Strip",
+    "raw_code": "SR3 Dec26-Dec29 4mo Balanced Strip",
+    "code": "SR3_Dec26-Dec29_4mo_Balanced_Strip",
+    "id": "1374218829495264775",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec26-Dec30 16mo Balanced Stri",
+    "raw_code": "SR3 Dec26-Dec30 16mo Balanced Stri",
+    "code": "SR3_Dec26-Dec30_16mo_Balanced_Stri",
+    "id": "8507721687100886413",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec26-Dec30 4mo Balanced Strip",
+    "raw_code": "SR3 Dec26-Dec30 4mo Balanced Strip",
+    "code": "SR3_Dec26-Dec30_4mo_Balanced_Strip",
+    "id": "11052769312769889041",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun27-Jun30 12mo Balanced Stri",
+    "raw_code": "SR3 Jun27-Jun30 12mo Balanced Stri",
+    "code": "SR3_Jun27-Jun30_12mo_Balanced_Stri",
+    "id": "7441116203146706870",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun27-Jun30 4mo Balanced Strip",
+    "raw_code": "SR3 Jun27-Jun30 4mo Balanced Strip",
+    "code": "SR3_Jun27-Jun30_4mo_Balanced_Strip",
+    "id": "1445075681052539963",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun27-Jun31 16mo Balanced Stri",
+    "raw_code": "SR3 Jun27-Jun31 16mo Balanced Stri",
+    "code": "SR3_Jun27-Jun31_16mo_Balanced_Stri",
+    "id": "4078945573117589414",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun27:+1xSR3 Sep27:+1xSR3",
+    "raw_code": "SR3 Jun27:+1xSR3 Sep27:+1xSR3",
+    "code": "SR3_Jun27:+1xSR3_Sep27:+1xSR3",
+    "id": "6535181755095286808",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep27-Sep28 Calendar",
+    "raw_code": "SR3 Sep27-Sep28 Calendar",
+    "code": "SFRU27-SFRU28",
+    "id": "7319310145327297066",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep27-Dec28 Calendar",
+    "raw_code": "SR3 Sep27-Dec28 Calendar",
+    "code": "SFRU27-SFRZ28",
+    "id": "7813174176768860565",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep27-Mar29 Calendar",
+    "raw_code": "SR3 Sep27-Mar29 Calendar",
+    "code": "SFRU27-SFRH29",
+    "id": "15578091828445969681",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep27-Jun29 Calendar",
+    "raw_code": "SR3 Sep27-Jun29 Calendar",
+    "code": "SFRU27-SFRM29",
+    "id": "4118273978798411199",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep27-Sep29 Calendar",
+    "raw_code": "SR3 Sep27-Sep29 Calendar",
+    "code": "SFRU27-SFRU29",
+    "id": "15642470681734023517",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep27-Dec29 Calendar",
+    "raw_code": "SR3 Sep27-Dec29 Calendar",
+    "code": "SFRU27-SFRZ29",
+    "id": "11303562526212036292",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep27-Mar30 Calendar",
+    "raw_code": "SR3 Sep27-Mar30 Calendar",
+    "code": "SFRU27-SFRH30",
+    "id": "114135992330359531727",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep27-Jun30 Calendar",
+    "raw_code": "SR3 Sep27-Jun30 Calendar",
+    "code": "SFRU27-SFRM30",
+    "id": "15825985760491187514",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep27-Dec30 Calendar",
+    "raw_code": "SR3 Sep27-Dec30 Calendar",
+    "code": "SFRU27-SFRZ30",
+    "id": "12752252026675353192",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep27-Jun31 Calendar",
+    "raw_code": "SR3 Sep27-Jun31 Calendar",
+    "code": "SFRU27-SFRM31",
+    "id": "16026024353126802709",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep27-Sep31 Calendar",
+    "raw_code": "SR3 Sep27-Sep31 Calendar",
+    "code": "SFRU27-SFRU31",
+    "id": "115756497912705031572",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep27-Jun32 Calendar",
+    "raw_code": "SR3 Sep27-Jun32 Calendar",
+    "code": "SFRU27-SFRM32",
+    "id": "12977507613951066568",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep27 3mo Butterfly",
+    "raw_code": "SR3 Sep27 3mo Butterfly",
+    "code": "SR3_Sep27_3mo_Butterfly",
+    "id": "4246183136712339533",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep27 6mo Butterfly",
+    "raw_code": "SR3 Sep27 6mo Butterfly",
+    "code": "SR3_Sep27_6mo_Butterfly",
+    "id": "13191717278349352005",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep27 9mo Butterfly",
+    "raw_code": "SR3 Sep27 9mo Butterfly",
+    "code": "SR3_Sep27_9mo_Butterfly",
+    "id": "14599145696820051861",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep27 12mo Butterfly",
+    "raw_code": "SR3 Sep27 12mo Butterfly",
+    "code": "SR3_Sep27_12mo_Butterfly",
+    "id": "114608907002206498989",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep27 3mo Condor",
+    "raw_code": "SR3 Sep27 3mo Condor",
+    "code": "SR3_Sep27_3mo_Condor",
+    "id": "11894138912301291309",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep27 6mo Condor",
+    "raw_code": "SR3 Sep27 6mo Condor",
+    "code": "SR3_Sep27_6mo_Condor",
+    "id": "12255771304820305344",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep27 12mo Condor",
+    "raw_code": "SR3 Sep27 12mo Condor",
+    "code": "SR3_Sep27_12mo_Condor",
+    "id": "19462891414197487298",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep27 Pack",
+    "raw_code": "SR3 Sep27 Pack",
+    "code": "SR3_Sep27_Pack",
+    "id": "13650531857494817000",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep27 2yr Bundle",
+    "raw_code": "SR3 Sep27 2yr Bundle",
+    "code": "SR3_Sep27_2yr_Bundle",
+    "id": "16454375115719975528",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep27 3yr Bundle",
+    "raw_code": "SR3 Sep27 3yr Bundle",
+    "code": "SR3_Sep27_3yr_Bundle",
+    "id": "10274543996598140217",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep27 4yr Bundle",
+    "raw_code": "SR3 Sep27 4yr Bundle",
+    "code": "SR3_Sep27_4yr_Bundle",
+    "id": "17981140901353899796",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep27 Syr Bundle",
+    "raw_code": "SR3 Sep27 Syr Bundle",
+    "code": "SR3_Sep27_Syr_Bundle",
+    "id": "6568119204648819574",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep27 6yr Bundle",
+    "raw_code": "SR3 Sep27 6yr Bundle",
+    "code": "SR3_Sep27_6yr_Bundle",
+    "id": "13136094848323227959",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep27 7yr Bundle",
+    "raw_code": "SR3 Sep27 7yr Bundle",
+    "code": "SR3_Sep27_7yr_Bundle",
+    "id": "9794832984950603611",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep27 8yr Bundle",
+    "raw_code": "SR3 Sep27 8yr Bundle",
+    "code": "SR3_Sep27_8yr_Bundle",
+    "id": "11881777771998776351",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep27 12mo Double Butterfly",
+    "raw_code": "SR3 Sep27 12mo Double Butterfly",
+    "code": "SR3_Sep27_12mo_Double_Butterfly",
+    "id": "2509495354229037404",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep27-Sep28 4mo Balanced Strip",
+    "raw_code": "SR3 Sep27-Sep28 4mo Balanced Strip",
+    "code": "SR3_Sep27-Sep28_4mo_Balanced_Strip",
+    "id": "1525792882963243297",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep27-Sep29 8mo Balanced Strip",
+    "raw_code": "SR3 Sep27-Sep29 8mo Balanced Strip",
+    "code": "SR3_Sep27-Sep29_8mo_Balanced_Strip",
+    "id": "3147540758397606271",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep27-Sep30 12mo Balanced Stri",
+    "raw_code": "SR3 Sep27-Sep30 12mo Balanced Stri",
+    "code": "SR3_Sep27-Sep30_12mo_Balanced_Stri",
+    "id": "3051278026946773263",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec27-Dec30 12mo Balanced Stri| 16002188",
+    "raw_code": "SR3 Dec27-Dec30 12mo Balanced Stri| 16002188",
+    "code": "SR3_Dec27-Dec30_12mo_Balanced_Stri_16002188",
+    "id": "189193357771",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec27-Dec30 4mo Balanced Strip",
+    "raw_code": "SR3 Dec27-Dec30 4mo Balanced Strip",
+    "code": "SR3_Dec27-Dec30_4mo_Balanced_Strip",
+    "id": "16199751473281355423",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec27-Dec31 16mo Balanced Stri",
+    "raw_code": "SR3 Dec27-Dec31 16mo Balanced Stri",
+    "code": "SR3_Dec27-Dec31_16mo_Balanced_Stri",
+    "id": "18246927402766596498",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec27:+1xSR3 Mar28:+1xSR3",
+    "raw_code": "SR3 Dec27:+1xSR3 Mar28:+1xSR3",
+    "code": "SR3_Dec27:+1xSR3_Mar28:+1xSR3",
+    "id": "11411545716530475116",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec27:+1xSR3 Mar28:+1xSR3",
+    "raw_code": "SR3 Dec27:+1xSR3 Mar28:+1xSR3",
+    "code": "SR3_Dec27:+1xSR3_Mar28:+1xSR3_4868",
+    "id": "2359756699457424868",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar28-Jun28 Calendar",
+    "raw_code": "SR3 Mar28-Jun28 Calendar",
+    "code": "SFRH28-SFRM28",
+    "id": "15781040958777106512",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar28-Dec28 Calendar",
+    "raw_code": "SR3 Mar28-Dec28 Calendar",
+    "code": "SFRH28-SFRZ28",
+    "id": "15700506220256044306",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar28-Jun29 Calendar",
+    "raw_code": "SR3 Mar28-Jun29 Calendar",
+    "code": "SFRH28-SFRM29",
+    "id": "11252243341235747558",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar28-Sep29 Calendar",
+    "raw_code": "SR3 Mar28-Sep29 Calendar",
+    "code": "SFRH28-SFRU29",
+    "id": "19795525193998870416",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar28-Dec29 Calendar",
+    "raw_code": "SR3 Mar28-Dec29 Calendar",
+    "code": "SFRH28-SFRZ29",
+    "id": "117857458540877550554",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar28-Mar30 Calendar",
+    "raw_code": "SR3 Mar28-Mar30 Calendar",
+    "code": "SFRH28-SFRH30",
+    "id": "14395541609243044922",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar28-Jun30 Calendar",
+    "raw_code": "SR3 Mar28-Jun30 Calendar",
+    "code": "SFRH28-SFRM30",
+    "id": "536817107559827232",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar28-Sep30 Calendar",
+    "raw_code": "SR3 Mar28-Sep30 Calendar",
+    "code": "SFRH28-SFRU30",
+    "id": "700930647934333837",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar28-Mar31 Calendar",
+    "raw_code": "SR3 Mar28-Mar31 Calendar",
+    "code": "SFRH28-SFRH31",
+    "id": "115882568990222572204",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar28-Dec31 Calendar",
+    "raw_code": "SR3 Mar28-Dec31 Calendar",
+    "code": "SFRH28-SFRZ31",
+    "id": "1582338648076722762",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar28-Sep32 Calendar",
+    "raw_code": "SR3 Mar28-Sep32 Calendar",
+    "code": "SFRH28-SFRU32",
+    "id": "16761262618747117605",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar28-Mar33 Calendar",
+    "raw_code": "SR3 Mar28-Mar33 Calendar",
+    "code": "SFRH28-SFRH33",
+    "id": "2305448784400035006",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar28 3mo Butterfly",
+    "raw_code": "SR3 Mar28 3mo Butterfly",
+    "code": "SR3_Mar28_3mo_Butterfly",
+    "id": "12412265760269376373",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar28 6mo Butterfly",
+    "raw_code": "SR3 Mar28 6mo Butterfly",
+    "code": "SR3_Mar28_6mo_Butterfly",
+    "id": "12437016426586141224",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar28 12mo Butterfly",
+    "raw_code": "SR3 Mar28 12mo Butterfly",
+    "code": "SR3_Mar28_12mo_Butterfly",
+    "id": "114076350960100809023",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar28 3mo Condor",
+    "raw_code": "SR3 Mar28 3mo Condor",
+    "code": "SR3_Mar28_3mo_Condor",
+    "id": "114603579014208298286",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar28 6mo Condor",
+    "raw_code": "SR3 Mar28 6mo Condor",
+    "code": "SR3_Mar28_6mo_Condor",
+    "id": "4206738359255727348",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar28 12mo Condor",
+    "raw_code": "SR3 Mar28 12mo Condor",
+    "code": "SR3_Mar28_12mo_Condor",
+    "id": "19593329653964534778",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar28 Pack",
+    "raw_code": "SR3 Mar28 Pack",
+    "code": "SR3_Mar28_Pack",
+    "id": "14357829571501912578",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar28 2yr Bundle",
+    "raw_code": "SR3 Mar28 2yr Bundle",
+    "code": "SR3_Mar28_2yr_Bundle",
+    "id": "10725756481122003221",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar28 4yr Bundle",
+    "raw_code": "SR3 Mar28 4yr Bundle",
+    "code": "SR3_Mar28_4yr_Bundle",
+    "id": "10743763834032778980",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar28 Syr Bundle",
+    "raw_code": "SR3 Mar28 Syr Bundle",
+    "code": "SR3_Mar28_Syr_Bundle",
+    "id": "12820789502485016491",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar28 6yr Bundle",
+    "raw_code": "SR3 Mar28 6yr Bundle",
+    "code": "SR3_Mar28_6yr_Bundle",
+    "id": "19044421844700211311",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar28 7yr Bundle",
+    "raw_code": "SR3 Mar28 7yr Bundle",
+    "code": "SR3_Mar28_7yr_Bundle",
+    "id": "6828069221312669254",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar28 3mo Double Butterfly",
+    "raw_code": "SR3 Mar28 3mo Double Butterfly",
+    "code": "SR3_Mar28_3mo_Double_Butterfly",
+    "id": "587162993089507401",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar28 6mo Double Butterfly",
+    "raw_code": "SR3 Mar28 6mo Double Butterfly",
+    "code": "SR3_Mar28_6mo_Double_Butterfly",
+    "id": "11557669486326806124",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar28 9mo Double Butterfly",
+    "raw_code": "SR3 Mar28 9mo Double Butterfly",
+    "code": "SR3_Mar28_9mo_Double_Butterfly",
+    "id": "17033814400875393903",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar28 12mo Double Butterfly",
+    "raw_code": "SR3 Mar28 12mo Double Butterfly",
+    "code": "SR3_Mar28_12mo_Double_Butterfly",
+    "id": "14026773755208456700",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar28-Mar29 4mo Balanced Strip",
+    "raw_code": "SR3 Mar28-Mar29 4mo Balanced Strip",
+    "code": "SR3_Mar28-Mar29_4mo_Balanced_Strip",
+    "id": "7759857011410695298",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar28-Mar30 4mo Balanced Stri",
+    "raw_code": "SR3 Mar28-Mar30 4mo Balanced Stri",
+    "code": "SR3_Mar28-Mar30_4mo_Balanced_Stri",
+    "id": "4044024210310211743",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar28-Mar30 8mo Balanced Strig",
+    "raw_code": "SR3 Mar28-Mar30 8mo Balanced Strig",
+    "code": "SR3_Mar28-Mar30_8mo_Balanced_Strig",
+    "id": "17616536831251858740",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar28-Mar31 12mo Balanced Str,",
+    "raw_code": "SR3 Mar28-Mar31 12mo Balanced Str,",
+    "code": "SR3_Mar28-Mar31_12mo_Balanced_Str",
+    "id": "11524373171502509960",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar28-Mar31 4mo Balanced Strip",
+    "raw_code": "SR3 Mar28-Mar31 4mo Balanced Strip",
+    "code": "SR3_Mar28-Mar31_4mo_Balanced_Strip",
+    "id": "1724540019004227941",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar28:+1xSR3 Jun28:+1xSR3",
+    "raw_code": "SR3 Mar28:+1xSR3 Jun28:+1xSR3",
+    "code": "SR3_Mar28:+1xSR3_Jun28:+1xSR3",
+    "id": "9981230399361964644",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep28-Sep29 4mo Balanced Strip",
+    "raw_code": "SR3 Sep28-Sep29 4mo Balanced Strip",
+    "code": "SR3_Sep28-Sep29_4mo_Balanced_Strip",
+    "id": "12338589735005496218",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep28-Sep30 4mo Balanced Strip",
+    "raw_code": "SR3 Sep28-Sep30 4mo Balanced Strip",
+    "code": "SR3_Sep28-Sep30_4mo_Balanced_Strip",
+    "id": "11144506007548770372",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep28-Sep30 8mo Balanced Strip",
+    "raw_code": "SR3 Sep28-Sep30 8mo Balanced Strip",
+    "code": "SR3_Sep28-Sep30_8mo_Balanced_Strip",
+    "id": "16804304190317499259",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep28-Sep31 12mo Balanced Stri",
+    "raw_code": "SR3 Sep28-Sep31 12mo Balanced Stri",
+    "code": "SR3_Sep28-Sep31_12mo_Balanced_Stri",
+    "id": "12538835386627972056",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep28:+1xSR3 Dec28:+1xSR3",
+    "raw_code": "SR3 Sep28:+1xSR3 Dec28:+1xSR3",
+    "code": "SR3_Sep28:+1xSR3_Dec28:+1xSR3",
+    "id": "1609105809742349130",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep28:+1xSR3 Dec28:+1xSR3",
+    "raw_code": "SR3 Sep28:+1xSR3 Dec28:+1xSR3",
+    "code": "SR3_Sep28:+1xSR3_Dec28:+1xSR3_4806",
+    "id": "4830749088276294806",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec28-Dec29 Calendar",
+    "raw_code": "SR3 Dec28-Dec29 Calendar",
+    "code": "SFRZ28-SFRZ29",
+    "id": "10171050261511673387",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec28-Mar30 Calendar",
+    "raw_code": "SR3 Dec28-Mar30 Calendar",
+    "code": "SFRZ28-SFRH30",
+    "id": "5348926729534455316",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec28-Jun30 Calendar",
+    "raw_code": "SR3 Dec28-Jun30 Calendar",
+    "code": "SFRZ28-SFRM30",
+    "id": "13030204393193666994",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec28-Sep30 Calendar",
+    "raw_code": "SR3 Dec28-Sep30 Calendar",
+    "code": "SFRZ28-SFRU30",
+    "id": "13982138750153311170",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec28-Dec30 Calendar",
+    "raw_code": "SR3 Dec28-Dec30 Calendar",
+    "code": "SFRZ28-SFRZ30",
+    "id": "7521503531530112608",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec28-Mar31 Calendar",
+    "raw_code": "SR3 Dec28-Mar31 Calendar",
+    "code": "SFRZ28-SFRH31",
+    "id": "246116456982881458",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec28-Sep31 Calendar",
+    "raw_code": "SR3 Dec28-Sep31 Calendar",
+    "code": "SFRZ28-SFRU31",
+    "id": "5622075854939031851",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec28-Dec31 Calendar",
+    "raw_code": "SR3 Dec28-Dec31 Calendar",
+    "code": "SFRZ28-SFRZ31",
+    "id": "4514546847757992489",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec28-Jun32 Calendar",
+    "raw_code": "SR3 Dec28-Jun32 Calendar",
+    "code": "SFRZ28-SFRM32",
+    "id": "16899380888275773619",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec28-Jun33 Calendar",
+    "raw_code": "SR3 Dec28-Jun33 Calendar",
+    "code": "SFRZ28-SFRM33",
+    "id": "13150867303039817117",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec28-Sep33 Calendar",
+    "raw_code": "SR3 Dec28-Sep33 Calendar",
+    "code": "SFRZ28-SFRU33",
+    "id": "15545413294666104039",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec28 3mo Butterfly",
+    "raw_code": "SR3 Dec28 3mo Butterfly",
+    "code": "SR3_Dec28_3mo_Butterfly",
+    "id": "17576025199489301908",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec28 9mo Butterfly",
+    "raw_code": "SR3 Dec28 9mo Butterfly",
+    "code": "SR3_Dec28_9mo_Butterfly",
+    "id": "12645419176560293157",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec28 12mo Butterfly",
+    "raw_code": "SR3 Dec28 12mo Butterfly",
+    "code": "SR3_Dec28_12mo_Butterfly",
+    "id": "19978164765045566326",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec28 3mo Condor",
+    "raw_code": "SR3 Dec28 3mo Condor",
+    "code": "SR3_Dec28_3mo_Condor",
+    "id": "7708176790307328859",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec28 12mo Condor",
+    "raw_code": "SR3 Dec28 12mo Condor",
+    "code": "SR3_Dec28_12mo_Condor",
+    "id": "15445516856743651529",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec28 Pack",
+    "raw_code": "SR3 Dec28 Pack",
+    "code": "SR3_Dec28_Pack",
+    "id": "18121042539965667232",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec28 2yr Bundle",
+    "raw_code": "SR3 Dec28 2yr Bundle",
+    "code": "SR3_Dec28_2yr_Bundle",
+    "id": "14948797367215494199",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec28 4yr Bundle",
+    "raw_code": "SR3 Dec28 4yr Bundle",
+    "code": "SR3_Dec28_4yr_Bundle",
+    "id": "10697229407405067302",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec28 Syr Bundle",
+    "raw_code": "SR3 Dec28 Syr Bundle",
+    "code": "SR3_Dec28_Syr_Bundle",
+    "id": "11880462206496775024",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec28 6yr Bundle",
+    "raw_code": "SR3 Dec28 6yr Bundle",
+    "code": "SR3_Dec28_6yr_Bundle",
+    "id": "12547508648865326524",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3Dec28 3mo Double Butterfly",
+    "raw_code": "SR3Dec28 3mo Double Butterfly",
+    "code": "SR3Dec28_3mo_Double_Butterfly",
+    "id": "1230138862443631954",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3Dec28 6mo Double Butterfly",
+    "raw_code": "SR3Dec28 6mo Double Butterfly",
+    "code": "SR3Dec28_6mo_Double_Butterfly",
+    "id": "6707535012017522726",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3Dec28 9mo Double Butterfly",
+    "raw_code": "SR3Dec28 9mo Double Butterfly",
+    "code": "SR3Dec28_9mo_Double_Butterfly",
+    "id": "6913536975118272969",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3Dec28 12mo Double Butterfly",
+    "raw_code": "SR3Dec28 12mo Double Butterfly",
+    "code": "SR3Dec28_12mo_Double_Butterfly",
+    "id": "14337036399173024766",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec28-Dec29 4mo Balanced Strip",
+    "raw_code": "SR3 Dec28-Dec29 4mo Balanced Strip",
+    "code": "SR3_Dec28-Dec29_4mo_Balanced_Strip",
+    "id": "16026169883141909320",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec28-Dec30 4mo Balanced Strip",
+    "raw_code": "SR3 Dec28-Dec30 4mo Balanced Strip",
+    "code": "SR3_Dec28-Dec30_4mo_Balanced_Strip",
+    "id": "11138035579911756692",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec28-Dec30 8mo Balanced Strip",
+    "raw_code": "SR3 Dec28-Dec30 8mo Balanced Strip",
+    "code": "SR3_Dec28-Dec30_8mo_Balanced_Strip",
+    "id": "14079606879208845445",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec28-Dec31 12mo Balanced Stri",
+    "raw_code": "SR3 Dec28-Dec31 12mo Balanced Stri",
+    "code": "SR3_Dec28-Dec31_12mo_Balanced_Stri",
+    "id": "12208573544542757837",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec28:+1xSR3 Mar29:+1xSR3",
+    "raw_code": "SR3 Dec28:+1xSR3 Mar29:+1xSR3",
+    "code": "SR3_Dec28:+1xSR3_Mar29:+1xSR3",
+    "id": "733185418288550484",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec28:+1xSR3 Mar29:+1xSR3",
+    "raw_code": "SR3 Dec28:+1xSR3 Mar29:+1xSR3",
+    "code": "SR3_Dec28:+1xSR3_Mar29:+1xSR3_2179",
+    "id": "12490001677984642179",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar29-Jun29 Calendar",
+    "raw_code": "SR3 Mar29-Jun29 Calendar",
+    "code": "SFRH29-SFRM29",
+    "id": "10503523860245957343",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar29-Sep29 Calendar",
+    "raw_code": "SR3 Mar29-Sep29 Calendar",
+    "code": "SFRH29-SFRU29",
+    "id": "2539866318235992389",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar29-Dec29 Calendar",
+    "raw_code": "SR3 Mar29-Dec29 Calendar",
+    "code": "SFRH29-SFRZ29",
+    "id": "10945287725333438445",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar29-Mar30 Calendar",
+    "raw_code": "SR3 Mar29-Mar30 Calendar",
+    "code": "SFRH29-SFRH30",
+    "id": "19969821841456777289",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar29-Jun30 Calendar",
+    "raw_code": "SR3 Mar29-Jun30 Calendar",
+    "code": "SFRH29-SFRM30",
+    "id": "12347428183748551064",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar29-Sep30 Calendar",
+    "raw_code": "SR3 Mar29-Sep30 Calendar",
+    "code": "SFRH29-SFRU30",
+    "id": "17875160585187996271",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar29-Jun31 Calendar",
+    "raw_code": "SR3 Mar29-Jun31 Calendar",
+    "code": "SFRH29-SFRM31",
+    "id": "5576910964019219824",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar29-Sep31 Calendar",
+    "raw_code": "SR3 Mar29-Sep31 Calendar",
+    "code": "SFRH29-SFRU31",
+    "id": "16626136134626331831",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar29-Dec31 Calendar",
+    "raw_code": "SR3 Mar29-Dec31 Calendar",
+    "code": "SFRH29-SFRZ31",
+    "id": "15879720325153762251",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar29-Mar32 Calendar",
+    "raw_code": "SR3 Mar29-Mar32 Calendar",
+    "code": "SFRH29-SFRH32",
+    "id": "1058382874790358996",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar29-Jun32 Calendar",
+    "raw_code": "SR3 Mar29-Jun32 Calendar",
+    "code": "SFRH29-SFRM32",
+    "id": "7787769914792852855",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar29-Sep32 Calendar",
+    "raw_code": "SR3 Mar29-Sep32 Calendar",
+    "code": "SFRH29-SFRU32",
+    "id": "114433764079775104743",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar29-Dec32 Calendar",
+    "raw_code": "SR3 Mar29-Dec32 Calendar",
+    "code": "SFRH29-SFRZ32",
+    "id": "1831462676296039504",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar29-Jun33 Calendar",
+    "raw_code": "SR3 Mar29-Jun33 Calendar",
+    "code": "SFRH29-SFRM33",
+    "id": "19063552497137494453",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar29 3mo Butterfly",
+    "raw_code": "SR3 Mar29 3mo Butterfly",
+    "code": "SR3_Mar29_3mo_Butterfly",
+    "id": "15975147523134469997",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar29 6mo Butterfly",
+    "raw_code": "SR3 Mar29 6mo Butterfly",
+    "code": "SR3_Mar29_6mo_Butterfly",
+    "id": "7483061917667859609",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar29 9mo Butterfly",
+    "raw_code": "SR3 Mar29 9mo Butterfly",
+    "code": "SR3_Mar29_9mo_Butterfly",
+    "id": "6835880188596002401",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar29 12mo Butterfly",
+    "raw_code": "SR3 Mar29 12mo Butterfly",
+    "code": "SR3_Mar29_12mo_Butterfly",
+    "id": "18396761226283251228",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar29 3mo Condor",
+    "raw_code": "SR3 Mar29 3mo Condor",
+    "code": "SR3_Mar29_3mo_Condor",
+    "id": "1022804425998620542",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar29 6mo Condor",
+    "raw_code": "SR3 Mar29 6mo Condor",
+    "code": "SR3_Mar29_6mo_Condor",
+    "id": "10356283109216700736",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar29 12mo Condor",
+    "raw_code": "SR3 Mar29 12mo Condor",
+    "code": "SR3_Mar29_12mo_Condor",
+    "id": "5774762667714667494",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar29 Pack",
+    "raw_code": "SR3 Mar29 Pack",
+    "code": "SR3_Mar29_Pack",
+    "id": "18182954173536588565",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar29 2yr Bundle",
+    "raw_code": "SR3 Mar29 2yr Bundle",
+    "code": "SR3_Mar29_2yr_Bundle",
+    "id": "17397155509631621606",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar29 4yr Bundle",
+    "raw_code": "SR3 Mar29 4yr Bundle",
+    "code": "SR3_Mar29_4yr_Bundle",
+    "id": "1359013567479105257",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar29 Syr Bundle",
+    "raw_code": "SR3 Mar29 Syr Bundle",
+    "code": "SR3_Mar29_Syr_Bundle",
+    "id": "10907977949088484700",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar29 6yr Bundle",
+    "raw_code": "SR3 Mar29 6yr Bundle",
+    "code": "SR3_Mar29_6yr_Bundle",
+    "id": "7751735410644064562",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar29 3mo Double Butterfly",
+    "raw_code": "SR3 Mar29 3mo Double Butterfly",
+    "code": "SR3_Mar29_3mo_Double_Butterfly",
+    "id": "487136255459946722",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar29 6mo Double Butterfly",
+    "raw_code": "SR3 Mar29 6mo Double Butterfly",
+    "code": "SR3_Mar29_6mo_Double_Butterfly",
+    "id": "7010229146247696822",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar29 9mo Double Butterfly",
+    "raw_code": "SR3 Mar29 9mo Double Butterfly",
+    "code": "SR3_Mar29_9mo_Double_Butterfly",
+    "id": "7794300056739967990",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar29 12mo Double Butterfly",
+    "raw_code": "SR3 Mar29 12mo Double Butterfly",
+    "code": "SR3_Mar29_12mo_Double_Butterfly",
+    "id": "16055653047970093922",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar29-Mar30 4mo Balanced Strig",
+    "raw_code": "SR3 Mar29-Mar30 4mo Balanced Strig",
+    "code": "SR3_Mar29-Mar30_4mo_Balanced_Strig",
+    "id": "18000224177952518600",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar29-Mar31 4mo Balanced Strip",
+    "raw_code": "SR3 Mar29-Mar31 4mo Balanced Strip",
+    "code": "SR3_Mar29-Mar31_4mo_Balanced_Strip",
+    "id": "4914367253897389631",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar29-Mar31 8mo Balanced Strip",
+    "raw_code": "SR3 Mar29-Mar31 8mo Balanced Strip",
+    "code": "SR3_Mar29-Mar31_8mo_Balanced_Strip",
+    "id": "150064714902186523",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar29-Mar32 12mo Balanced Str",
+    "raw_code": "SR3 Mar29-Mar32 12mo Balanced Str",
+    "code": "SR3_Mar29-Mar32_12mo_Balanced_Str",
+    "id": "14696962476174919640",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar29:+1xSR3 Jun29:+1xSR3_ 968298081",
+    "raw_code": "SR3 Mar29:+1xSR3 Jun29:+1xSR3_ 968298081",
+    "code": "SR3_Mar29:+1xSR3_Jun29:+1xSR3_968298081",
+    "id": "5619987363",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar29:+1xSR3 Jun29:+1xSR3 503835286",
+    "raw_code": "SR3 Mar29:+1xSR3 Jun29:+1xSR3 503835286",
+    "code": "SR3_Mar29:+1xSR3_Jun29:+1xSR3_503835286",
+    "id": "1820700691",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar29:+1xSR3 Jun29:+1xSR3",
+    "raw_code": "SR3 Mar29:+1xSR3 Jun29:+1xSR3",
+    "code": "SR3_Mar29:+1xSR3_Jun29:+1xSR3",
+    "id": "6118568090607741919",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun29-Dec29 Calendar",
+    "raw_code": "SR3 Jun29-Dec29 Calendar",
+    "code": "SFRM29-SFRZ29",
+    "id": "14678429134878754021",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun29-Mar30 Calendar",
+    "raw_code": "SR3 Jun29-Mar30 Calendar",
+    "code": "SFRM29-SFRH30",
+    "id": "1587524333350156682",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun29-Sep30 Calendar",
+    "raw_code": "SR3 Jun29-Sep30 Calendar",
+    "code": "SFRM29-SFRU30",
+    "id": "19197974546152550954",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun29-Mar31 Calendar",
+    "raw_code": "SR3 Jun29-Mar31 Calendar",
+    "code": "SFRM29-SFRH31",
+    "id": "12454881969767155410",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun29-Jun31 Calendar",
+    "raw_code": "SR3 Jun29-Jun31 Calendar",
+    "code": "SFRM29-SFRM31",
+    "id": "18350713635587954200",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun29-Sep31 Calendar",
+    "raw_code": "SR3 Jun29-Sep31 Calendar",
+    "code": "SFRM29-SFRU31",
+    "id": "18395716083695140744",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun29-Mar32 Calendar",
+    "raw_code": "SR3 Jun29-Mar32 Calendar",
+    "code": "SFRM29-SFRH32",
+    "id": "13069625797921904384",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun29-Sep32 Calendar",
+    "raw_code": "SR3 Jun29-Sep32 Calendar",
+    "code": "SFRM29-SFRU32",
+    "id": "5592107882745950061",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun29-Jun33 Calendar",
+    "raw_code": "SR3 Jun29-Jun33 Calendar",
+    "code": "SFRM29-SFRM33",
+    "id": "12033077289124177980",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun29 3mo Butterfly",
+    "raw_code": "SR3 Jun29 3mo Butterfly",
+    "code": "SR3_Jun29_3mo_Butterfly",
+    "id": "10079344912650163936",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun29 6mo Butterfly",
+    "raw_code": "SR3 Jun29 6mo Butterfly",
+    "code": "SR3_Jun29_6mo_Butterfly",
+    "id": "18304291351663293457",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun29 9mo Butterfly",
+    "raw_code": "SR3 Jun29 9mo Butterfly",
+    "code": "SR3_Jun29_9mo_Butterfly",
+    "id": "10419402686138196110",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun29 12mo Butterfly",
+    "raw_code": "SR3 Jun29 12mo Butterfly",
+    "code": "SR3_Jun29_12mo_Butterfly",
+    "id": "12403881943965040991",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun29 3mo Condor",
+    "raw_code": "SR3 Jun29 3mo Condor",
+    "code": "SR3_Jun29_3mo_Condor",
+    "id": "1359218157259417790",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun29 12mo Condor",
+    "raw_code": "SR3 Jun29 12mo Condor",
+    "code": "SR3_Jun29_12mo_Condor",
+    "id": "12264876415410001899",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun29 2yr Bundle",
+    "raw_code": "SR3 Jun29 2yr Bundle",
+    "code": "SR3_Jun29_2yr_Bundle",
+    "id": "112650043966523662621",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun29 3yr Bundle",
+    "raw_code": "SR3 Jun29 3yr Bundle",
+    "code": "SR3_Jun29_3yr_Bundle",
+    "id": "16057978326424523952",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun29 5yr Bundle",
+    "raw_code": "SR3 Jun29 5yr Bundle",
+    "code": "SR3_Jun29_5yr_Bundle",
+    "id": "17042268164109081248",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun29 6yr Bundle",
+    "raw_code": "SR3 Jun29 6yr Bundle",
+    "code": "SR3_Jun29_6yr_Bundle",
+    "id": "17674323317027583571",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun29 12mo Double Butterfly",
+    "raw_code": "SR3 Jun29 12mo Double Butterfly",
+    "code": "SR3_Jun29_12mo_Double_Butterfly",
+    "id": "2909446241557196577",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun29-Jun30 4mo Balanced Strip",
+    "raw_code": "SR3 Jun29-Jun30 4mo Balanced Strip",
+    "code": "SR3_Jun29-Jun30_4mo_Balanced_Strip",
+    "id": "7118741905440276697",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun29-Jun31 8mo Balanced Strip",
+    "raw_code": "SR3 Jun29-Jun31 8mo Balanced Strip",
+    "code": "SR3_Jun29-Jun31_8mo_Balanced_Strip",
+    "id": "15186475036929837757",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun29-Jun32 12mo Balanced Stri",
+    "raw_code": "SR3 Jun29-Jun32 12mo Balanced Stri",
+    "code": "SR3_Jun29-Jun32_12mo_Balanced_Stri",
+    "id": "297176520636360749",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun29:+1xSR3 Sep29:+1xSR3",
+    "raw_code": "SR3 Jun29:+1xSR3 Sep29:+1xSR3",
+    "code": "SR3_Jun29:+1xSR3_Sep29:+1xSR3",
+    "id": "16354070951647302956",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun29:+1xSR3 Sep29:+1xSR3",
+    "raw_code": "SR3 Jun29:+1xSR3 Sep29:+1xSR3",
+    "code": "SR3_Jun29:+1xSR3_Sep29:+1xSR3_8969",
+    "id": "14416939336007498969",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep29-Mar30 Calendar",
+    "raw_code": "SR3 Sep29-Mar30 Calendar",
+    "code": "SFRU29-SFRH30",
+    "id": "15755212041884028274",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep29-Jun30 Calendar",
+    "raw_code": "SR3 Sep29-Jun30 Calendar",
+    "code": "SFRU29-SFRM30",
+    "id": "4308439990129857668",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep29-Sep30 Calendar",
+    "raw_code": "SR3 Sep29-Sep30 Calendar",
+    "code": "SFRU29-SFRU30",
+    "id": "15455121566496593395",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep29-Dec30 Calendar",
+    "raw_code": "SR3 Sep29-Dec30 Calendar",
+    "code": "SFRU29-SFRZ30",
+    "id": "1111061511385387082",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep29-Jun31 Calendar",
+    "raw_code": "SR3 Sep29-Jun31 Calendar",
+    "code": "SFRU29-SFRM31",
+    "id": "10019296502434397933",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep29-Sep31 Calendar",
+    "raw_code": "SR3 Sep29-Sep31 Calendar",
+    "code": "SFRU29-SFRU31",
+    "id": "15721356381374125939",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep29-Dec31 Calendar",
+    "raw_code": "SR3 Sep29-Dec31 Calendar",
+    "code": "SFRU29-SFRZ31",
+    "id": "17069249396043782903",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep29-Mar32 Calendar",
+    "raw_code": "SR3 Sep29-Mar32 Calendar",
+    "code": "SFRU29-SFRH32",
+    "id": "18497308670671380056",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep29-Jun32 Calendar",
+    "raw_code": "SR3 Sep29-Jun32 Calendar",
+    "code": "SFRU29-SFRM32",
+    "id": "14076317189718365907",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep29-Mar33 Calendar",
+    "raw_code": "SR3 Sep29-Mar33 Calendar",
+    "code": "SFRU29-SFRH33",
+    "id": "13046224357400178935",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep29-Jun33 Calendar",
+    "raw_code": "SR3 Sep29-Jun33 Calendar",
+    "code": "SFRU29-SFRM33",
+    "id": "17852576175288271450",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep29-Sep33 Calendar",
+    "raw_code": "SR3 Sep29-Sep33 Calendar",
+    "code": "SFRU29-SFRU33",
+    "id": "1887437176208093201",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep29 6mo Butterfly",
+    "raw_code": "SR3 Sep29 6mo Butterfly",
+    "code": "SR3_Sep29_6mo_Butterfly",
+    "id": "15376331176301407591",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep29 3mo Condor",
+    "raw_code": "SR3 Sep29 3mo Condor",
+    "code": "SR3_Sep29_3mo_Condor",
+    "id": "14167791020828890739",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep29 12mo Condor",
+    "raw_code": "SR3 Sep29 12mo Condor",
+    "code": "SR3_Sep29_12mo_Condor",
+    "id": "5173506789366011202",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec29-Dec30 4mo Balanced Strip",
+    "raw_code": "SR3 Dec29-Dec30 4mo Balanced Strip",
+    "code": "SR3_Dec29-Dec30_4mo_Balanced_Strip",
+    "id": "17232004793023174583",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec29-Dec31 8mo Balanced Strip 72645303321",
+    "raw_code": "SR3 Dec29-Dec31 8mo Balanced Strip 72645303321",
+    "code": "SR3_Dec29-Dec31_8mo_Balanced_Strip_72645303321",
+    "id": "26760407",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec29-Dec32 12mo Balanced Stri",
+    "raw_code": "SR3 Dec29-Dec32 12mo Balanced Stri",
+    "code": "SR3_Dec29-Dec32_12mo_Balanced_Stri",
+    "id": "731770678148677799",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar30-Mar31 4mo Balanced Strig",
+    "raw_code": "SR3 Mar30-Mar31 4mo Balanced Strig",
+    "code": "SR3_Mar30-Mar31_4mo_Balanced_Strig",
+    "id": "17955800528988087449",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar30-Mar32 8mo Balanced Strip",
+    "raw_code": "SR3 Mar30-Mar32 8mo Balanced Strip",
+    "code": "SR3_Mar30-Mar32_8mo_Balanced_Strip",
+    "id": "3060446178650933306",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar30:+1xSR3 Jun30:+1xSR3",
+    "raw_code": "SR3 Mar30:+1xSR3 Jun30:+1xSR3",
+    "code": "SR3_Mar30:+1xSR3_Jun30:+1xSR3",
+    "id": "4136951086580570578",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar30:+1xSR3 Jun30:+1xSR3",
+    "raw_code": "SR3 Mar30:+1xSR3 Jun30:+1xSR3",
+    "code": "SR3_Mar30:+1xSR3_Jun30:+1xSR3_4881",
+    "id": "15539162491649234881",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun30-Dec31 Calendar",
+    "raw_code": "SR3 Jun30-Dec31 Calendar",
+    "code": "SFRM30-SFRZ31",
+    "id": "4462691672924270023",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun30-Jun32 Calendar",
+    "raw_code": "SR3 Jun30-Jun32 Calendar",
+    "code": "SFRM30-SFRM32",
+    "id": "15612008443655419572",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun30-Sep32 Calendar",
+    "raw_code": "SR3 Jun30-Sep32 Calendar",
+    "code": "SFRM30-SFRU32",
+    "id": "1382685917141365671",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun30-Dec32 Calendar",
+    "raw_code": "SR3 Jun30-Dec32 Calendar",
+    "code": "SFRM30-SFRZ32",
+    "id": "592239346589989164",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun30-Mar33 Calendar",
+    "raw_code": "SR3 Jun30-Mar33 Calendar",
+    "code": "SFRM30-SFRH33",
+    "id": "13666392163940240936",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun30-Jun33 Calendar",
+    "raw_code": "SR3 Jun30-Jun33 Calendar",
+    "code": "SFRM30-SFRM33",
+    "id": "10643969278929669232",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun30-Jun34 Calendar",
+    "raw_code": "SR3 Jun30-Jun34 Calendar",
+    "code": "SFRM30-SFRM34",
+    "id": "18308019353210933503",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun30 6mo Butterfly",
+    "raw_code": "SR3 Jun30 6mo Butterfly",
+    "code": "SR3_Jun30_6mo_Butterfly",
+    "id": "105357145166791978",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun30 9mo Butterfly",
+    "raw_code": "SR3 Jun30 9mo Butterfly",
+    "code": "SR3_Jun30_9mo_Butterfly",
+    "id": "10074046114041942987",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun30 6mo Condor",
+    "raw_code": "SR3 Jun30 6mo Condor",
+    "code": "SR3_Jun30_6mo_Condor",
+    "id": "16491384077507130605",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun30 12mo Condor",
+    "raw_code": "SR3 Jun30 12mo Condor",
+    "code": "SR3_Jun30_12mo_Condor",
+    "id": "573492282846149437",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun30 Pack",
+    "raw_code": "SR3 Jun30 Pack",
+    "code": "SR3_Jun30_Pack",
+    "id": "7739677649044267360",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun30 2yr Bundle",
+    "raw_code": "SR3 Jun30 2yr Bundle",
+    "code": "SR3_Jun30_2yr_Bundle",
+    "id": "18360513842061369762",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun30 4yr Bundle",
+    "raw_code": "SR3 Jun30 4yr Bundle",
+    "code": "SR3_Jun30_4yr_Bundle",
+    "id": "5541228456463829485",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun30 Syr Bundle",
+    "raw_code": "SR3 Jun30 Syr Bundle",
+    "code": "SR3_Jun30_Syr_Bundle",
+    "id": "6026746639902510489",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun30 3mo Double Butterfly",
+    "raw_code": "SR3 Jun30 3mo Double Butterfly",
+    "code": "SR3_Jun30_3mo_Double_Butterfly",
+    "id": "3880758354805132929",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun30 6mo Double Butterfly",
+    "raw_code": "SR3 Jun30 6mo Double Butterfly",
+    "code": "SR3_Jun30_6mo_Double_Butterfly",
+    "id": "8928232296276994581",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun30 12mo Double Butterfly",
+    "raw_code": "SR3 Jun30 12mo Double Butterfly",
+    "code": "SR3_Jun30_12mo_Double_Butterfly",
+    "id": "12646277962620321479",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun30-Jun31 4mo Balanced Strip",
+    "raw_code": "SR3 Jun30-Jun31 4mo Balanced Strip",
+    "code": "SR3_Jun30-Jun31_4mo_Balanced_Strip",
+    "id": "7862505525391765104",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun30-Jun32 8mo Balanced Strip",
+    "raw_code": "SR3 Jun30-Jun32 8mo Balanced Strip",
+    "code": "SR3_Jun30-Jun32_8mo_Balanced_Strip",
+    "id": "9938830526092660573",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Jun30:+1xSR3 Sep30:+1xSR3",
+    "raw_code": "SR3 Jun30:+1xSR3 Sep30:+1xSR3",
+    "code": "SR3_Jun30:+1xSR3_Sep30:+1xSR3",
+    "id": "17430694436027750114",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep30-Dec30 Calendar",
+    "raw_code": "SR3 Sep30-Dec30 Calendar",
+    "code": "SFRU30-SFRZ30",
+    "id": "6051097766110792341",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep30-Mar31 Calendar",
+    "raw_code": "SR3 Sep30-Mar31 Calendar",
+    "code": "SFRU30-SFRH31",
+    "id": "10299507914138812750",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep30-Jun31 Calendar",
+    "raw_code": "SR3 Sep30-Jun31 Calendar",
+    "code": "SFRU30-SFRM31",
+    "id": "13537023950624023319",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep30-Sep31 Calendar",
+    "raw_code": "SR3 Sep30-Sep31 Calendar",
+    "code": "SFRU30-SFRU31",
+    "id": "14621673452041641203",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep30-Dec31 Calendar",
+    "raw_code": "SR3 Sep30-Dec31 Calendar",
+    "code": "SFRU30-SFRZ31",
+    "id": "1897557127001711401",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep30-Mar32 Calendar",
+    "raw_code": "SR3 Sep30-Mar32 Calendar",
+    "code": "SFRU30-SFRH32",
+    "id": "13830165316037064506",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep30-Jun32 Calendar",
+    "raw_code": "SR3 Sep30-Jun32 Calendar",
+    "code": "SFRU30-SFRM32",
+    "id": "10597168066297645585",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep30-Sep32 Calendar",
+    "raw_code": "SR3 Sep30-Sep32 Calendar",
+    "code": "SFRU30-SFRU32",
+    "id": "1911993654597160707",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep30-Dec32 Calendar",
+    "raw_code": "SR3 Sep30-Dec32 Calendar",
+    "code": "SFRU30-SFRZ32",
+    "id": "12274128797427431270",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep30-Mar33 Calendar",
+    "raw_code": "SR3 Sep30-Mar33 Calendar",
+    "code": "SFRU30-SFRH33",
+    "id": "13785218296187245421",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep30-Jun33 Calendar",
+    "raw_code": "SR3 Sep30-Jun33 Calendar",
+    "code": "SFRU30-SFRM33",
+    "id": "114783405855952489162",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep30-Sep33 Calendar",
+    "raw_code": "SR3 Sep30-Sep33 Calendar",
+    "code": "SFRU30-SFRU33",
+    "id": "19323274894584243268",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep30 3mo Butterfly",
+    "raw_code": "SR3 Sep30 3mo Butterfly",
+    "code": "SR3_Sep30_3mo_Butterfly",
+    "id": "6196760227161379226",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep30 6mo Butterfly",
+    "raw_code": "SR3 Sep30 6mo Butterfly",
+    "code": "SR3_Sep30_6mo_Butterfly",
+    "id": "2964213606397608177",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep30 9mo Butterfly",
+    "raw_code": "SR3 Sep30 9mo Butterfly",
+    "code": "SR3_Sep30_9mo_Butterfly",
+    "id": "11823855058211812925",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep30 Pack",
+    "raw_code": "SR3 Sep30 Pack",
+    "code": "SR3_Sep30_Pack",
+    "id": "5321366315275524801",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep30 2yr Bundle",
+    "raw_code": "SR3 Sep30 2yr Bundle",
+    "code": "SR3_Sep30_2yr_Bundle",
+    "id": "2477906419456039046",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep30 4yr Bundle",
+    "raw_code": "SR3 Sep30 4yr Bundle",
+    "code": "SR3_Sep30_4yr_Bundle",
+    "id": "12599425403310918243",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep30 Syr Bundle",
+    "raw_code": "SR3 Sep30 Syr Bundle",
+    "code": "SR3_Sep30_Syr_Bundle",
+    "id": "17159372615965151719",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3Sep303mo Double Butterfly",
+    "raw_code": "SR3Sep303mo Double Butterfly",
+    "code": "SR3Sep303mo_Double_Butterfly",
+    "id": "14843017120783614249",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3Sep30 6mo Double Butterfly",
+    "raw_code": "SR3Sep30 6mo Double Butterfly",
+    "code": "SR3Sep30_6mo_Double_Butterfly",
+    "id": "9759908467596581232",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep30-Sep31 4mo Balanced Strip",
+    "raw_code": "SR3 Sep30-Sep31 4mo Balanced Strip",
+    "code": "SR3_Sep30-Sep31_4mo_Balanced_Strip",
+    "id": "16218292942180192325",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep30-Sep32 8mo Balanced Strip",
+    "raw_code": "SR3 Sep30-Sep32 8mo Balanced Strip",
+    "code": "SR3_Sep30-Sep32_8mo_Balanced_Strip",
+    "id": "1144008412652446675",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep30:+1xSR3 Dec30:+1xSR3",
+    "raw_code": "SR3 Sep30:+1xSR3 Dec30:+1xSR3",
+    "code": "SR3_Sep30:+1xSR3_Dec30:+1xSR3",
+    "id": "13998656198633100756",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep30:+1xSR3 Dec30:+1xSR3",
+    "raw_code": "SR3 Sep30:+1xSR3 Dec30:+1xSR3",
+    "code": "SR3_Sep30:+1xSR3_Dec30:+1xSR3_7322",
+    "id": "7949035061232637322",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec30-Mar31 Calendar",
+    "raw_code": "SR3 Dec30-Mar31 Calendar",
+    "code": "SFRZ30-SFRH31",
+    "id": "16178623093136071578",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec30-Sep31 Calendar",
+    "raw_code": "SR3 Dec30-Sep31 Calendar",
+    "code": "SFRZ30-SFRU31",
+    "id": "11860067841121949174",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec30-Mar32 Calendar",
+    "raw_code": "SR3 Dec30-Mar32 Calendar",
+    "code": "SFRZ30-SFRH32",
+    "id": "11035936664853992549",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec30-Dec32 Calendar",
+    "raw_code": "SR3 Dec30-Dec32 Calendar",
+    "code": "SFRZ30-SFRZ32",
+    "id": "14322848339612465191",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec30-Mar33 Calendar",
+    "raw_code": "SR3 Dec30-Mar33 Calendar",
+    "code": "SFRZ30-SFRH33",
+    "id": "6419488748704039935",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec30-Sep33 Calendar",
+    "raw_code": "SR3 Dec30-Sep33 Calendar",
+    "code": "SFRZ30-SFRU33",
+    "id": "13645226188958815292",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec30-Dec33 Calendar",
+    "raw_code": "SR3 Dec30-Dec33 Calendar",
+    "code": "SFRZ30-SFRZ33",
+    "id": "114765562446100487030",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec30-Dec34 Calendar",
+    "raw_code": "SR3 Dec30-Dec34 Calendar",
+    "code": "SFRZ30-SFRZ34",
+    "id": "16365847892999163556",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec30 3mo Butterfly",
+    "raw_code": "SR3 Dec30 3mo Butterfly",
+    "code": "SR3_Dec30_3mo_Butterfly",
+    "id": "13906324082705793949",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec30 9mo Butterfly",
+    "raw_code": "SR3 Dec30 9mo Butterfly",
+    "code": "SR3_Dec30_9mo_Butterfly",
+    "id": "11483903677416568580",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec30 12mo Butterfly",
+    "raw_code": "SR3 Dec30 12mo Butterfly",
+    "code": "SR3_Dec30_12mo_Butterfly",
+    "id": "7747119892488497464",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec30 Pack",
+    "raw_code": "SR3 Dec30 Pack",
+    "code": "SR3_Dec30_Pack",
+    "id": "17455255624865133145",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec30 3yr Bundle",
+    "raw_code": "SR3 Dec30 3yr Bundle",
+    "code": "SR3_Dec30_3yr_Bundle",
+    "id": "11941708828010183914",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec30 4yr Bundle",
+    "raw_code": "SR3 Dec30 4yr Bundle",
+    "code": "SR3_Dec30_4yr_Bundle",
+    "id": "17412410180692049603",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3Dec30 3mo Double Butterfly",
+    "raw_code": "SR3Dec30 3mo Double Butterfly",
+    "code": "SR3Dec30_3mo_Double_Butterfly",
+    "id": "2849906531136669410",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3Dec30 9mo Double Butterfly",
+    "raw_code": "SR3Dec30 9mo Double Butterfly",
+    "code": "SR3Dec30_9mo_Double_Butterfly",
+    "id": "15128876321770251807",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec30-Dec31 4mo Balanced Strip",
+    "raw_code": "SR3 Dec30-Dec31 4mo Balanced Strip",
+    "code": "SR3_Dec30-Dec31_4mo_Balanced_Strip",
+    "id": "8252729308001618794",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec30-Dec32 8mo Balanced Strip",
+    "raw_code": "SR3 Dec30-Dec32 8mo Balanced Strip",
+    "code": "SR3_Dec30-Dec32_8mo_Balanced_Strip",
+    "id": "3070228735740549971",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec30:+1xSR3 Mar31:+1xSR3",
+    "raw_code": "SR3 Dec30:+1xSR3 Mar31:+1xSR3",
+    "code": "SR3_Dec30:+1xSR3_Mar31:+1xSR3",
+    "id": "12543490662341970645",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec30:+1xSR3 Mar31:+1xSR3",
+    "raw_code": "SR3 Dec30:+1xSR3 Mar31:+1xSR3",
+    "code": "SR3_Dec30:+1xSR3_Mar31:+1xSR3_0638",
+    "id": "15814588695877280638",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar31-Jun31 Calendar",
+    "raw_code": "SR3 Mar31-Jun31 Calendar",
+    "code": "SFRH31-SFRM31",
+    "id": "17712558764620583619",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar31-Sep31 Calendar",
+    "raw_code": "SR3 Mar31-Sep31 Calendar",
+    "code": "SFRH31-SFRU31",
+    "id": "10434225626719655411",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar31-Jun32 Calendar",
+    "raw_code": "SR3 Mar31-Jun32 Calendar",
+    "code": "SFRH31-SFRM32",
+    "id": "17037364774218629750",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar31-Sep32 Calendar",
+    "raw_code": "SR3 Mar31-Sep32 Calendar",
+    "code": "SFRH31-SFRU32",
+    "id": "13098812954545979145",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar31-Jun33 Calendar",
+    "raw_code": "SR3 Mar31-Jun33 Calendar",
+    "code": "SFRH31-SFRM33",
+    "id": "10091753043386468812",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar31-Sep33 Calendar",
+    "raw_code": "SR3 Mar31-Sep33 Calendar",
+    "code": "SFRH31-SFRU33",
+    "id": "7477086419050201239",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep32-Jun34 Calendar",
+    "raw_code": "SR3 Sep32-Jun34 Calendar",
+    "code": "SFRU32-SFRM34",
+    "id": "6601111365307546629",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep32-Sep34 Calendar",
+    "raw_code": "SR3 Sep32-Sep34 Calendar",
+    "code": "SFRU32-SFRU34",
+    "id": "10633055902535089636",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep32-Dec34 Calendar",
+    "raw_code": "SR3 Sep32-Dec34 Calendar",
+    "code": "SFRU32-SFRZ34",
+    "id": "6070954508557469606",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep32-Mar35 Calendar",
+    "raw_code": "SR3 Sep32-Mar35 Calendar",
+    "code": "SFRU32-SFRH35",
+    "id": "67423657995829290",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep32 3mo Butterfly",
+    "raw_code": "SR3 Sep32 3mo Butterfly",
+    "code": "SR3_Sep32_3mo_Butterfly",
+    "id": "11866216696172423011",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep32 6mo Butterfly",
+    "raw_code": "SR3 Sep32 6mo Butterfly",
+    "code": "SR3_Sep32_6mo_Butterfly",
+    "id": "7071343135343282962",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep32 9mo Butterfly",
+    "raw_code": "SR3 Sep32 9mo Butterfly",
+    "code": "SR3_Sep32_9mo_Butterfly",
+    "id": "1061100023303391164",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep32 Pack",
+    "raw_code": "SR3 Sep32 Pack",
+    "code": "SR3_Sep32_Pack",
+    "id": "17282098629117170401",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep32 2yr Bundle",
+    "raw_code": "SR3 Sep32 2yr Bundle",
+    "code": "SR3_Sep32_2yr_Bundle",
+    "id": "10789619110095947608",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Sep32 3yr Bundle",
+    "raw_code": "SR3 Sep32 3yr Bundle",
+    "code": "SR3_Sep32_3yr_Bundle",
+    "id": "5248821432269659094",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec32-Mar33 Calendar",
+    "raw_code": "SR3 Dec32-Mar33 Calendar",
+    "code": "SFRZ32-SFRH33",
+    "id": "11793466655900272171",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec32-Jun33 Calendar",
+    "raw_code": "SR3 Dec32-Jun33 Calendar",
+    "code": "SFRZ32-SFRM33",
+    "id": "19893855078229446207",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec32-Sep33 Calendar",
+    "raw_code": "SR3 Dec32-Sep33 Calendar",
+    "code": "SFRZ32-SFRU33",
+    "id": "4323535803346199823",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec32-Dec33 Calendar",
+    "raw_code": "SR3 Dec32-Dec33 Calendar",
+    "code": "SFRZ32-SFRZ33",
+    "id": "12760810274916450867",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec32-Mar34 Calendar",
+    "raw_code": "SR3 Dec32-Mar34 Calendar",
+    "code": "SFRZ32-SFRH34",
+    "id": "12903725746243077273",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec32-Sep34 Calendar",
+    "raw_code": "SR3 Dec32-Sep34 Calendar",
+    "code": "SFRZ32-SFRU34",
+    "id": "5130608948824207498",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec32-Dec34 Calendar",
+    "raw_code": "SR3 Dec32-Dec34 Calendar",
+    "code": "SFRZ32-SFRZ34",
+    "id": "6450185262209151558",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec32-Mar35 Calendar",
+    "raw_code": "SR3 Dec32-Mar35 Calendar",
+    "code": "SFRZ32-SFRH35",
+    "id": "12971972421311598025",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec32-Jun35 Calendar",
+    "raw_code": "SR3 Dec32-Jun35 Calendar",
+    "code": "SFRZ32-SFRM35",
+    "id": "16369012403116849823",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec32 3mo Butterfly",
+    "raw_code": "SR3 Dec32 3mo Butterfly",
+    "code": "SR3_Dec32_3mo_Butterfly",
+    "id": "14307261190619615553",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec32 6mo Butterfly",
+    "raw_code": "SR3 Dec32 6mo Butterfly",
+    "code": "SR3_Dec32_6mo_Butterfly",
+    "id": "10534748972791598497",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec32 12mo Butterfly",
+    "raw_code": "SR3 Dec32 12mo Butterfly",
+    "code": "SR3_Dec32_12mo_Butterfly",
+    "id": "11927390898546461842",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec32 Pack",
+    "raw_code": "SR3 Dec32 Pack",
+    "code": "SR3_Dec32_Pack",
+    "id": "2922824276769884029",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec32 2yr Bundle",
+    "raw_code": "SR3 Dec32 2yr Bundle",
+    "code": "SR3_Dec32_2yr_Bundle",
+    "id": "14710972550540046427",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec32 3yr Bundle",
+    "raw_code": "SR3 Dec32 3yr Bundle",
+    "code": "SR3_Dec32_3yr_Bundle",
+    "id": "10074007498640363192",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec32-Dec33 4mo Balanced Strip",
+    "raw_code": "SR3 Dec32-Dec33 4mo Balanced Strip",
+    "code": "SR3_Dec32-Dec33_4mo_Balanced_Strip",
+    "id": "16630876864948409791",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Dec32:+1xSR3 Mar33:+1xSR3",
+    "raw_code": "SR3 Dec32:+1xSR3 Mar33:+1xSR3",
+    "code": "SR3_Dec32:+1xSR3_Mar33:+1xSR3",
+    "id": "11102835685784813955",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar33-Jun33 Calendar",
+    "raw_code": "SR3 Mar33-Jun33 Calendar",
+    "code": "SFRH33-SFRM33",
+    "id": "14881439948633458187",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar33-Sep33 Calendar",
+    "raw_code": "SR3 Mar33-Sep33 Calendar",
+    "code": "SFRH33-SFRU33",
+    "id": "13465518517197648610",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar33-Dec33 Calendar",
+    "raw_code": "SR3 Mar33-Dec33 Calendar",
+    "code": "SFRH33-SFRZ33",
+    "id": "5313806947012498300",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  },
+  {
+    "name": "SR3 Mar33-Mar34 Calendar",
+    "raw_code": "SR3 Mar33-Mar34 Calendar",
+    "code": "SFRH33-SFRH34",
+    "id": "5974681965036237415",
+    "type": "SR3_SPREAD_EXT",
+    "kind": "spread"
+  }
+]

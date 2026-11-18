@@ -10,48 +10,79 @@ A high-performance quantitative analytics platform and interactive terminal for 
 
 ## Key Features
 
-1. **Three-Layer Multi-Market Geometry**:
+1. **Live Real-Time Streaming via Lightstreamer**:
+   - Native integration with Lightstreamer client (`lightstreamer-client-lib`).
+   - Real-time tick-by-tick outright prices, spreads, and butterfly updates streamed over WebSockets.
+   - Live Outright tape and streaming BBO depth for SOFR, Euribor, SONIA, and SARON.
+
+2. **Three-Layer Multi-Market Geometry**:
    - **Level 1 (Outrights)**: Implied forward yield curves ($100 - \text{VWAP}$).
    - **Level 2 (3M Calendar Spreads)**: Sequential quarter-to-quarter slopes ($S_k = r_{k+1} - r_k$).
    - **Level 3 (3M Butterflies)**: Discrete second differences / curvature ($F_k = S_k - S_{k+1}$).
 
-2. **Relative Curvature & Structure Lab (4-Panel Visual Analytics)**:
-   - Panel 1: Curve Shape & Rate Moves vs $T_0$ with zero-curvature straight line.
-   - Panel 2: Slope of $3\text{M}$ flies vs $6\text{M}$ fly $\div 4$ even-share baseline.
-   - Panel 3: Relative Trade Curvature Departure ($4 \times 3\text{M fly} - 6\text{M fly}$) and intermarket gaps.
-   - Panel 4: Peak Curvature Bulge above straight line (verifying $\text{belly bulge} = \frac{1}{2} \times 6\text{M fly}$).
+3. **Arbitrary Curve Combinations & Structure Tweaker**:
+   - **Generalized Combination Mode ($a - x \cdot b$)**: Compare any two contracts, spreads, or butterflies across any quarter ($Z26 \to Z30$) with custom or auto-calculated multiplier $x$.
+   - **Higher-Order Multi-Fly Curvature**:
+     - `Dec26 12M Fly - 2.0 × Dec26 6M Fly`
+     - `Dec26 6M Fly - 2.0 × Dec26 3M Fly`
+   - **Total Spread Strip Neutralizer ($\sum \text{Spreads} - y \cdot \text{Leg}$)**:
+     - `Total 3M Spreads (1Y Strip) - 4.0 × (Dec26 3M Spread)`
+     - `Total 6M Spreads - 2.0 × (Dec26 6M Fly)`
+   - **Live Dynamic Curve Plotter**: Continuous cubic polynomial fit ($y(x) = c_3 x^3 + c_2 x^2 + c_1 x + c_0$), 1st derivative slope ($dy/dx$), 2nd derivative curvature ($d^2y/dx^2$), and $R^2$ fit quality.
 
-3. **Advanced Mathematical Curve Lab**:
-   - **Hamiltonian Phase Portrait**: Mapping slope momentum $y'(x)$ against curvature restoring force $y''(x)$.
-   - **Discrete Laplacian Green's Matrix**: Isolating $[+1, -2, +1]$ single-contract order flow noise from genuine policy shifts.
-   - **Mechanical Bending Energy**: Scalar strain metric $E_{\text{bend}} = \sum F_k^2$.
-   - **Frenet-Serret Torsion ($\tau$)**: Identifying 3-market basis mispricings (USD-EUR-GBP).
-   - **Heat Diffusion Lead/Lag**: Calculating exact policy turning point phase offsets (USD leads EUR by 41 days).
-   - **Mahalanobis $Z$-Score**: Objective statistical entry and exit triggers.
-
-4. **DV01 Dollar Neutrality & Lot Sizing**:
-   - Dollar DV01 per basis point adjusted for contract notional and currency FX:
-     - **USD SOFR**: $25.00 / bp
-     - **EUR Euribor**: $27.00 / bp (€25 × 1.08)
-     - **GBP SONIA**: $32.00 / bp (£25 × 1.28)
-     - **CHF SARON**: $28.50 / bp (CHF 25 × 1.14)
-   - Dynamic lot ratios: **27 SR3 : 25 Euribor** (≈ 5 : 4.6).
+4. **Institutional Curve Board**:
+   - Matrix format covering:
+     - `01 · December spreads` ($Z26\text{-}Z27, Z27\text{-}Z28, Z28\text{-}Z29, Z29\text{-}Z30$ across SRA, SON, ER, CRA).
+     - `02 · 3-month flies` ($Z26 \to Z28$ quarterly legs).
+     - `03 · 6-month flies` ($Z26 \to Z28$ half-yearly legs).
 
 5. **Instant Publication-Quality PDF Report**:
    - Built-in ReportLab and Matplotlib PDF compilation engine serving institutional reports at `/Intermarket_Curve_Intelligence_Mathematical_Report.pdf`.
 
 ---
 
-## Quick Start
+## Quick Start & Lightstreamer Setup
 
-### Prerequisites
-- Python 3.10+
-- Install dependencies:
-  ```bash
-  pip install -r requirements.txt
-  ```
+### 1. Installation
+Clone the repository and install dependencies:
+```bash
+git clone https://github.com/ayan-choradia/inter-market.git
+cd inter-market
+pip install -r requirements.txt
+```
 
-### Run the Server
+### 2. Configure Environment & Lightstreamer Credentials
+Copy the example environment template:
+```bash
+# On Windows (cmd):
+copy .env.example .env
+
+# On Linux / macOS:
+cp .env.example .env
+```
+
+Open `.env` in any text editor and configure your credentials:
+```bash
+# Enable Lightstreamer Live Market Data Streaming (1 = ON, 0 = OFF)
+ENABLE_LIGHTSTREAMER=1
+
+# Lightstreamer Server & Adapter
+LIGHTSTREAMER_URL=https://ls-md.corp.hertshtengroup.com/
+LIGHTSTREAMER_ADAPTER=TTsdkLSAdapter
+LIGHTSTREAMER_DATA_ADAPTER=HGL1_Adapter
+
+# Your Lightstreamer Credentials
+LS_USER=your.username
+LS_TOKEN=YOUR_LIGHTSTREAMER_AUTH_TOKEN_HERE
+
+# Server Port
+PORT=8050
+HOST=0.0.0.0
+```
+
+> **Note**: If you don't have active Lightstreamer credentials, set `ENABLE_LIGHTSTREAMER=0` or leave `LS_TOKEN` blank. The platform will automatically run with the embedded institutional dataset.
+
+### 3. Run the Platform
 On Windows:
 ```cmd
 run.bat
@@ -66,14 +97,18 @@ Open your browser to: **`http://localhost:8050/`**
 
 ## Repository Structure
 ```
-intermarket-curve-intelligence/
-├── app.py                                            # Standalone FastAPI server
+inter-market/
+├── app.py                                            # Standalone FastAPI server with WebSocket & LS support
+├── lightstreamer_adapter.py                          # Native Lightstreamer client adapter & parser
+├── instruments.py                                    # Instrument classification & registry mapper
+├── instrument_registry.json                          # JSON instrument definitions for live feed
 ├── intermarket_curve_engine.py                       # Core mathematical curve engine
-├── intermarket_curves_dashboard.html                 # Complete 5-tab frontend dashboard
+├── intermarket_curves_dashboard.html                 # 5-tab frontend dashboard with live plotting
 ├── Intermarket_Curve_Intelligence_Mathematical_Report.pdf # Publication-quality PDF report
+├── .env.example                                      # Environment variables template
 ├── requirements.txt                                  # Python dependencies
 ├── run.bat                                           # Windows one-click launcher
-├── PROMPT_SPECIFICATION.md                           # Master prompt and mathematical specification
+├── PROMPT_SPECIFICATION.md                           # Mathematical specification & prompt guide
 ├── README.md                                         # Project documentation
 └── [Data Files]
     ├── I outreight inst id                           # ICE Euribor outrights

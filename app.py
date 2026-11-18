@@ -6,6 +6,10 @@ import os
 import json
 import asyncio
 from typing import List
+from dotenv import load_dotenv
+
+# Load local environment variables (.env)
+load_dotenv()
 from fastapi import FastAPI, HTTPException, Request, WebSocket, WebSocketDisconnect
 from fastapi.responses import FileResponse, Response
 from fastapi.middleware.cors import CORSMiddleware
@@ -164,6 +168,54 @@ async def forward_backend_ws():
 
 @app.on_event("startup")
 async def startup_event():
+    app.state.loop = asyncio.get_running_loop()
+
+    # 1. Native Lightstreamer support if enabled in .env
+    if os.getenv("ENABLE_LIGHTSTREAMER", "0") == "1":
+        import threading
+        def _run_native_ls():
+            try:
+                from lightstreamer_adapter import start_lightstreamer_feed
+                print("[STANDALONE] Starting native Lightstreamer live streaming feed...", flush=True)
+
+                def on_im_tick(im_tick):
+                    loop = getattr(app.state, 'loop', None)
+                    if loop and not loop.is_closed():
+                        for client in list(connected_ws):
+                            try:
+                                asyncio.run_coroutine_threadsafe(client.send_json(im_tick), loop)
+                            except Exception:
+                                pass
+
+                def on_price_tick(inst_type, prices, rich_data):
+                    tick_msg = {
+                        "type": "price_tick",
+                        "instrument_type": inst_type,
+                        "prices": prices,
+                        "rich_data": rich_data
+                    }
+                    loop = getattr(app.state, 'loop', None)
+                    if loop and not loop.is_closed():
+                        for client in list(connected_ws):
+                            try:
+                                asyncio.run_coroutine_threadsafe(client.send_json(tick_msg), loop)
+                            except Exception:
+                                pass
+
+                start_lightstreamer_feed(
+                    server_url=os.getenv("LIGHTSTREAMER_URL", "https://ls-md.corp.hertshtengroup.com/"),
+                    adapter_set=os.getenv("LIGHTSTREAMER_ADAPTER", "TTsdkLSAdapter"),
+                    data_adapter=os.getenv("LIGHTSTREAMER_DATA_ADAPTER", "HGL1_Adapter"),
+                    api_url=f"http://localhost:{os.getenv('PORT', '8050')}",
+                    on_price_callback=on_price_tick,
+                    on_intermarket_callback=on_im_tick
+                )
+            except Exception as e:
+                print(f"[STANDALONE] Native Lightstreamer startup failed: {e}", flush=True)
+
+        threading.Thread(target=_run_native_ls, daemon=True).start()
+
+    # 2. Also relay live ticks from port 8000 if backend is running locally
     asyncio.create_task(forward_backend_ws())
 
 @app.get("/")
