@@ -1154,7 +1154,7 @@
               <span class="badge badge-teal" style="font-size:10px; text-transform:uppercase; font-weight:700;"><i class="fa-solid fa-bolt"></i> Live Feed Connected</span>
             </div>
             <div class="layer-subtitle" style="font-size:11px; color:#94a3b8; margin-top:2px;">
-              Tweak live 3M spreads, butterfly flies, or arbitrary structures (a - x·b) to mathematically deduce the forward curve shape. Compare Live Market Curve vs. Deduced Curve with side-by-side polynomial equations and lock 12M net policy rate moves (constant total hikes).
+              Manually change spreads, flies, or slope of flies (a - x·b) while keeping total 12M hikes/cuts strictly constant to see how the live outright forward curve changes shape.
             </div>
           </div>
           <div style="display:flex; align-items:center; gap:10px; margin-left:auto; flex-wrap:wrap;">
@@ -1171,10 +1171,10 @@
 
             <!-- View Mode Switcher -->
             <div class="selector-group" style="margin-bottom:0;">
-              <span class="selector-label" style="font-size:11px;">View:</span>
+              <span class="selector-label" style="font-size:11px;">Curve View:</span>
               <div class="btn-group">
-                <button id="btnDeduceViewRel" class="btn btn-sm active" onclick="setDeduceViewMode('rel_t0')">Move vs T₀ (bp)</button>
-                <button id="btnDeduceViewYield" class="btn btn-sm" onclick="setDeduceViewMode('yield')">Implied Yield (%)</button>
+                <button id="btnDeduceViewRel" class="btn btn-sm active" onclick="setDeduceViewMode('rel_t0')">Rate Move vs T₀ (bp)</button>
+                <button id="btnDeduceViewYield" class="btn btn-sm" onclick="setDeduceViewMode('yield')">Outright Yield (%)</button>
                 <button id="btnDeduceViewSpreads" class="btn btn-sm" onclick="setDeduceViewMode('spreads')">3M Spreads (bp)</button>
                 <button id="btnDeduceViewFlies" class="btn btn-sm" onclick="setDeduceViewMode('flies')">Flies (bp)</button>
               </div>
@@ -1211,25 +1211,25 @@
             </div>
           </div>
 
-          <!-- Column 3: Active a - x·b Structure -->
+          <!-- Column 3: Slope of Flies & Structure Tweaker (a - x·b) -->
           <div style="background:#090e1a; border:1px solid #1a253c; border-radius:8px; padding:12px;">
             <div style="font-weight:800; font-size:12px; color:#f59e0b; display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1px solid #162035; padding-bottom:6px;">
-              <span><i class="fa-solid fa-calculator"></i> 3. Active Structure Tweaker (a - x·b)</span>
-              <span id="deduceComboLinkedBadge" class="badge badge-indigo" style="font-size:9px;">Linked to Sec 04</span>
+              <span><i class="fa-solid fa-calculator"></i> 3. Slope of Flies (a - x·b)</span>
+              <span class="badge badge-amber" style="font-size:9px;">Fly Differential</span>
             </div>
             <div id="deduceComboContainer" style="display:flex; flex-direction:column; gap:10px;">
-              <!-- Populated dynamically with active a - x*b structure controls -->
+              <!-- Populated dynamically with slope of flies controls -->
             </div>
           </div>
 
-          <!-- Column 4: 12-Month Spread & Central Bank Policy Invariant -->
+          <!-- Column 4: 12-Month Spread & Policy Invariant Lock -->
           <div style="background:#090e1a; border:1px solid #1a253c; border-radius:8px; padding:12px;">
             <div style="font-weight:800; font-size:12px; color:#10b981; display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1px solid #162035; padding-bottom:6px;">
-              <span><i class="fa-solid fa-scale-balanced"></i> 4. 12M Spread & Policy Hikes Lock</span>
+              <span><i class="fa-solid fa-scale-balanced"></i> 4. 12M Spread & Policy Invariant</span>
               <span id="deduceHikesBadge" class="badge badge-emerald" style="font-size:10px;">1.84 Hikes</span>
             </div>
             <div id="deduceHikesContainer" style="display:flex; flex-direction:column; gap:10px;">
-              <!-- Invariant lock toggle, 12M slider, and quick shift chips -->
+              <!-- Populated dynamically with invariant lock, 12M slider, and hike presets -->
             </div>
           </div>
         </div>
@@ -1238,11 +1238,11 @@
         <div style="margin-top:14px; background:#070b14; border:1px solid #162032; border-radius:8px; padding:10px;">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; padding:0 6px;">
             <div style="font-size:12px; font-weight:700; color:#e2e8f0; display:flex; align-items:center; gap:8px;">
-              <span id="deduceChartTitle">Live Market Forward Curve vs. My Deduced Curve (Continuous Cubic Spline)</span>
+              <span id="deduceChartTitle">Live Outright Forward Curve vs. My Deduced Curve</span>
               <span id="deduceCurveStatusBadge" class="badge badge-cyan" style="font-size:10px;">Identical (Unshifted)</span>
             </div>
             <div style="display:flex; align-items:center; gap:12px; font-size:11px; font-family:var(--font-mono);">
-              <span style="color:#38bdf8;"><span style="display:inline-block; width:12px; height:3px; background:#38bdf8; vertical-align:middle; margin-right:4px;"></span>Live Market</span>
+              <span style="color:#38bdf8;"><span style="display:inline-block; width:12px; height:3px; background:#38bdf8; vertical-align:middle; margin-right:4px;"></span>Live Market Curve</span>
               <span style="color:#fbbf24;"><span style="display:inline-block; width:12px; height:3px; background:#fbbf24; border-top:1px dashed #fbbf24; vertical-align:middle; margin-right:4px;"></span>My Deduced Curve</span>
               <span style="color:#64748b;"><span style="display:inline-block; width:12px; height:2px; background:#475569; vertical-align:middle; margin-right:4px;"></span>Linear Baseline</span>
             </div>
@@ -1263,7 +1263,6 @@
         </div>
 
       </div>
-
 
     </div>
 
@@ -4342,14 +4341,25 @@
     // ═══════════════════════════════════════════════════════════════════════════
     let deduceActiveMarket = 'USD';
     let deduceViewMode = 'rel_t0';      // 'rel_t0', 'yield', 'spreads', 'flies'
-    let deduceLock12MSpread = true;     // Constant 12M net policy rate move (total hikes invariant lock)
+    let deduceLock12MSpread = true;     // Invariant lock: Keep 12M net policy rate move constant
+    let deduceActiveSlopeType = 'FLYS_SLOPE_1'; // 'FLYS_SLOPE_1', 'FLY_6M_2X3M', 'FLYS_SLOPE_2', 'SEC04_COMBO'
 
     // User tweaks storage (null = identical to live)
-    // S: [S0, S1, S2, S3]
-    let deducedSpreads = null;
-    let deducedFlies = null;
-    let deduced12MSpread = null;
-    let deducedActiveComboVal = null;
+    let deducedSpreads = null;          // [S0, S1, S2, S3]
+    let deducedFlies = null;            // [F0, F1, F2, F6M]
+    let deduced12MSpread = null;        // Delta_12M
+    let deducedFlySlopeVal = null;      // Value of active fly slope
+
+    // Helper: evaluate net value of a combo safely
+    function getComboNetValue(combo) {
+      if (!combo) return 0.0;
+      try {
+        const res = evaluateCombination(combo);
+        return (res && res.net !== null && !isNaN(res.net)) ? res.net : 0.0;
+      } catch (e) {
+        return 0.0;
+      }
+    }
 
     // Helper: get 5 quarterly contract IMM prices [p0, p1, p2, p3, p4] for active deduce market
     function getDeduceMarket5QPrices(mkt) {
@@ -4371,7 +4381,7 @@
     // Helper: compute Live Spreads, Flies, and 12M Net Spread from the 5 quarterly prices
     function getLiveDeduceState(mkt) {
       const p = getDeduceMarket5QPrices(mkt);
-      // Fallback prices if feed initializing
+      // Clean fallback if live feed connecting
       const basePrices = (p.filter(x => x !== null).length === 5) ? p : [95.7135, 95.4291, 95.2754, 95.2284, 95.2529];
       const S0 = Number(((basePrices[0] - basePrices[1]) * 100.0).toFixed(2));
       const S1 = Number(((basePrices[1] - basePrices[2]) * 100.0).toFixed(2));
@@ -4386,12 +4396,17 @@
       const flies = [F0, F1, F2, F6M];
       const hikes = Number((d12 / 25.0).toFixed(2));
 
-      // Calculate cumulative moves vs T0 (bp)
-      const yMoves = [0.0, spreads[0], spreads[0] + spreads[1], spreads[0] + spreads[1] + spreads[2], d12];
+      // Slope of flies
+      const slope1 = Number((F1 - F0).toFixed(2));
+      const slope2 = Number((F2 - F1).toFixed(2));
+      const ratio6M2X3M = Number((F6M - 2.0 * F0).toFixed(2));
+
+      // Rate moves vs T0 (bp)
+      const yMoves = [0.0, spreads[0], Number((spreads[0] + spreads[1]).toFixed(2)), Number((spreads[0] + spreads[1] + spreads[2]).toFixed(2)), d12];
       // Implied yields (%)
       const yields = basePrices.map(pr => Number((100.0 - pr).toFixed(4)));
 
-      return { p: basePrices, spreads, d12, flies, hikes, yMoves, yields };
+      return { p: basePrices, spreads, d12, flies, hikes, yMoves, yields, slope1, slope2, ratio6M2X3M };
     }
 
     function initDeduceModule() {
@@ -4408,11 +4423,11 @@
       const ab = document.getElementById(map[m]);
       if (ab) ab.classList.add('active');
 
-      // Reset deduced tweaks when switching market so user starts fresh on that market
+      // Reset tweaks when changing market
       deducedSpreads = null;
       deducedFlies = null;
       deduced12MSpread = null;
-      deducedActiveComboVal = null;
+      deducedFlySlopeVal = null;
 
       recalculateAndRenderDeduceStudio();
     }
@@ -4439,7 +4454,7 @@
       deducedSpreads = null;
       deducedFlies = null;
       deduced12MSpread = null;
-      deducedActiveComboVal = null;
+      deducedFlySlopeVal = null;
       recalculateAndRenderDeduceStudio();
     }
 
@@ -4455,7 +4470,7 @@
       if (Math.abs(delta) < 0.0001) return;
 
       if (deduceLock12MSpread) {
-        // Distribute -delta / 3 equally across other 3 spreads to keep sum constant!
+        // Distribute -delta / 3 across other 3 spreads so sum remains strictly identical!
         curSpreads[idx] = Number(newVal.toFixed(2));
         const remDelta = -delta / 3.0;
         for (let i = 0; i < 4; i++) {
@@ -4466,7 +4481,7 @@
       }
 
       deducedSpreads = curSpreads;
-      // Update flies and 12M
+      // Recompute flies and 12M
       const F0 = Number((deducedSpreads[0] - deducedSpreads[1]).toFixed(2));
       const F1 = Number((deducedSpreads[1] - deducedSpreads[2]).toFixed(2));
       const F2 = Number((deducedSpreads[2] - deducedSpreads[3]).toFixed(2));
@@ -4485,7 +4500,7 @@
       const live = getLiveDeduceState(deduceActiveMarket);
       let curSpreads = deducedSpreads ? [...deducedSpreads] : [...live.spreads];
       let curFlies = deducedFlies ? [...deducedFlies] : [...live.flies];
-      let curD12 = deduced12MSpread !== null ? deduced12MSpread : live.d12;
+      let curD12 = (deduced12MSpread !== null) ? deduced12MSpread : live.d12;
 
       const delta = newVal - curFlies[flyIdx];
       if (Math.abs(delta) < 0.0001) return;
@@ -4507,8 +4522,7 @@
           curSpreads[1] = Number((curSpreads[1] + 0.25 * delta).toFixed(2));
           curSpreads[2] = Number((curSpreads[2] + 0.25 * delta).toFixed(2));
           curSpreads[3] = Number((curSpreads[3] - 0.75 * delta).toFixed(2));
-        } else if (flyIdx === 3) { // F6M
-          // F6M = F0 + 2*F1 + F2. Shift belly F1 by delta / 2
+        } else if (flyIdx === 3) { // F6M = F0 + 2*F1 + F2
           const bellyDelta = delta / 2.0;
           curSpreads[0] = Number((curSpreads[0] + 0.50 * bellyDelta).toFixed(2));
           curSpreads[1] = Number((curSpreads[1] + 0.50 * bellyDelta).toFixed(2));
@@ -4516,7 +4530,6 @@
           curSpreads[3] = Number((curSpreads[3] - 0.50 * bellyDelta).toFixed(2));
         }
       } else {
-        // Unlocked mode: direct fly adjustment
         if (flyIdx === 0) {
           curSpreads[1] = Number((curSpreads[0] - newVal).toFixed(2));
         } else if (flyIdx === 1) {
@@ -4524,7 +4537,7 @@
         } else if (flyIdx === 2) {
           curSpreads[3] = Number((curSpreads[2] - newVal).toFixed(2));
         } else if (flyIdx === 3) {
-          curSpreads[2] = Number((curSpreads[1] - delta/2.0).toFixed(2));
+          curSpreads[2] = Number((curSpreads[1] - delta / 2.0).toFixed(2));
         }
       }
 
@@ -4536,6 +4549,43 @@
       deducedFlies = [F0, F1, F2, F6M];
       deduced12MSpread = Number((deducedSpreads[0] + deducedSpreads[1] + deducedSpreads[2] + deducedSpreads[3]).toFixed(2));
 
+      recalculateAndRenderDeduceStudio();
+    }
+
+    // Handler when user tweaks Slope of Flies (a - x·b)
+    function onFlySlopeTweak(slopeType, newValStr) {
+      const newVal = parseFloat(newValStr);
+      if (isNaN(newVal)) return;
+
+      const live = getLiveDeduceState(deduceActiveMarket);
+      let curFlies = deducedFlies ? [...deducedFlies] : [...live.flies];
+      let curSlopeVal = 0.0;
+      if (slopeType === 'FLYS_SLOPE_1') curSlopeVal = curFlies[1] - curFlies[0];
+      else if (slopeType === 'FLYS_SLOPE_2') curSlopeVal = curFlies[2] - curFlies[1];
+      else if (slopeType === 'FLY_6M_2X3M') curSlopeVal = curFlies[3] - 2.0 * curFlies[0];
+      else {
+        const activeCombo = customCombinationsList.find(c => c.id === activePlottedComboId) || customCombinationsList[0];
+        curSlopeVal = getComboNetValue(activeCombo);
+      }
+
+      const delta = newVal - curSlopeVal;
+      if (Math.abs(delta) < 0.0001) return;
+
+      deducedFlySlopeVal = Number(newVal.toFixed(2));
+
+      if (slopeType === 'FLYS_SLOPE_1') {
+        // Shift F1 by +delta/2, and F0 by -delta/2 (steeper fly slope)
+        onFlyTweak(1, (curFlies[1] + delta / 2.0).toFixed(2));
+      } else if (slopeType === 'FLYS_SLOPE_2') {
+        onFlyTweak(2, (curFlies[2] + delta / 2.0).toFixed(2));
+      } else if (slopeType === 'FLY_6M_2X3M' || slopeType === 'SEC04_COMBO') {
+        onFlyTweak(1, (curFlies[1] + delta / 2.0).toFixed(2));
+      }
+    }
+
+    function setDeduceSlopeType(st) {
+      deduceActiveSlopeType = st;
+      deducedFlySlopeVal = null;
       recalculateAndRenderDeduceStudio();
     }
 
@@ -4568,27 +4618,6 @@
     function setHikePreset(hikesTarget) {
       const targetD12 = Number((hikesTarget * 25.0).toFixed(2));
       onHikesTweak(targetD12);
-    }
-
-    // Handler when user tweaks the active Section 04 structure
-    function onComboTweak(newValStr) {
-      const newVal = parseFloat(newValStr);
-      if (isNaN(newVal)) return;
-
-      const activeCombo = customCombinationsList.find(c => c.id === activePlottedComboId) || customCombinationsList[0];
-      const liveComboVal = calcComboValue(activeCombo) || 0.0;
-      const curVal = deducedActiveComboVal !== null ? deducedActiveComboVal : liveComboVal;
-      const delta = newVal - curVal;
-      if (Math.abs(delta) < 0.0001) return;
-
-      deducedActiveComboVal = Number(newVal.toFixed(2));
-
-      // Translate structure tweak into underlying curvature tweak
-      // If combo is a fly differential (e.g. 12M Fly - 2*6M Fly or 6M Fly - 2*3M Fly)
-      // 6M Fly - 2*3M Fly = 2*F1 + F2 - F0. Tweak delta maps to belly fly delta / 2
-      const live = getLiveDeduceState(deduceActiveMarket);
-      let curFlies = deducedFlies ? [...deducedFlies] : [...live.flies];
-      onFlyTweak(1, (curFlies[1] + delta / 2.0).toFixed(2));
     }
 
     // Master update and re-render of Section 05
@@ -4666,34 +4695,63 @@
         fliesContainer.innerHTML = html;
       }
 
-      // 3. Render Column 3: Active Section 04 Structure
+      // 3. Render Column 3: Slope of Flies & Structure Tweaker (a - x·b)
       const comboContainer = document.getElementById('deduceComboContainer');
       if (comboContainer) {
-        const activeCombo = customCombinationsList.find(c => c.id === activePlottedComboId) || customCombinationsList[0];
-        const liveComboVal = calcComboValue(activeCombo) || 0.0;
-        const curComboVal = deducedActiveComboVal !== null ? deducedActiveComboVal : liveComboVal;
-        const diff = Number((curComboVal - liveComboVal).toFixed(2));
+        let liveVal = 0.0;
+        let titleStr = '';
+        let descStr = '';
+
+        if (deduceActiveSlopeType === 'FLYS_SLOPE_1') {
+          titleStr = 'Belly - Front Slope: F₁ − F₀';
+          liveVal = live.slope1;
+          descStr = 'Slope between Mar27 Belly Fly and Dec26 Front Fly';
+        } else if (deduceActiveSlopeType === 'FLY_6M_2X3M') {
+          titleStr = 'Institutional Ratio: 6M Fly − 2·(3M Fly)';
+          liveVal = live.ratio6M2X3M;
+          descStr = 'Dec26 6M Fly − 2·(Dec26 3M Fly) curvature differential';
+        } else if (deduceActiveSlopeType === 'FLYS_SLOPE_2') {
+          titleStr = 'Back - Belly Slope: F₂ − F₁';
+          liveVal = live.slope2;
+          descStr = 'Slope between Jun27 Fly and Mar27 Belly Fly';
+        } else {
+          const activeCombo = customCombinationsList.find(c => c.id === activePlottedComboId) || customCombinationsList[0];
+          titleStr = activeCombo.name;
+          liveVal = getComboNetValue(activeCombo);
+          descStr = `Linked from Sec 04 (${activeCombo.market})`;
+        }
+
+        const curVal = (deducedFlySlopeVal !== null) ? deducedFlySlopeVal : liveVal;
+        const diff = Number((curVal - liveVal).toFixed(2));
         const diffBadge = Math.abs(diff) > 0.01 
           ? `<span class="badge ${diff > 0 ? 'badge-teal' : 'badge-amber'}" style="font-size:9px;">${diff > 0 ? '+' : ''}${diff.toFixed(2)} bp</span>`
           : `<span class="badge badge-indigo" style="font-size:9px;">0.00 bp</span>`;
 
         comboContainer.innerHTML = `
           <div style="background:#0e1526; border:1px solid #1c2742; border-radius:6px; padding:10px;">
+            <div style="margin-bottom:8px;">
+              <select class="btn btn-sm" style="width:100%; font-size:11px; padding:4px 6px; background:#070b14; color:#f59e0b; border-color:#334155;" onchange="setDeduceSlopeType(this.value)">
+                <option value="FLYS_SLOPE_1" ${deduceActiveSlopeType === 'FLYS_SLOPE_1' ? 'selected' : ''}>Fly Slope 1: Belly − Front (F₁ − F₀)</option>
+                <option value="FLY_6M_2X3M" ${deduceActiveSlopeType === 'FLY_6M_2X3M' ? 'selected' : ''}>Institutional: 6M Fly − 2·(3M Fly)</option>
+                <option value="FLYS_SLOPE_2" ${deduceActiveSlopeType === 'FLYS_SLOPE_2' ? 'selected' : ''}>Fly Slope 2: Back − Belly (F₂ − F₁)</option>
+                <option value="SEC04_COMBO" ${deduceActiveSlopeType === 'SEC04_COMBO' ? 'selected' : ''}>Active Structure from Sec 04 (a − x·b)</option>
+              </select>
+            </div>
             <div style="font-size:11px; font-weight:800; color:#f59e0b; margin-bottom:4px; display:flex; justify-content:space-between; align-items:center;">
-              <span>${activeCombo.name}</span>
+              <span>${titleStr}</span>
               ${diffBadge}
             </div>
             <div style="font-size:10px; color:#94a3b8; font-family:var(--font-mono); margin-bottom:8px;">
-              Market: ${activeCombo.market || deduceActiveMarket} · Live: <strong style="color:#e2e8f0;">${liveComboVal > 0 ? '+' : ''}${liveComboVal.toFixed(2)} bp</strong>
+              Live: <strong style="color:#e2e8f0;">${liveVal > 0 ? '+' : ''}${liveVal.toFixed(2)} bp</strong> · ${descStr}
             </div>
             <div style="display:flex; align-items:center; gap:8px;">
-              <input type="range" class="tweaker-slider" min="-30" max="60" step="0.1" value="${curComboVal}"
-                     oninput="onComboTweak(this.value)" style="flex:1;">
+              <input type="range" class="tweaker-slider" min="-30" max="60" step="0.1" value="${curVal}"
+                     oninput="onFlySlopeTweak(deduceActiveSlopeType, this.value)" style="flex:1;">
               <input type="number" class="btn" style="width:72px; padding:3px 6px; font-size:11px; text-align:right; font-family:var(--font-mono); background:#060a12; color:#f59e0b;"
-                     step="0.1" value="${curComboVal.toFixed(2)}" onchange="onComboTweak(this.value)">
+                     step="0.1" value="${curVal.toFixed(2)}" onchange="onFlySlopeTweak(deduceActiveSlopeType, this.value)">
             </div>
-            <div style="margin-top:10px; font-size:10px; color:#64748b; line-height:1.4;">
-              Tweaking this structure instantly modifies the underlying curvature and fly parameters, propagating through the inverse curve reconstitution engine.
+            <div style="margin-top:8px; font-size:10px; color:#64748b; line-height:1.4;">
+              Tweaking this slope tilts curvature across the strip; under locked 12M spread, it bends the outright curve with zero policy shift.
             </div>
           </div>
         `;
@@ -4716,9 +4774,9 @@
           <div style="background:#0e1526; border:1px solid ${deduceLock12MSpread ? '#10b981' : '#334155'}; border-radius:6px; padding:8px 10px; display:flex; justify-content:space-between; align-items:center;">
             <div>
               <div style="font-size:11px; font-weight:800; color:${deduceLock12MSpread ? '#10b981' : '#94a3b8'};">
-                <i class="fa-solid ${deduceLock12MSpread ? 'fa-lock' : 'fa-lock-open'}"></i> Keep 12M Spread Constant
+                <i class="fa-solid ${deduceLock12MSpread ? 'fa-lock' : 'fa-lock-open'}"></i> Keep 12M Hikes/Cuts Constant
               </div>
-              <div style="font-size:10px; color:#64748b;">Lock 1Y policy move (pure shape twist)</div>
+              <div style="font-size:10px; color:#64748b;">Lock net policy move (pure shape twist)</div>
             </div>
             <input type="checkbox" id="chkLock12MSpread" ${deduceLock12MSpread ? 'checked' : ''} onchange="toggleLock12MSpread()" style="width:18px; height:18px; cursor:pointer; accent-color:#10b981;">
           </div>
@@ -4742,7 +4800,7 @@
 
           <!-- Quick Policy Shift Chips -->
           <div>
-            <div style="font-size:10px; color:#64748b; font-weight:700; text-transform:uppercase; margin-bottom:4px;">Quick Policy Hikes Presets:</div>
+            <div style="font-size:10px; color:#64748b; font-weight:700; text-transform:uppercase; margin-bottom:4px;">Shift 1Y Hikes:</div>
             <div style="display:flex; flex-wrap:wrap; gap:5px;">
               <button class="btn btn-sm btn-outline" style="font-size:10px; padding:2px 6px;" onclick="setHikePreset(0)">Flat (0H)</button>
               <button class="btn btn-sm btn-outline" style="font-size:10px; padding:2px 6px;" onclick="setHikePreset(1.0)">+1.0 Hike</button>
@@ -4762,7 +4820,7 @@
           statusBadge.innerHTML = '<i class="fa-solid fa-check"></i> Identical to Live Feed';
         } else {
           statusBadge.className = 'badge badge-amber';
-          statusBadge.innerHTML = `<i class="fa-solid fa-wand-magic-sparkles"></i> Tweaked Forward Curve (Δ12M: ${(d12 - live.d12) >= 0 ? '+' : ''}${(d12 - live.d12).toFixed(2)} bp)`;
+          statusBadge.innerHTML = `<i class="fa-solid fa-wand-magic-sparkles"></i> Tweaked Outright Curve (Δ12M: ${(d12 - live.d12) >= 0 ? '+' : ''}${(d12 - live.d12).toFixed(2)} bp)`;
         }
       }
 
@@ -4778,8 +4836,8 @@
       const myY = [
         0.0,
         deducedSpreads[0],
-        deducedSpreads[0] + deducedSpreads[1],
-        deducedSpreads[0] + deducedSpreads[1] + deducedSpreads[2],
+        Number((deducedSpreads[0] + deducedSpreads[1]).toFixed(2)),
+        Number((deducedSpreads[0] + deducedSpreads[1] + deducedSpreads[2]).toFixed(2)),
         deducedD12
       ];
 
@@ -4793,7 +4851,7 @@
         cardLive.innerHTML = `
           <div class="eq-card-header">
             <span class="eq-card-title" style="color:#38bdf8;">
-              <i class="fa-solid fa-globe"></i> Live Market Curve (${deduceActiveMarket})
+              <i class="fa-solid fa-globe"></i> Live Market Outright Curve (${deduceActiveMarket})
             </span>
             <span class="badge badge-teal" style="font-size:9px;">R² = ${fitLive.r2.toFixed(4)}</span>
           </div>
@@ -4822,7 +4880,7 @@
         cardMy.innerHTML = `
           <div class="eq-card-header">
             <span class="eq-card-title" style="color:#fbbf24;">
-              <i class="fa-solid fa-pen-ruler"></i> My Deduced Forward Curve
+              <i class="fa-solid fa-pen-ruler"></i> My Deduced Outright Curve
             </span>
             <span class="badge badge-amber" style="font-size:9px;">R² = ${fitMy.r2.toFixed(4)}</span>
           </div>
@@ -4909,7 +4967,13 @@
 
       if (deduceViewMode === 'rel_t0') {
         const liveY = live.yMoves;
-        const myY = [0.0, spreads[0], spreads[0] + spreads[1], spreads[0] + spreads[1] + spreads[2], d12];
+        const myY = [
+          0.0,
+          spreads[0],
+          Number((spreads[0] + spreads[1]).toFixed(2)),
+          Number((spreads[0] + spreads[1] + spreads[2]).toFixed(2)),
+          d12
+        ];
 
         // Dense polynomial interpolation
         const fitLive = fitPolynomialCoeffs(knotX, liveY, 3);
@@ -4924,69 +4988,65 @@
           return c[0] + c[1]*x + c[2]*x*x + (c[3]||0)*x*x*x;
         });
 
-        // 1. Zero curvature baseline
+        // 1. Zero curvature baseline (numeric x = 0 to 4)
         traces.push({
           name: 'Zero Curvature Baseline',
-          x: [quarterLabels[0], quarterLabels[4]],
+          x: [0, 4],
           y: [0, live.d12],
           mode: 'lines',
           line: { color: '#475569', width: 1.5, dash: 'dot' },
           hoverinfo: 'skip'
         });
 
-        // 2. Continuous Live Market Spline
+        // 2. Continuous Live Market Spline (numeric x = denseX)
         traces.push({
           name: 'Live Market Spline',
-          x: denseX.map(x => {
-            const idx = Math.min(4, Math.floor(x));
-            return quarterLabels[idx];
-          }),
+          x: denseX,
           y: denseLiveY,
           mode: 'lines',
           line: { color: '#38bdf8', width: 2.5 },
           hoverinfo: 'skip'
         });
 
-        // 3. Live Market Contract Points
+        // 3. Live Market Contract Points (numeric x = [0, 1, 2, 3, 4])
         traces.push({
           name: 'Live Market Contracts',
-          x: quarterLabels,
+          x: knotX,
           y: liveY,
           mode: 'markers+text',
           marker: { color: '#38bdf8', size: 10, line: { color: '#0f172a', width: 2 } },
           text: liveY.map(v => `${v > 0 ? '+' : ''}${v.toFixed(1)} bp`),
           textposition: 'top center',
           textfont: { color: '#38bdf8', size: 10, family: 'monospace' },
-          hovertemplate: '<b>%{x} (Live)</b>: %{y:.2f} bp<extra></extra>'
+          customdata: quarterLabels,
+          hovertemplate: '<b>%{customdata} (Live Market)</b>: %{y:.2f} bp<extra></extra>'
         });
 
-        // 4. Continuous Deduced Curve Spline
+        // 4. Continuous Deduced Curve Spline (numeric x = denseX)
         traces.push({
           name: 'My Deduced Spline',
-          x: denseX.map(x => {
-            const idx = Math.min(4, Math.floor(x));
-            return quarterLabels[idx];
-          }),
+          x: denseX,
           y: denseMyY,
           mode: 'lines',
           line: { color: '#fbbf24', width: 2.5, dash: 'dash' },
           hoverinfo: 'skip'
         });
 
-        // 5. Deduced Contract Points
+        // 5. Deduced Contract Points (numeric x = [0, 1, 2, 3, 4])
         traces.push({
           name: 'My Deduced Points',
-          x: quarterLabels,
+          x: knotX,
           y: myY,
           mode: 'markers+text',
           marker: { color: '#fbbf24', symbol: 'diamond', size: 11, line: { color: '#0f172a', width: 2 } },
           text: myY.map((v, i) => {
-            const diff = v - liveY[i];
+            const diff = Number((v - liveY[i]).toFixed(2));
             return Math.abs(diff) > 0.05 ? `${diff > 0 ? '+' : ''}${diff.toFixed(1)} bp` : '';
           }),
           textposition: 'bottom center',
           textfont: { color: '#fbbf24', size: 10, family: 'monospace' },
-          hovertemplate: '<b>%{x} (Deduced)</b>: %{y:.2f} bp<extra></extra>'
+          customdata: quarterLabels,
+          hovertemplate: '<b>%{customdata} (My Deduced)</b>: %{y:.2f} bp<extra></extra>'
         });
 
       } else if (deduceViewMode === 'yield') {
@@ -5001,70 +5061,82 @@
 
         traces.push({
           name: 'Live Yield (%)',
-          x: quarterLabels,
+          x: knotX,
           y: liveYields,
           mode: 'lines+markers',
           line: { color: '#38bdf8', width: 2.5 },
           marker: { color: '#38bdf8', size: 9 },
-          hovertemplate: '<b>%{x} Live Yield</b>: %{y:.4f}%<extra></extra>'
+          customdata: quarterLabels,
+          hovertemplate: '<b>%{customdata} Live Yield</b>: %{y:.4f}%<extra></extra>'
         });
 
         traces.push({
           name: 'Deduced Yield (%)',
-          x: quarterLabels,
+          x: knotX,
           y: myYields,
           mode: 'lines+markers',
           line: { color: '#fbbf24', width: 2.5, dash: 'dash' },
           marker: { color: '#fbbf24', symbol: 'diamond', size: 10 },
-          hovertemplate: '<b>%{x} Deduced Yield</b>: %{y:.4f}%<extra></extra>'
+          customdata: quarterLabels,
+          hovertemplate: '<b>%{customdata} Deduced Yield</b>: %{y:.4f}%<extra></extra>'
         });
 
       } else if (deduceViewMode === 'spreads') {
         const spreadLabels = ['Dec26/Mar27', 'Mar27/Jun27', 'Jun27/Sep27', 'Sep27/Dec27'];
         traces.push({
           name: 'Live 3M Spreads (bp)',
-          x: spreadLabels,
+          x: [0, 1, 2, 3],
           y: live.spreads,
           type: 'bar',
           marker: { color: '#38bdf8', opacity: 0.7 },
-          hovertemplate: '<b>%{x} (Live)</b>: %{y:.2f} bp<extra></extra>'
+          customdata: spreadLabels,
+          hovertemplate: '<b>%{customdata} (Live)</b>: %{y:.2f} bp<extra></extra>'
         });
         traces.push({
           name: 'Deduced 3M Spreads (bp)',
-          x: spreadLabels,
+          x: [0, 1, 2, 3],
           y: spreads,
           type: 'bar',
           marker: { color: '#fbbf24', opacity: 0.85 },
-          hovertemplate: '<b>%{x} (Deduced)</b>: %{y:.2f} bp<extra></extra>'
+          customdata: spreadLabels,
+          hovertemplate: '<b>%{customdata} (Deduced)</b>: %{y:.2f} bp<extra></extra>'
         });
 
       } else if (deduceViewMode === 'flies') {
         const flyLabels = ['Dec26 3M Fly', 'Mar27 3M Fly', 'Jun27 3M Fly', 'Dec26 6M Fly'];
         traces.push({
           name: 'Live Flies (bp)',
-          x: flyLabels,
+          x: [0, 1, 2, 3],
           y: live.flies,
           type: 'bar',
           marker: { color: '#a855f7', opacity: 0.7 },
-          hovertemplate: '<b>%{x} (Live)</b>: %{y:.2f} bp<extra></extra>'
+          customdata: flyLabels,
+          hovertemplate: '<b>%{customdata} (Live)</b>: %{y:.2f} bp<extra></extra>'
         });
         traces.push({
           name: 'Deduced Flies (bp)',
-          x: flyLabels,
+          x: [0, 1, 2, 3],
           y: flies,
           type: 'bar',
           marker: { color: '#fbbf24', opacity: 0.85 },
-          hovertemplate: '<b>%{x} (Deduced)</b>: %{y:.2f} bp<extra></extra>'
+          customdata: flyLabels,
+          hovertemplate: '<b>%{customdata} (Deduced)</b>: %{y:.2f} bp<extra></extra>'
         });
       }
 
       const layout = {
-        margin: { l: 50, r: 30, t: 20, b: 35 },
+        margin: { l: 55, r: 30, t: 20, b: 40 },
         paper_bgcolor: '#070b14',
         plot_bgcolor: '#070b14',
         xaxis: {
+          tickvals: (deduceViewMode === 'spreads' || deduceViewMode === 'flies') ? [0, 1, 2, 3] : [0, 1, 2, 3, 4],
+          ticktext: (deduceViewMode === 'spreads') ? ['Dec26/Mar27', 'Mar27/Jun27', 'Jun27/Sep27', 'Sep27/Dec27']
+                  : (deduceViewMode === 'flies') ? ['Dec26 3M Fly', 'Mar27 3M Fly', 'Jun27 3M Fly', 'Dec26 6M Fly']
+                  : ['Dec26', 'Mar27', 'Jun27', 'Sep27', 'Dec27'],
+          range: (deduceViewMode === 'spreads' || deduceViewMode === 'flies') ? [-0.5, 3.5] : [-0.2, 4.2],
           gridcolor: '#131d33',
-          tickfont: { color: '#94a3b8', size: 10, family: 'monospace' }
+          zerolinecolor: '#334155',
+          tickfont: { color: '#94a3b8', size: 11, family: 'monospace' }
         },
         yaxis: {
           title: { 
@@ -5077,7 +5149,7 @@
           tickfont: { color: '#94a3b8', size: 10, family: 'monospace' }
         },
         barmode: 'group',
-        legend: { font: { color: '#94a3b8', size: 10 }, orientation: 'h', y: -0.18 },
+        legend: { font: { color: '#94a3b8', size: 10 }, orientation: 'h', y: -0.2 },
         hovermode: 'x unified'
       };
 
@@ -5086,9 +5158,10 @@
 
     // Called on live WebSocket tick or snapshot update
     function updateDeduceModuleLive() {
-      // Re-evaluate live and re-render deduced studio
       recalculateAndRenderDeduceStudio();
     }
+
+    
 
 function updateCombinationsModuleLive() {
       onComboBuilderChange();
