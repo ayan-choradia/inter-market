@@ -718,6 +718,186 @@
           </div>
         </div>
       </div>
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- CURVE BOARD: EXACT MATRIX FORMAT FROM INSTITUTIONAL MONITOR     -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <div class="curve-panel" style="margin-top:20px; border:1px solid #1e3a8a; background:linear-gradient(180deg, #0b111e 0%, #070d18 100%);">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:16px; border-bottom:1px solid #1e293b; padding-bottom:12px;">
+        <div>
+          <div style="font-size:10px; color:#64748b; font-weight:800; letter-spacing:1px; text-transform:uppercase;">
+            RATES / MARKET MONITOR
+          </div>
+          <div style="font-size:20px; font-weight:800; color:#fff; display:flex; align-items:center; gap:8px;">
+            <i class="fa-solid fa-water" style="color:#38bdf8;"></i> Curve board.
+          </div>
+          <div style="font-size:11px; color:#94a3b8; margin-top:2px; display:flex; align-items:center; gap:12px;">
+            <span><span style="color:#00d97e;">●</span> Live quote coverage / Mathematical fair value</span>
+            <span style="color:#64748b;">|</span>
+            <span id="boardLastUpdated" style="color:#64748b; font-family:var(--font-mono);">Live streaming via Lightstreamer</span>
+          </div>
+        </div>
+
+        <!-- Quick Market Curve View Controls -->
+        <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+          <span style="font-size:11px; color:var(--text-dim); font-weight:700;">Plot Market:</span>
+          <div class="selector-group" style="margin:0;">
+            <button class="btn active" id="btnBoardPlotAll" onclick="setBoardCurveFocus('ALL')">
+              <i class="fa-solid fa-globe"></i> Compare All Markets Overlaid
+            </button>
+            <button class="btn" id="btnBoardPlotUSD" onclick="setBoardCurveFocus('USD')">
+              🇺🇸 SRA (SOFR)
+            </button>
+            <button class="btn" id="btnBoardPlotEUR" onclick="setBoardCurveFocus('EUR')">
+              🇪🇺 ER (Euribor)
+            </button>
+            <button class="btn" id="btnBoardPlotGBP" onclick="setBoardCurveFocus('GBP')">
+              🇬🇧 SON (SONIA)
+            </button>
+            <button class="btn" id="btnBoardPlotCHF" onclick="setBoardCurveFocus('CHF')">
+              🇨🇭 CRA (SARON)
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel 01: December spreads (Front - back, BP) -->
+      <div style="background:#090e17; border:1px solid #1a2538; border-radius:8px; padding:14px; margin-bottom:16px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+          <div style="font-size:12px; font-weight:800; color:#f1f5f9; display:flex; align-items:center; gap:6px;">
+            <span style="color:#38bdf8; font-weight:900;">01</span>
+            <span>December spreads</span>
+          </div>
+          <div style="font-size:11px; color:#64748b; font-family:var(--font-mono);">
+            Front - back &nbsp; <span style="background:#131d33; padding:2px 6px; border-radius:4px; color:#94a3b8; font-size:10px;">BP</span>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table style="width:100%; border-collapse:collapse; font-family:var(--font-mono); font-size:12px;" id="tableDecSpreadsBoard">
+            <thead>
+              <tr style="border-bottom:1px solid #1e293b; color:#94a3b8; text-transform:uppercase; font-size:11px;">
+                <th style="padding:8px 12px; text-align:left; width:140px;">Market</th>
+                <th style="padding:8px 12px; text-align:right;">Z26-Z27</th>
+                <th style="padding:8px 12px; text-align:right;">Z27-Z28</th>
+                <th style="padding:8px 12px; text-align:right;">Z28-Z29</th>
+                <th style="padding:8px 12px; text-align:right;">Z29-Z30</th>
+              </tr>
+            </thead>
+            <tbody id="tbodyDecSpreads">
+              <!-- Dynamically populated rows: SRA, SON, ER, CRA -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Two-Column Grid: 02 3-month flies & 03 6-month flies -->
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;">
+        
+        <!-- Panel 02: 3-month flies -->
+        <div style="background:#090e17; border:1px solid #1a2538; border-radius:8px; padding:14px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+            <div style="font-size:12px; font-weight:800; color:#f1f5f9; display:flex; align-items:center; gap:6px;">
+              <span style="color:#60a5fa; font-weight:900;">02</span>
+              <span>3-month flies</span>
+            </div>
+            <div style="font-size:11px; color:#64748b; font-family:var(--font-mono);">
+              Quarterly legs &nbsp; <span style="background:#131d33; padding:2px 6px; border-radius:4px; color:#94a3b8; font-size:10px;">BP</span>
+            </div>
+          </div>
+
+          <div class="table-responsive" style="max-height:360px; overflow-y:auto;">
+            <table style="width:100%; border-collapse:collapse; font-family:var(--font-mono); font-size:12px;" id="table3MFRowBoard">
+              <thead>
+                <tr style="border-bottom:1px solid #1e293b; color:#94a3b8; text-transform:uppercase; font-size:11px;">
+                  <th style="padding:6px 10px; text-align:left; width:90px;">Start</th>
+                  <th style="padding:6px 10px; text-align:right; color:#00d97e;">SRA</th>
+                  <th style="padding:6px 10px; text-align:right; color:#c084fc;">SON</th>
+                  <th style="padding:6px 10px; text-align:right; color:#38bdf8;">ER</th>
+                  <th style="padding:6px 10px; text-align:right; color:#f59e0b;">CRA</th>
+                </tr>
+              </thead>
+              <tbody id="tbody3MFlies">
+                <!-- Dynamically populated rows: Z26 through Z28 -->
+              </tbody>
+            </table>
+          </div>
+          <div style="margin-top:8px; font-size:10px; color:#64748b; font-family:var(--font-mono); border-top:1px dashed #1a2538; padding-top:6px;">
+            Formula: Z26 = Z26 - 2·H27 + M27 (Rate: Front - 2·Body + Back)
+          </div>
+        </div>
+
+        <!-- Panel 03: 6-month flies -->
+        <div style="background:#090e17; border:1px solid #1a2538; border-radius:8px; padding:14px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+            <div style="font-size:12px; font-weight:800; color:#f1f5f9; display:flex; align-items:center; gap:6px;">
+              <span style="color:#c084fc; font-weight:900;">03</span>
+              <span>6-month flies</span>
+            </div>
+            <div style="font-size:11px; color:#64748b; font-family:var(--font-mono);">
+              Half-yearly legs &nbsp; <span style="background:#131d33; padding:2px 6px; border-radius:4px; color:#94a3b8; font-size:10px;">BP</span>
+            </div>
+          </div>
+
+          <div class="table-responsive" style="max-height:360px; overflow-y:auto;">
+            <table style="width:100%; border-collapse:collapse; font-family:var(--font-mono); font-size:12px;" id="table6MFRowBoard">
+              <thead>
+                <tr style="border-bottom:1px solid #1e293b; color:#94a3b8; text-transform:uppercase; font-size:11px;">
+                  <th style="padding:6px 10px; text-align:left; width:90px;">Start</th>
+                  <th style="padding:6px 10px; text-align:right; color:#00d97e;">SRA</th>
+                  <th style="padding:6px 10px; text-align:right; color:#c084fc;">SON</th>
+                  <th style="padding:6px 10px; text-align:right; color:#38bdf8;">ER</th>
+                  <th style="padding:6px 10px; text-align:right; color:#f59e0b;">CRA</th>
+                </tr>
+              </thead>
+              <tbody id="tbody6MFlies">
+                <!-- Dynamically populated rows: Z26 through Z28 -->
+              </tbody>
+            </table>
+          </div>
+          <div style="margin-top:8px; font-size:10px; color:#64748b; font-family:var(--font-mono); border-top:1px dashed #1a2538; padding-top:6px;">
+            Formula: Z26 = Z26 - 2·M27 + Z27 (Rate: Front - 2·Middle + Tail)
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Live Dynamic Curve Plot of Spreads & Butterflies -->
+      <div style="background:#090e17; border:1px solid #1a2538; border-radius:8px; padding:14px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:10px;">
+          <div>
+            <div style="font-size:13px; font-weight:800; color:#fff; display:flex; align-items:center; gap:8px;">
+              <i class="fa-solid fa-chart-area" style="color:#38bdf8;"></i> 
+              <span id="boardCurveTitle">Continuous Spreads & Curvature Structure Curve (All Markets Live)</span>
+            </div>
+            <div style="font-size:11px; color:#64748b;" id="boardCurveSubtitle">
+              Real-time dense polynomial curve fitting with live mathematical slope and curvature equations.
+            </div>
+          </div>
+
+          <div class="selector-group" style="margin:0;">
+            <button class="btn active" id="btnPlotTypeDec" onclick="setBoardCurvePlotType('DEC_SPREADS')">
+              December Spreads Curve
+            </button>
+            <button class="btn" id="btnPlotType3M" onclick="setBoardCurvePlotType('3M_FLIES')">
+              3M Butterfly Curve
+            </button>
+            <button class="btn" id="btnPlotType6M" onclick="setBoardCurvePlotType('6M_FLIES')">
+              6M Butterfly Curve
+            </button>
+          </div>
+        </div>
+
+        <!-- Live Curve Equations Banner for Board Curves -->
+        <div id="boardEquationBanner" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:10px; margin-bottom:10px;">
+          <!-- Live equation cards for SRA, ER, SON, CRA -->
+        </div>
+
+        <!-- Plotly Canvas for Board Curves -->
+        <div id="chartBoardPlotly" style="width:100%; height:340px;"></div>
+      </div>
+
+    </div>
+
 
       <!-- Grid for Level 2 and Level 3 -->
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
@@ -1584,7 +1764,7 @@
           hovermode: 'x unified'
         };
 
-        Plotly.newPlot(plotDiv, traces, layout, { responsive: true, displayModeBar: true });
+        Plotly.react(plotDiv, traces, layout, { responsive: true, displayModeBar: true });
 
         // Update the Live Dual Equation Banner above the chart
         updateLiveEquationBanner(fittedModels, activeIMM, anchorQuarter);
@@ -1674,7 +1854,7 @@
           }
         }
 
-        Plotly.newPlot(plotDiv, traces, layout, { responsive: true, displayModeBar: true });
+        Plotly.react(plotDiv, traces, layout, { responsive: true, displayModeBar: true });
         return;
       }
 
@@ -1767,7 +1947,7 @@
             margin: { l: 65, r: 65, t: 40, b: 65 }
           };
 
-          Plotly.newPlot(plotDiv, traces, layout, { responsive: true, displayModeBar: true });
+          Plotly.react(plotDiv, traces, layout, { responsive: true, displayModeBar: true });
         } catch (err) {
           console.error("Equation fit error:", err);
         }
@@ -1823,7 +2003,7 @@
           hovermode: 'x unified'
         };
 
-        Plotly.newPlot(plotDiv, traces, layout, { responsive: true, displayModeBar: true });
+        Plotly.react(plotDiv, traces, layout, { responsive: true, displayModeBar: true });
       }
     }
 
@@ -2032,7 +2212,7 @@
         margin: { l: 55, r: 25, t: 20, b: 60 }
       };
 
-      Plotly.newPlot('chartSpreadsPlotly', traces, layout, { responsive: true, displayModeBar: false });
+      Plotly.react('chartSpreadsPlotly', traces, layout, { responsive: true, displayModeBar: false });
     }
 
     // ─── 3. LEVEL 3: 3M BUTTERFLIES (PLOTLY) ───
@@ -2080,7 +2260,7 @@
         margin: { l: 55, r: 25, t: 20, b: 60 }
       };
 
-      Plotly.newPlot('chartFliesPlotly', traces, layout, { responsive: true, displayModeBar: false });
+      Plotly.react('chartFliesPlotly', traces, layout, { responsive: true, displayModeBar: false });
     }
 
     // ─── TAB 2: RELATIVE CURVATURE & STRUCTURE LAB (PLOTLY 4-PANEL!) ───
@@ -2657,6 +2837,436 @@
     let previousPricesMap = {};
     let pendingCurveRedraw = false;
 
+    
+    // ─── CURVE BOARD (IMAGE 2) LOGIC & MULTI-MARKET LIVE EQUATION PLOTTER ───
+    let boardCurveFocus = 'ALL';          // 'ALL', 'USD', 'EUR', 'GBP', 'CHF'
+    let boardCurvePlotType = 'DEC_SPREADS'; // 'DEC_SPREADS', '3M_FLIES', '6M_FLIES'
+
+    const BOARD_MARKETS = [
+      { key: 'USD', label: 'SRA', name: 'US SOFR', color: '#00d97e' },
+      { key: 'GBP', label: 'SON', name: 'UK SONIA', color: '#c084fc' },
+      { key: 'EUR', label: 'ER',  name: 'Eurozone Euribor', color: '#38bdf8' },
+      { key: 'CHF', label: 'CRA', name: 'Swiss SARON', color: '#f59e0b' }
+    ];
+
+    const BOARD_QUARTERS = [
+      { code: 'DEC26', short: 'Z26' },
+      { code: 'MAR27', short: 'H27' },
+      { code: 'JUN27', short: 'M27' },
+      { code: 'SEP27', short: 'U27' },
+      { code: 'DEC27', short: 'Z27' },
+      { code: 'MAR28', short: 'H28' },
+      { code: 'JUN28', short: 'M28' },
+      { code: 'SEP28', short: 'U28' },
+      { code: 'DEC28', short: 'Z28' },
+      { code: 'MAR29', short: 'H29' },
+      { code: 'JUN29', short: 'M29' },
+      { code: 'SEP29', short: 'U29' },
+      { code: 'DEC29', short: 'Z29' },
+      { code: 'MAR30', short: 'H30' },
+      { code: 'JUN30', short: 'M30' },
+      { code: 'SEP30', short: 'U30' },
+      { code: 'DEC30', short: 'Z30' }
+    ];
+
+    function setBoardCurveFocus(m) {
+      boardCurveFocus = m;
+      for (const btnId of ['btnBoardPlotAll', 'btnBoardPlotUSD', 'btnBoardPlotEUR', 'btnBoardPlotGBP', 'btnBoardPlotCHF']) {
+        const btn = document.getElementById(btnId);
+        if (btn) btn.classList.remove('active');
+      }
+      const map = { 'ALL': 'btnBoardPlotAll', 'USD': 'btnBoardPlotUSD', 'EUR': 'btnBoardPlotEUR', 'GBP': 'btnBoardPlotGBP', 'CHF': 'btnBoardPlotCHF' };
+      const ab = document.getElementById(map[m]);
+      if (ab) ab.classList.add('active');
+      renderBoardCurvePlotly();
+    }
+
+    function setBoardCurvePlotType(type) {
+      boardCurvePlotType = type;
+      for (const btnId of ['btnPlotTypeDec', 'btnPlotType3M', 'btnPlotType6M']) {
+        const btn = document.getElementById(btnId);
+        if (btn) btn.classList.remove('active');
+      }
+      const map = { 'DEC_SPREADS': 'btnPlotTypeDec', '3M_FLIES': 'btnPlotType3M', '6M_FLIES': 'btnPlotType6M' };
+      const ab = document.getElementById(map[type]);
+      if (ab) ab.classList.add('active');
+      renderBoardCurvePlotly();
+    }
+
+    function cmeCodeToTenor(code) {
+      if (!code) return '';
+      code = code.trim().toUpperCase();
+      const m = code.match(/^(?:SFR|SR3|GE|SO3|SA3|I)?([FGHJKMNQUVXZ])(\d{2})$/i);
+      if (m) {
+        const letter = m[1].toUpperCase();
+        const yr = m[2];
+        const monthMap = {
+          'F': 'Jan', 'G': 'Feb', 'H': 'Mar', 'J': 'Apr',
+          'K': 'May', 'M': 'Jun', 'N': 'Jul', 'Q': 'Aug',
+          'U': 'Sep', 'V': 'Oct', 'X': 'Nov', 'Z': 'Dec'
+        };
+        const mo = monthMap[letter];
+        if (mo) return `${mo}${yr}`;
+      }
+      return code;
+    }
+
+    // Extract price map for all markets: { 'SRA': { 'Z26': 95.692, 'H27': ... } }
+    function getBoardMarketPrices() {
+      if (!globalData) return {};
+      const prices = {};
+
+      for (const bm of BOARD_MARKETS) {
+        const c = globalData.markets[bm.key];
+        prices[bm.label] = {};
+        if (!c) continue;
+
+        (c.outrights || []).forEach(o => {
+          const rawCode = (o.code || '').toUpperCase();
+          const tenor = (o.tenor || '').toUpperCase();
+          const p = (o.vwap !== null && o.vwap !== undefined) ? o.vwap : (o.last || o.settle);
+          if (p === null || p === undefined) return;
+
+          for (const bq of BOARD_QUARTERS) {
+            if (rawCode.includes(bq.code) || tenor.includes(bq.code) || rawCode === bq.short || tenor === bq.short) {
+              prices[bm.label][bq.short] = p;
+            }
+          }
+        });
+      }
+      return prices;
+    }
+
+    function renderCurveBoardTables() {
+      const prices = getBoardMarketPrices();
+      const decTbody = document.getElementById('tbodyDecSpreads');
+      const flies3MTbody = document.getElementById('tbody3MFlies');
+      const flies6MTbody = document.getElementById('tbody6MFlies');
+      if (!decTbody || !flies3MTbody || !flies6MTbody) return;
+
+      // ── 01. DECEMBER SPREADS ──
+      const decPairs = [
+        { f: 'Z26', b: 'Z27', label: 'Z26-Z27' },
+        { f: 'Z27', b: 'Z28', label: 'Z27-Z28' },
+        { f: 'Z28', b: 'Z29', label: 'Z28-Z29' },
+        { f: 'Z29', b: 'Z30', label: 'Z29-Z30' }
+      ];
+
+      let decHtml = '';
+      for (const bm of BOARD_MARKETS) {
+        const mPrices = prices[bm.label] || {};
+        let cellsHtml = '';
+
+        for (const dp of decPairs) {
+          const pFront = mPrices[dp.f];
+          const pBack = mPrices[dp.b];
+          let valStr = '—';
+          let colorClass = '';
+
+          if (pFront !== undefined && pBack !== undefined) {
+            const spreadBp = Number(((pFront - pBack) * 100.0).toFixed(2));
+            valStr = (spreadBp > 0 ? '+' : '') + spreadBp.toFixed(2);
+            colorClass = spreadBp > 0 ? 'color:var(--green); font-weight:700;' : (spreadBp < 0 ? 'color:var(--red); font-weight:700;' : 'color:#94a3b8;');
+          }
+
+          cellsHtml += `<td style="padding:8px 12px; text-align:right; ${colorClass}" id="board-dec-${bm.label}-${dp.label}">${valStr}</td>`;
+        }
+
+        decHtml += `
+          <tr style="border-bottom:1px solid #141c2c;">
+            <td style="padding:8px 12px; font-weight:800; color:${bm.color};">
+              <span style="background:#111a2e; padding:3px 8px; border-radius:4px; border:1px solid ${bm.color}44;">${bm.label}</span>
+              <span style="font-size:11px; color:#64748b; margin-left:6px;">(${bm.name})</span>
+            </td>
+            ${cellsHtml}
+          </tr>
+        `;
+      }
+      decTbody.innerHTML = decHtml;
+
+      // ── 02. 3-MONTH FLIES (Z26 .. Z28) ──
+      const flyStarts = ['Z26', 'H27', 'M27', 'U27', 'Z27', 'H28', 'M28', 'U28', 'Z28'];
+      let f3Html = '';
+      for (let i = 0; i < flyStarts.length; i++) {
+        const startShort = flyStarts[i];
+        const nextShort = BOARD_QUARTERS[i + 1] ? BOARD_QUARTERS[i + 1].short : null;
+        const thirdShort = BOARD_QUARTERS[i + 2] ? BOARD_QUARTERS[i + 2].short : null;
+
+        let cells = '';
+        for (const bm of BOARD_MARKETS) {
+          const mPrices = prices[bm.label] || {};
+          const p1 = mPrices[startShort];
+          const p2 = nextShort ? mPrices[nextShort] : null;
+          const p3 = thirdShort ? mPrices[thirdShort] : null;
+
+          let valStr = '—';
+          let colorClass = '';
+          if (p1 !== undefined && p2 !== undefined && p3 !== undefined) {
+            const flyBp = Number(((p1 - 2.0 * p2 + p3) * 100.0).toFixed(2));
+            valStr = (flyBp > 0 ? '+' : '') + flyBp.toFixed(2);
+            colorClass = flyBp > 0 ? 'color:var(--green); font-weight:700;' : (flyBp < 0 ? 'color:var(--red); font-weight:700;' : 'color:#94a3b8;');
+          }
+          cells += `<td style="padding:6px 10px; text-align:right; ${colorClass}" id="board-3m-${bm.label}-${startShort}">${valStr}</td>`;
+        }
+
+        f3Html += `
+          <tr style="border-bottom:1px solid #141c2c;">
+            <td style="padding:6px 10px; font-weight:700; color:#fff;">${startShort}</td>
+            ${cells}
+          </tr>
+        `;
+      }
+      flies3MTbody.innerHTML = f3Html;
+
+      // ── 03. 6-MONTH FLIES (Z26 .. Z28) ──
+      let f6Html = '';
+      for (let i = 0; i < flyStarts.length; i++) {
+        const startShort = flyStarts[i];
+        const midShort = BOARD_QUARTERS[i + 2] ? BOARD_QUARTERS[i + 2].short : null;
+        const tailShort = BOARD_QUARTERS[i + 4] ? BOARD_QUARTERS[i + 4].short : null;
+
+        let cells = '';
+        for (const bm of BOARD_MARKETS) {
+          const mPrices = prices[bm.label] || {};
+          const p1 = mPrices[startShort];
+          const p2 = midShort ? mPrices[midShort] : null;
+          const p3 = tailShort ? mPrices[tailShort] : null;
+
+          let valStr = '—';
+          let colorClass = '';
+          if (p1 !== undefined && p2 !== undefined && p3 !== undefined) {
+            const fly6Bp = Number(((p1 - 2.0 * p2 + p3) * 100.0).toFixed(2));
+            valStr = (fly6Bp > 0 ? '+' : '') + fly6Bp.toFixed(2);
+            colorClass = fly6Bp > 0 ? 'color:var(--green); font-weight:700;' : (fly6Bp < 0 ? 'color:var(--red); font-weight:700;' : 'color:#94a3b8;');
+          }
+          cells += `<td style="padding:6px 10px; text-align:right; ${colorClass}" id="board-6m-${bm.label}-${startShort}">${valStr}</td>`;
+        }
+
+        f6Html += `
+          <tr style="border-bottom:1px solid #141c2c;">
+            <td style="padding:6px 10px; font-weight:700; color:#fff;">${startShort}</td>
+            ${cells}
+          </tr>
+        `;
+      }
+      flies6MTbody.innerHTML = f6Html;
+
+      renderBoardCurvePlotly();
+    }
+
+    // ── PLOT DENSE CONTINUOUS CURVES FOR BOARD SPREADS / FLIES WITH LIVE EQUATIONS ──
+    function renderBoardCurvePlotly() {
+      const prices = getBoardMarketPrices();
+      const plotDiv = document.getElementById('chartBoardPlotly');
+      const eqBanner = document.getElementById('boardEquationBanner');
+      if (!plotDiv || !globalData) return;
+
+      const activeMarkets = (boardCurveFocus === 'ALL')
+        ? BOARD_MARKETS
+        : BOARD_MARKETS.filter(bm => bm.key === boardCurveFocus);
+
+      const traces = [];
+      let eqCardsHtml = '';
+
+      if (boardCurvePlotType === 'DEC_SPREADS') {
+        const decLabels = ['Z26-Z27', 'Z27-Z28', 'Z28-Z29', 'Z29-Z30'];
+        const decPairs = [
+          { f: 'Z26', b: 'Z27' }, { f: 'Z27', b: 'Z28' },
+          { f: 'Z28', b: 'Z29' }, { f: 'Z29', b: 'Z30' }
+        ];
+
+        document.getElementById('boardCurveTitle').innerText = 
+          (boardCurveFocus === 'ALL') ? "December 1Y Calendar Spreads Curve (All Markets Overlaid)" : `${activeMarkets[0].name} December Spreads Curve`;
+        document.getElementById('boardCurveSubtitle').innerText = 
+          "Continuous polynomial fit of 1-Year December Calendar Spreads (bp) with live 1st and 2nd derivatives";
+
+        for (const bm of activeMarkets) {
+          const mPrices = prices[bm.label] || {};
+          const xPts = [], yPts = [];
+          for (let i = 0; i < decPairs.length; i++) {
+            const p1 = mPrices[decPairs[i].f];
+            const p2 = mPrices[decPairs[i].b];
+            if (p1 !== undefined && p2 !== undefined) {
+              xPts.push(i);
+              yPts.push(Number(((p1 - p2) * 100.0).toFixed(2)));
+            }
+          }
+
+          if (xPts.length >= 2) {
+            const fit = fitPolynomialCoeffs(xPts, yPts, Math.min(3, xPts.length - 1));
+            // Dense spline knots
+            const denseX = [], denseY = [];
+            for (let s = 0; s <= 80; s++) {
+              const xVal = s * ((decPairs.length - 1) / 80.0);
+              denseX.push(xVal);
+              let yVal = 0;
+              for (let p = 0; p < fit.coeffs.length; p++) yVal += fit.coeffs[p] * Math.pow(xVal, p);
+              denseY.push(Number(yVal.toFixed(2)));
+            }
+
+            // Continuous trace
+            traces.push({
+              x: denseX,
+              y: denseY,
+              mode: 'lines',
+              name: `${bm.label} (${bm.name}) Curve`,
+              line: { color: bm.color, width: 2.8 }
+            });
+
+            // Knot markers
+            traces.push({
+              x: xPts,
+              y: yPts,
+              mode: 'markers+text',
+              name: `${bm.label} Knots`,
+              text: yPts.map(v => (v > 0 ? '+' : '') + v + ' bp'),
+              textposition: 'top center',
+              textfont: { color: '#f1f5f9', size: 10, family: 'JetBrains Mono' },
+              marker: { size: 9, color: bm.color, line: { color: '#fff', width: 1.5 } },
+              showlegend: false
+            });
+
+            eqCardsHtml += `
+              <div style="background:#111a2e; border:1px solid ${bm.color}44; border-left:4px solid ${bm.color}; border-radius:6px; padding:8px 12px;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <strong style="color:${bm.color}; font-size:12px;">${bm.label} - ${bm.name}</strong>
+                  <span style="font-size:10px; color:var(--green); font-weight:700;">R² = ${fit.r2.toFixed(4)}</span>
+                </div>
+                <div style="font-size:11px; color:#fff; font-family:var(--font-mono); margin:3px 0;">${fit.eqStr}</div>
+                <div style="display:flex; justify-content:space-between; font-size:10px; color:#94a3b8;">
+                  <span style="color:#00d97e;">Slope: ${fit.d1Str}</span>
+                  <span style="color:#c084fc;">Curv: ${fit.d2Str}</span>
+                </div>
+              </div>
+            `;
+          }
+        }
+
+        const layout = {
+          paper_bgcolor: '#090e17',
+          plot_bgcolor: '#070b12',
+          margin: { l: 55, r: 25, t: 25, b: 45 },
+          xaxis: {
+            tickmode: 'array',
+            tickvals: [0, 1, 2, 3],
+            ticktext: decLabels,
+            gridcolor: '#162032',
+            tickfont: { color: '#94a3b8', family: 'JetBrains Mono' }
+          },
+          yaxis: {
+            title: { text: 'December Spread (bp)', font: { color: '#94a3b8', size: 11 } },
+            gridcolor: '#162032',
+            tickfont: { color: '#94a3b8', family: 'JetBrains Mono' },
+            zerolinecolor: '#334155'
+          },
+          legend: { font: { color: '#94a3b8', size: 10 }, orientation: 'h', y: -0.18 },
+          hovermode: 'x unified'
+        };
+
+        Plotly.react(plotDiv, traces, layout, { responsive: true, displayModeBar: false });
+        if (eqBanner) eqBanner.innerHTML = eqCardsHtml;
+        return;
+      }
+
+      // ── FLIES (3M or 6M) ──
+      const flyStarts = ['Z26', 'H27', 'M27', 'U27', 'Z27', 'H28', 'M28', 'U28', 'Z28'];
+      const is6M = (boardCurvePlotType === '6M_FLIES');
+
+      document.getElementById('boardCurveTitle').innerText = 
+        (boardCurveFocus === 'ALL') 
+          ? (is6M ? "6-Month Butterfly Curve (All Markets Overlaid)" : "3-Month Butterfly Curve (All Markets Overlaid)") 
+          : `${activeMarkets[0].name} ${is6M ? '6M' : '3M'} Butterfly Curve`;
+
+      document.getElementById('boardCurveSubtitle').innerText = 
+        `Continuous polynomial fit of ${is6M ? '6-Month (Half-Yearly Legs)' : '3-Month (Quarterly Legs)'} Butterfly Flies (bp) with live analytical slope`;
+
+      for (const bm of activeMarkets) {
+        const mPrices = prices[bm.label] || {};
+        const xPts = [], yPts = [];
+
+        for (let i = 0; i < flyStarts.length; i++) {
+          const p1 = mPrices[flyStarts[i]];
+          const p2 = is6M ? (BOARD_QUARTERS[i + 2] ? mPrices[BOARD_QUARTERS[i + 2].short] : null) : (BOARD_QUARTERS[i + 1] ? mPrices[BOARD_QUARTERS[i + 1].short] : null);
+          const p3 = is6M ? (BOARD_QUARTERS[i + 4] ? mPrices[BOARD_QUARTERS[i + 4].short] : null) : (BOARD_QUARTERS[i + 2] ? mPrices[BOARD_QUARTERS[i + 2].short] : null);
+
+          if (p1 !== undefined && p2 !== undefined && p3 !== undefined) {
+            xPts.push(i);
+            yPts.push(Number(((p1 - 2.0 * p2 + p3) * 100.0).toFixed(2)));
+          }
+        }
+
+        if (xPts.length >= 3) {
+          const fit = fitPolynomialCoeffs(xPts, yPts, 3);
+          const denseX = [], denseY = [];
+          for (let s = 0; s <= 100; s++) {
+            const xVal = s * ((flyStarts.length - 1) / 100.0);
+            denseX.push(xVal);
+            let yVal = 0;
+            for (let p = 0; p < fit.coeffs.length; p++) yVal += fit.coeffs[p] * Math.pow(xVal, p);
+            denseY.push(Number(yVal.toFixed(2)));
+          }
+
+          traces.push({
+            x: denseX,
+            y: denseY,
+            mode: 'lines',
+            name: `${bm.label} (${bm.name}) Curve`,
+            line: { color: bm.color, width: 2.8 }
+          });
+
+          traces.push({
+            x: xPts,
+            y: yPts,
+            mode: 'markers+text',
+            name: `${bm.label} Flies`,
+            text: yPts.map(v => (v > 0 ? '+' : '') + v),
+            textposition: 'top center',
+            textfont: { color: '#f1f5f9', size: 9, family: 'JetBrains Mono' },
+            marker: { size: 8, color: bm.color, line: { color: '#fff', width: 1.2 } },
+            showlegend: false
+          });
+
+          eqCardsHtml += `
+            <div style="background:#111a2e; border:1px solid ${bm.color}44; border-left:4px solid ${bm.color}; border-radius:6px; padding:8px 12px;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <strong style="color:${bm.color}; font-size:12px;">${bm.label} - ${bm.name}</strong>
+                <span style="font-size:10px; color:var(--green); font-weight:700;">R² = ${fit.r2.toFixed(4)}</span>
+              </div>
+              <div style="font-size:11px; color:#fff; font-family:var(--font-mono); margin:3px 0;">${fit.eqStr}</div>
+              <div style="display:flex; justify-content:space-between; font-size:10px; color:#94a3b8;">
+                <span style="color:#00d97e;">Slope: ${fit.d1Str}</span>
+                <span style="color:#c084fc;">Curv: ${fit.d2Str}</span>
+              </div>
+            </div>
+          `;
+        }
+      }
+
+      const layout = {
+        paper_bgcolor: '#090e17',
+        plot_bgcolor: '#070b12',
+        margin: { l: 55, r: 25, t: 25, b: 45 },
+        xaxis: {
+          tickmode: 'array',
+          tickvals: flyStarts.map((_, i) => i),
+          ticktext: flyStarts,
+          gridcolor: '#162032',
+          tickfont: { color: '#94a3b8', family: 'JetBrains Mono' }
+        },
+        yaxis: {
+          title: { text: is6M ? '6M Butterfly Fly (bp)' : '3M Butterfly Fly (bp)', font: { color: '#94a3b8', size: 11 } },
+          gridcolor: '#162032',
+          tickfont: { color: '#94a3b8', family: 'JetBrains Mono' },
+          zerolinecolor: '#334155'
+        },
+        legend: { font: { color: '#94a3b8', size: 10 }, orientation: 'h', y: -0.18 },
+        hovermode: 'x unified'
+      };
+
+      Plotly.react(plotDiv, traces, layout, { responsive: true, displayModeBar: false });
+      if (eqBanner) eqBanner.innerHTML = eqCardsHtml;
+    }
+
     function setFeedMarketFilter(m) {
       feedMarketFilter = m;
       for (const btnId of ['btnFeedAll', 'btnFeedUSD', 'btnFeedEUR', 'btnFeedGBP', 'btnFeedCHF']) {
@@ -2784,6 +3394,7 @@
       requestAnimationFrame(() => {
         renderCurvesTab();
         renderLiveOutrightsFeed();
+        renderCurveBoardTables();
         pendingCurveRedraw = false;
       });
     }
@@ -2849,7 +3460,7 @@
       }
 
       // Case 2: Standard price_tick from Lightstreamer (SR3 / ZQ)
-      else if (msg.type === 'price_tick' && msg.instrument_type === 'SR3') {
+      else if (msg.type === 'price_tick' && (msg.instrument_type === 'SR3' || msg.instrument_type === 'SR3_SPREAD_EXT' || msg.instrument_type === 'SR3_CAL')) {
         const prices = msg.prices || {};
         const richData = msg.rich_data || {};
         const c = globalData.markets['USD'];
@@ -2860,11 +3471,13 @@
         for (const [code, price] of Object.entries(prices)) {
           wsTickCount++;
           const rich = richData[code] || {};
+          const tenorName = cmeCodeToTenor(code);
           // Find matching outright in USD
           const match = (c.outrights || []).find(o => 
-            (o.code && o.code.toUpperCase().includes(code.toUpperCase())) ||
+            (o.code && (o.code.toUpperCase() === tenorName.toUpperCase() || o.code.toUpperCase().includes(tenorName.toUpperCase()))) ||
+            (o.tenor && o.tenor.toUpperCase() === tenorName.toUpperCase()) ||
             (o.raw_code && o.raw_code.toUpperCase() === code.toUpperCase()) ||
-            (o.contract && o.contract.toUpperCase().includes(code.toUpperCase()))
+            (o.contract && o.contract.toUpperCase().includes(tenorName.toUpperCase()))
           );
 
           let deltaBp = 0;
@@ -2969,6 +3582,7 @@
     window.addEventListener('DOMContentLoaded', () => {
       fetchData().then(() => {
         renderLiveOutrightsFeed();
+        renderCurveBoardTables();
         initWebSocket();
       });
       updateRefreshInterval();
