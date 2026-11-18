@@ -1386,18 +1386,91 @@
       else if (tabId === 'tabTables') renderDepthTables();
     }
 
-    // ─── DATA FETCHING ───
+    // ─── DATA FETCHING & LIVE QUOTE CACHE ───
+    // Persistent store of real-time ticks to guarantee snapshot polling never reverts live prices to initial CSV/demo data
+    const liveQuotesStore = {};
+
+    function recordLiveQuote(market, tenor, quote) {
+      if (!market || !tenor || !quote) return;
+      const v = (quote.vwap !== null && quote.vwap !== undefined) ? quote.vwap : quote.price;
+      if (v === null || v === undefined) return;
+      const m = market.toUpperCase();
+      const t = tenor.toUpperCase();
+      const entry = {
+        market: m,
+        tenor: t,
+        vwap: v,
+        price: v,
+        rate: (quote.rate !== null && quote.rate !== undefined) ? quote.rate : Number((100.0 - v).toFixed(4)),
+        bid: quote.bid,
+        ask: quote.ask,
+        volume: quote.volume,
+        timestamp: new Date().toLocaleTimeString()
+      };
+      liveQuotesStore[`${m}:${t}`] = entry;
+      if (quote.code) liveQuotesStore[`${m}:${quote.code.toUpperCase()}`] = entry;
+      if (quote.instrument_id) liveQuotesStore[`ID:${quote.instrument_id}`] = entry;
+    }
+
+    function mergeLiveQuotesIntoSnapshot(data) {
+      if (!data || !data.markets) return;
+      for (const m in data.markets) {
+        const mktObj = data.markets[m];
+        if (!mktObj || !mktObj.outrights) continue;
+        const mUpper = m.toUpperCase();
+        for (const o of mktObj.outrights) {
+          const tenor = (o.tenor || '').toUpperCase();
+          const code = (o.code || '').toUpperCase();
+          const contract = (o.contract || '').toUpperCase();
+          
+          let live = null;
+          if (o.instrument_id && liveQuotesStore[`ID:${o.instrument_id}`]) {
+            live = liveQuotesStore[`ID:${o.instrument_id}`];
+          } else if (liveQuotesStore[`${mUpper}:${tenor}`]) {
+            live = liveQuotesStore[`${mUpper}:${tenor}`];
+          } else if (liveQuotesStore[`${mUpper}:${code}`]) {
+            live = liveQuotesStore[`${mUpper}:${code}`];
+          } else {
+            for (const key in liveQuotesStore) {
+              if (key.startsWith(`${mUpper}:`)) {
+                const sub = key.split(':')[1];
+                if (contract.includes(sub) || tenor.includes(sub) || code.includes(sub)) {
+                  live = liveQuotesStore[key];
+                  break;
+                }
+              }
+            }
+          }
+
+          if (live && live.vwap !== null && live.vwap !== undefined) {
+            o.vwap = live.vwap;
+            o.rate = live.rate;
+            if (live.bid !== undefined && live.bid !== null) o.bid = live.bid;
+            if (live.ask !== undefined && live.ask !== null) o.ask = live.ask;
+            if (live.volume !== undefined && live.volume !== null) o.volume = live.volume;
+            o.last_tick = live.timestamp;
+          }
+        }
+      }
+    }
+
     async function fetchData() {
       try {
         const res = await fetch('/api/intermarket/curves/all?_nocache=' + Date.now(), { cache: 'no-store', headers: { 'Cache-Control': 'no-cache, no-store, must-revalidate', 'Pragma': 'no-cache' } });
         if (!res.ok) throw new Error("HTTP " + res.status);
-        globalData = await res.json();
+        const incoming = await res.json();
+        
+        // Deep-merge live ticks so snapshot never reverts live prices to initial CSV
+        mergeLiveQuotesIntoSnapshot(incoming);
+        globalData = incoming;
         document.getElementById('headerTimestamp').innerText = "Last tick: " + new Date(globalData.timestamp).toLocaleTimeString();
 
         renderMetricCards();
         if (activeNavTab === 'tabCurves') renderCurvesTab();
         else if (activeNavTab === 'tabCurvature') fetchCurvature4Panel();
         else if (activeNavTab === 'tabTables') renderDepthTables();
+        renderLiveOutrightsFeed();
+        renderCurveBoardTables();
       } catch (err) {
         console.error("Fetch error:", err);
       }
@@ -3502,6 +3575,8 @@
           if (msg.volume) outright.volume = msg.volume;
           outright.last_tick = nowStr;
 
+          recordLiveQuote(m, outright.tenor || msg.tenor || msg.code, outright);
+
           if (oldVwap && msg.price) {
             deltaBp = (msg.price - oldVwap) * 100.0;
           }
@@ -3564,6 +3639,8 @@
             if (rich.BestAsk) match.ask = Number(rich.BestAsk) / 100.0;
             if (rich.Volume) match.volume = Number(rich.Volume);
             match.last_tick = nowStr;
+
+            recordLiveQuote('USD', tenorName, match);
 
             if (oldVwap) deltaBp = (price - oldVwap) * 100.0;
             hasChange = true;
