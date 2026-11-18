@@ -636,6 +636,13 @@
         </div>
 
         <!-- Interactive Plotly Canvas -->
+        
+        <!-- Real-Time Total Hikes & Cuts Strip (a - e / 25bp) across All 4 Markets -->
+        <div id="stripTotalHikesCuts" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:10px; margin-bottom:10px;">
+          <!-- Dynamically populated real-time hikes/cuts metrics -->
+        </div>
+
+        <!-- Interactive Plotly Canvas -->
         <div id="chartOutrightsPlotly" style="width:100%; height:410px;"></div>
 
         <!-- Canvas Footer / Interaction Help -->
@@ -1382,7 +1389,7 @@
     // ─── DATA FETCHING ───
     async function fetchData() {
       try {
-        const res = await fetch('/api/intermarket/curves/all');
+        const res = await fetch('/api/intermarket/curves/all?_nocache=' + Date.now(), { cache: 'no-store', headers: { 'Cache-Control': 'no-cache, no-store, must-revalidate', 'Pragma': 'no-cache' } });
         if (!res.ok) throw new Error("HTTP " + res.status);
         globalData = await res.json();
         document.getElementById('headerTimestamp').innerText = "Last tick: " + new Date(globalData.timestamp).toLocaleTimeString();
@@ -1768,6 +1775,7 @@
 
         // Update the Live Dual Equation Banner above the chart
         updateLiveEquationBanner(fittedModels, activeIMM, anchorQuarter);
+        renderTotalHikesCutsStrip(activeIMM, anchorQuarter);
 
         // Compute and render LIVE EQUATIONS & SLOPES for ALL curves
         renderMultiCurveEquations(['USD', 'EUR', 'GBP', 'CHF'], activeIMM, anchorQuarter, selectedCurveMarket);
@@ -2010,6 +2018,55 @@
 
 
     // ─── RENDER LIVE DUAL EQUATION BANNER (ABOVE CHART) ───
+        // ─── RENDER REAL-TIME TOTAL HIKES & CUTS STRIP (ABOVE CHART) ───
+    function renderTotalHikesCutsStrip(activeIMM, anchorQuarter) {
+      const banner = document.getElementById('stripTotalHikesCuts');
+      if (!banner || !globalData) return;
+
+      let html = '';
+      const order = ['USD', 'EUR', 'GBP', 'CHF'];
+
+      for (const m of order) {
+        const c = globalData.markets[m];
+        if (!c) continue;
+        const color = MARKET_COLORS[m] || '#38bdf8';
+        const oDict = {};
+        (c.outrights || []).forEach(o => { oDict[o.code.toUpperCase()] = o; });
+
+        const p0Obj = Object.entries(oDict).find(([k, v]) => k.includes(anchorQuarter))?.[1] || (c.outrights || [])[0];
+        const p0 = p0Obj ? p0Obj.vwap : 95.0;
+
+        const pEndObj = Object.entries(oDict).find(([k, v]) => k.includes(activeIMM[activeIMM.length - 1]))?.[1] || (c.outrights || [])[activeIMM.length - 1];
+        const pEnd = pEndObj ? pEndObj.vwap : p0;
+
+        const moveBp = Number(((p0 - pEnd) * 100.0).toFixed(2));
+        const hikesCuts = (moveBp / 25.0).toFixed(2);
+        const isCut = moveBp < 0;
+        const action = isCut ? 'Cuts' : 'Hikes';
+        const absVal = Math.abs(Number(hikesCuts)).toFixed(2);
+
+        html += `
+          <div style="background:#0b111e; border:1px solid ${color}44; border-left:4px solid ${color}; border-radius:6px; padding:8px 12px; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <div style="font-size:11px; font-weight:800; color:${color}; text-transform:uppercase;">
+                ${c.meta.name} (${m})
+              </div>
+              <div style="font-size:10px; color:#94a3b8; margin-top:2px; font-family:var(--font-mono);">
+                ${anchorQuarter} → ${activeIMM[activeIMM.length - 1]}: <strong style="color:#fff;">${moveBp >= 0 ? '+' : ''}${moveBp} bp</strong>
+              </div>
+            </div>
+            <div style="text-align:right;">
+              <span class="badge" style="background:${isCut ? '#7f1d1d' : '#14532d'}; color:#fff; font-size:12px; font-weight:800; padding:3px 10px; border-radius:12px; border:1px solid ${isCut ? '#ef4444' : '#22c55e'}; font-family:var(--font-mono);">
+                ${absVal} ${action}
+              </span>
+              <div style="font-size:9px; color:#64748b; margin-top:2px;">(25bp steps)</div>
+            </div>
+          </div>
+        `;
+      }
+      banner.innerHTML = html;
+    }
+
     function updateLiveEquationBanner(models, tenors, anchorQuarter) {
       const banner = document.getElementById('liveDualEquationStrip');
       if (!banner || !globalData) return;
@@ -2115,6 +2172,14 @@
         const cardBorder = isSelected ? `2px solid ${color}` : `1px solid var(--border)`;
         const cardShadow = isSelected ? `0 0 14px ${color}33` : `none`;
 
+        // Exact Total Number of Hikes / Cuts (25 bp per step)
+        const totalSteps = (totalMove12M / 25.0).toFixed(2);
+        const isCut = totalMove12M < 0;
+        const moveAction = isCut ? 'Cuts' : 'Hikes';
+        const absSteps = Math.abs(Number(totalSteps)).toFixed(2);
+        const fullStepCount = Math.floor(Math.abs(Number(totalSteps)));
+        const partialPct = Math.round((Math.abs(Number(totalSteps)) - fullStepCount) * 100);
+
         cardsHtml += `
           <div class="eq-card" style="border-top: 4px solid ${color}; border: ${cardBorder}; box-shadow: ${cardShadow};">
             <div class="eq-card-header">
@@ -2146,7 +2211,17 @@
             </div>
 
             <!-- Key Dynamics Bar -->
-            <div style="display:flex; justify-content:space-between; margin-top:8px; font-size:10px; color:var(--text-dim); background:#111a2e; padding:5px 8px; border-radius:4px; border:1px solid #1a2333;">
+            <!-- Total Policy Hikes/Cuts (25bp Steps) -->
+            <div style="background:#070b12; border:1px solid ${color}44; border-radius:5px; padding:6px 10px; margin:6px 0; display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-size:11px; font-weight:800; color:#fff;">
+                <i class="fa-solid fa-arrows-up-down" style="color:${color}; margin-right:4px;"></i> Total Policy Move (a - e):
+                <strong style="color:${color}; margin-left:2px;">${totalMove12M >= 0 ? '+' : ''}${totalMove12M} bp</strong>
+              </span>
+              <span class="badge" style="background:${isCut ? '#7f1d1d' : '#14532d'}; color:#fff; font-size:11px; font-weight:800; padding:2px 8px; border-radius:10px; border:1px solid ${isCut ? '#ef4444' : '#22c55e'};">
+                ${absSteps} ${moveAction} (${partialPct}% of next)
+              </span>
+            </div>
+<div style="display:flex; justify-content:space-between; margin-top:8px; font-size:10px; color:var(--text-dim); background:#111a2e; padding:5px 8px; border-radius:4px; border:1px solid #1a2333;">
               <span>12M Move: <strong style="color:#fff;">${totalMove12M >= 0 ? '+' : ''}${totalMove12M} bp</strong></span>
               <span>Avg Slope: <strong style="color:#38bdf8;">${avgSlope >= 0 ? '+' : ''}${avgSlope} bp/Qtr</strong></span>
               <span>Peak: <strong style="color:#f59e0b;">${peakTenor} (${maxBp >= 0 ? '+' : ''}${maxBp} bp)</strong></span>
