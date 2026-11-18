@@ -556,7 +556,21 @@
             <!-- Segment Slopes Overlay Toggle -->
             <div class="selector-group">
               <button class="btn active" id="btnToggleSlopes" onclick="toggleShowSlopes()" title="Display segment slope numbers on chart">
-                <i class="fa-solid fa-arrow-trend-up"></i> Slopes on Chart: ON
+                <i class="fa-solid fa-arrow-trend-up"></i> Contract Badges: ON
+              </button>
+            </div>
+
+            <!-- Continuous Derivatives Toggle (y', y'') -->
+            <div class="selector-group">
+              <button class="btn active" id="btnToggleDerivs" onclick="toggleShowDerivatives()" title="Toggle continuous 1st derivative (Slope) and 2nd derivative (Curvature) curves">
+                <i class="fa-solid fa-calculator"></i> Derivatives (y', y''): ON
+              </button>
+            </div>
+
+            <!-- Intermarket Comparison Overlay Toggle -->
+            <div class="selector-group">
+              <button class="btn active" id="btnOverlayCompare" onclick="toggleOverlayCompare()" title="Overlay comparative benchmark curve (EUR/USD)">
+                <i class="fa-solid fa-code-compare"></i> Intermarket Dual Curve: ON
               </button>
             </div>
 
@@ -923,7 +937,29 @@
     let fixedAxisMin = -10.0;
     let fixedAxisMax = 75.0;
     let showSegmentSlopes = true;    // Display slope numbers on chart
+    let showDerivatives = true;      // Display continuous 1st and 2nd derivatives on chart
+    let showOverlayCompare = true;   // Overlay comparative market curve (SR3 vs Euribor)
     let useMultiAxis = false;
+
+    function toggleShowDerivatives() {
+      showDerivatives = !showDerivatives;
+      const btn = document.getElementById('btnToggleDerivs');
+      if (btn) {
+        btn.innerHTML = `<i class="fa-solid fa-calculator"></i> Derivatives (y', y''): ${showDerivatives ? 'ON' : 'OFF'}`;
+        btn.classList.toggle('active', showDerivatives);
+      }
+      renderCurvesTab();
+    }
+
+    function toggleOverlayCompare() {
+      showOverlayCompare = !showOverlayCompare;
+      const btn = document.getElementById('btnOverlayCompare');
+      if (btn) {
+        btn.innerHTML = `<i class="fa-solid fa-code-compare"></i> Intermarket Dual Curve: ${showOverlayCompare ? 'ON' : 'OFF'}`;
+        btn.classList.toggle('active', showOverlayCompare);
+      }
+      renderCurvesTab();
+    }
     let refreshTimer = null;
     let globalData = null;
 
@@ -1218,15 +1254,35 @@
       const traces = [];
       const plotDiv = document.getElementById('chartOutrightsPlotly');
 
-      // MODE A: RELATIVE VS T0 (bp) — EXACTLY MATCHES REFERENCE PICTURE!
+      // MODE A: RELATIVE VS T0 (bp) — CONTINUOUS MATHEMATICAL CURVE (GEOGEBRA / DESMOS STYLE)
       if (curveProjection === 'rel_t0') {
         let maxMove = 0, minMove = 0;
         let baseline12mEur = 44.16;
         const xIndices = activeIMM.map((_, i) => i);
+        const sliceLen = activeIMM.length;
+        const maxKnot = sliceLen - 1;
 
-        for (const m of mktsToPlot) {
+        // Determine which markets to plot:
+        // If single market selected (e.g. USD), include EUR as comparative reference if showOverlayCompare is ON!
+        let targetMkts = [...mktsToPlot];
+        if (selectedCurveMarket === 'USD' && showOverlayCompare && !targetMkts.includes('EUR')) {
+          targetMkts.push('EUR');
+        } else if (selectedCurveMarket === 'EUR' && showOverlayCompare && !targetMkts.includes('USD')) {
+          targetMkts.push('USD');
+        }
+
+        const fittedModels = {};
+
+        // Dense evaluation grid for smooth continuous curve (150 interpolated evaluation knots)
+        const denseN = 150;
+        const denseX = [];
+        for (let i = 0; i <= denseN; i++) denseX.push(i * (maxKnot / denseN));
+
+        for (const m of targetMkts) {
           const c = globalData.markets[m];
           if (!c) continue;
+          const color = MARKET_COLORS[m] || '#38bdf8';
+          const isPrimary = (m === selectedCurveMarket || selectedCurveMarket === 'ALL');
           const oDict = {};
           (c.outrights || []).forEach(o => { oDict[o.code.toUpperCase()] = o; });
 
@@ -1234,71 +1290,141 @@
           const t0Obj = Object.entries(oDict).find(([k, v]) => k.includes(anchorQuarter))?.[1] || (c.outrights || [])[0];
           const p0 = t0Obj ? t0Obj.vwap : 95.0;
 
-          const yMoves = [];
+          const knotX = [];
+          const knotY = [];
           const customData = [];
 
           for (let qIdx = 0; qIdx < activeIMM.length; qIdx++) {
             const q = activeIMM[qIdx];
             const match = Object.entries(oDict).find(([k, v]) => k.includes(q))?.[1];
-            if (match) {
+            if (match && match.vwap !== null) {
               const bpMove = Number(((p0 - match.vwap) * 100).toFixed(2));
-              yMoves.push(bpMove);
+              knotX.push(qIdx);
+              knotY.push(bpMove);
               customData.push([match.rate, match.vwap, match.code, xLabels[qIdx]]);
               if (bpMove > maxMove) maxMove = bpMove;
               if (bpMove < minMove) minMove = bpMove;
               if ((m === 'EUR' || m === 'USD') && q === 'DEC27') baseline12mEur = bpMove;
             } else {
-              yMoves.push(null);
               customData.push([null, null, q, xLabels[qIdx]]);
             }
           }
 
+          if (knotY.length < 3) continue;
+
+          // Fit cubic polynomial: y(x) = c3 x^3 + c2 x^2 + c1 x + c0
+          const fit = fitPolynomialCoeffs(knotX, knotY, 3);
+          fittedModels[m] = fit;
+          const c3 = fit.coeffs[3] || 0;
+          const c2 = fit.coeffs[2] || 0;
+          const c1 = fit.coeffs[1] || 0;
+          const c0 = fit.coeffs[0] || 0;
+
+          // Compute dense smooth mathematical curve: y(x)
+          const denseY = denseX.map(x => c3*(x**3) + c2*(x**2) + c1*x + c0);
+
+          // 1. ADD SMOOTH CONTINUOUS MATHEMATICAL CURVE (Solid line)
           traces.push({
-            x: xIndices,
-            y: yMoves,
-            name: `${c.meta.name} (${m})`,
+            x: denseX,
+            y: denseY,
+            name: `${c.meta.name} (${m}) Continuous Curve`,
             type: 'scatter',
-            mode: showSegmentSlopes ? 'lines+markers+text' : 'lines+markers',
-            text: yMoves.map(v => (v !== null && v !== undefined) ? `${v >= 0 ? '+' : ''}${v.toFixed(1)}` : ''),
+            mode: 'lines',
+            line: { 
+              color: color, 
+              width: isPrimary ? 3.5 : 2.2,
+              dash: isPrimary ? 'solid' : 'longdash'
+            },
+            hoverinfo: 'none'
+          });
+
+          // 2. ADD ACTUAL MARKET CONTRACT NODES (Discrete scatter points sitting on curve)
+          traces.push({
+            x: knotX,
+            y: knotY,
+            name: `${c.meta.name} (${m}) Contracts`,
+            type: 'scatter',
+            mode: showSegmentSlopes ? 'markers+text' : 'markers',
+            text: knotY.map(v => (v !== null && v !== undefined) ? `${v >= 0 ? '+' : ''}${v.toFixed(1)} bp` : ''),
             textposition: 'top center',
-            textfont: { family: 'JetBrains Mono, monospace', size: 10, color: MARKET_COLORS[m] },
-            line: { shape: 'spline', smoothing: 1.25, width: 3, color: MARKET_COLORS[m] },
-            marker: { size: 8, color: MARKET_COLORS[m] },
+            textfont: { family: 'JetBrains Mono, monospace', size: 10, color: color },
+            marker: { 
+              size: isPrimary ? 10 : 7, 
+              color: color, 
+              symbol: 'circle',
+              line: { color: '#ffffff', width: isPrimary ? 1.8 : 1.0 }
+            },
             customdata: customData,
             hovertemplate: `<b>${m} %{customdata[3]}</b> (%{customdata[2]})<br>Cumulative Move: <b>%{y:+.2f} bp</b><br>Implied Rate: %{customdata[0]:.3f}%<br>VWAP Price: %{customdata[1]:.4f}<extra></extra>`
           });
+
+          // 3. IF DERIVATIVES ENABLED & THIS IS PRIMARY MARKET: PLOT 1ST AND 2ND DERIVATIVES!
+          if (showDerivatives && (isPrimary || targetMkts.length === 1)) {
+            // 1st Derivative: Slope dy/dx = 3 c3 x^2 + 2 c2 x + c1
+            const denseD1 = denseX.map(x => 3*c3*(x**2) + 2*c2*x + c1);
+            traces.push({
+              x: denseX,
+              y: denseD1,
+              name: `${m} 1st Deriv: Slope dy/dx`,
+              type: 'scatter',
+              mode: 'lines',
+              line: { dash: 'dash', width: 2.0, color: '#00d97e' },
+              hovertemplate: `${m} Local Slope dy/dx: <b>%{y:+.2f} bp/qtr</b><extra></extra>`
+            });
+
+            // 2nd Derivative: Curvature d²y/dx² = 6 c3 x + 2 c2
+            const denseD2 = denseX.map(x => 6*c3*x + 2*c2);
+            traces.push({
+              x: denseX,
+              y: denseD2,
+              name: `${m} 2nd Deriv: Curvature d²y/dx²`,
+              type: 'scatter',
+              mode: 'lines',
+              line: { dash: 'dot', width: 2.0, color: '#c084fc' },
+              hovertemplate: `${m} Local Curvature d²y/dx²: <b>%{y:+.2f} bp/qtr²</b><extra></extra>`
+            });
+          }
         }
 
         // Add Straight-Line Baseline (No Curvature)
         const straightStep = baseline12mEur / (sliceCount - 1);
-        const straightLine = [];
-        for (let i = 0; i < sliceCount; i++) {
-          straightLine.push(Number((straightStep * i).toFixed(2)));
-        }
+        const straightLine = denseX.map(x => Number((straightStep * x).toFixed(2)));
 
         traces.push({
-          x: xIndices,
+          x: denseX,
           y: straightLine,
-          name: `Straight Line Baseline (${straightStep.toFixed(1)} bp/Qtr, No Curvature)`,
+          name: `Straight Line Baseline (${straightStep.toFixed(1)} bp/Qtr, Zero Curvature)`,
           type: 'scatter',
           mode: 'lines',
-          line: { dash: 'dash', width: 2, color: '#94a3b8' },
-          customdata: xLabels,
-          hovertemplate: `Linear Baseline at %{customdata}: <b>%{y:.2f} bp</b><extra></extra>`
+          line: { dash: 'dash', width: 1.8, color: '#94a3b8' },
+          hoverinfo: 'none'
         });
 
         // Build annotations for segment slopes if enabled
         const annotations = [];
-        if (showSegmentSlopes && traces.length > 0) {
-          // If 1 market selected, annotate that market; if ALL, annotate USD and EUR or prominent
-          const primaryTraces = (mktsToPlot.length === 1) 
-            ? [traces[0]] 
-            : traces.filter(t => t.name.includes('USD') || t.name.includes('EUR'));
+        if (showSegmentSlopes) {
+          const primeMarket = (targetMkts.includes(selectedCurveMarket) && selectedCurveMarket !== 'ALL') 
+            ? selectedCurveMarket 
+            : 'USD';
+          
+          const primeData = globalData.markets[primeMarket];
+          if (primeData) {
+            const oDict = {};
+            (primeData.outrights || []).forEach(o => { oDict[o.code.toUpperCase()] = o; });
+            const p0Obj = Object.entries(oDict).find(([k, v]) => k.includes(anchorQuarter))?.[1] || (primeData.outrights || [])[0];
+            const p0 = p0Obj ? p0Obj.vwap : 95.0;
 
-          for (const tr of primaryTraces) {
-            for (let i = 0; i < tr.x.length - 1; i++) {
-              const y1 = tr.y[i];
-              const y2 = tr.y[i+1];
+            const ky = [];
+            for (let i = 0; i < activeIMM.length; i++) {
+              const q = activeIMM[i];
+              const match = Object.entries(oDict).find(([k, v]) => k.includes(q))?.[1];
+              if (match) ky.push(Number(((p0 - match.vwap) * 100).toFixed(2)));
+              else ky.push(null);
+            }
+
+            for (let i = 0; i < ky.length - 1; i++) {
+              const y1 = ky[i];
+              const y2 = ky[i+1];
               if (y1 === null || y2 === null || y1 === undefined || y2 === undefined) continue;
               const slope = Number((y2 - y1).toFixed(1));
               const midY = (y1 + y2) / 2.0;
@@ -1334,8 +1460,8 @@
           paper_bgcolor: '#0d1424',
           plot_bgcolor: '#0a0e17',
           title: {
-            text: `<b>Relative Curve Level & Curvature Shape vs ${anchorQuarter} (bp)</b>`,
-            font: { color: '#f1f5f9', size: 14 }
+            text: `<b>Continuous Mathematical Curve & Curvature Dynamics vs ${anchorQuarter} (bp)</b>`,
+            font: { color: '#f1f5f9', size: 13 }
           },
           xaxis: {
             title: { text: 'Quarterly Contract Strip', font: { color: '#94a3b8', size: 11 } },
@@ -1360,12 +1486,15 @@
             autorange: !isAxisFixed
           },
           annotations: annotations,
-          legend: { font: { color: '#94a3b8' }, orientation: 'h', y: -0.22 },
+          legend: { font: { color: '#94a3b8', size: 10 }, orientation: 'h', y: -0.22 },
           margin: { l: 65, r: 35, t: 40, b: 65 },
           hovermode: 'x unified'
         };
 
         Plotly.newPlot(plotDiv, traces, layout, { responsive: true, displayModeBar: true });
+
+        // Update the Live Dual Equation Banner above the chart
+        updateLiveEquationBanner(fittedModels, activeIMM, anchorQuarter);
 
         // Compute and render LIVE EQUATIONS & SLOPES for ALL curves
         renderMultiCurveEquations(['USD', 'EUR', 'GBP', 'CHF'], activeIMM, anchorQuarter, selectedCurveMarket);
@@ -1605,6 +1734,51 @@
       }
     }
 
+
+
+    // ─── RENDER LIVE DUAL EQUATION BANNER (ABOVE CHART) ───
+    function updateLiveEquationBanner(models, tenors, anchorQuarter) {
+      const banner = document.getElementById('liveDualEquationStrip');
+      if (!banner || !globalData) return;
+
+      const usd = models['USD'];
+      const eur = models['EUR'];
+      if (!usd && !eur) return;
+
+      let html = '';
+      for (const m of ['USD', 'EUR']) {
+        const fit = models[m];
+        if (!fit) continue;
+        const c = globalData.markets[m];
+        const color = MARKET_COLORS[m] || '#38bdf8';
+
+        html += `
+          <div style="background:#111a2e; border:1px solid ${color}44; border-left:4px solid ${color}; border-radius:6px; padding:8px 12px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+              <span style="font-weight:800; color:${color}; font-size:12px;">
+                <i class="fa-solid fa-chart-line"></i> ${c ? c.meta.name : m} (${m})
+              </span>
+              <span style="font-size:10px; color:var(--green); font-weight:700;">R² = ${fit.r2.toFixed(4)}</span>
+            </div>
+            <div style="margin-bottom:3px; word-break:break-all;">
+              <span style="color:var(--text-dim); font-size:10px; font-weight:700;">CURVE y(x):</span>
+              <strong style="color:#fff; font-size:11px; margin-left:4px;">${fit.eqStr}</strong>
+            </div>
+            <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px; font-size:10px;">
+              <div>
+                <span style="color:#00d97e; font-weight:700;">1st Deriv (Slope):</span>
+                <span style="color:#00d97e; margin-left:3px;">${fit.d1Str}</span>
+              </div>
+              <div>
+                <span style="color:#c084fc; font-weight:700;">2nd Deriv (Curv):</span>
+                <span style="color:#c084fc; margin-left:3px;">${fit.d2Str}</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+      banner.innerHTML = html;
+    }
 
     // ─── RENDER MULTI-CURVE LIVE EQUATIONS & SLOPES ───
     function renderMultiCurveEquations(mkts, tenors, anchorQuarter, activeMarket = 'ALL') {
