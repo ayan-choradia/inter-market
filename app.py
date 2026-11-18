@@ -3,9 +3,13 @@ Standalone Intermarket Curves Service
 Run with: uvicorn app:app --host 0.0.0.0 --port 8050 --reload
 """
 import os
-from fastapi import FastAPI, HTTPException
+import json
+import asyncio
+from typing import List
+from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect
 from fastapi.responses import FileResponse
 from fastapi.middleware.cors import CORSMiddleware
+import websockets
 from intermarket_curve_engine import router as intermarket_router, get_engine
 
 app = FastAPI(title="Intermarket Curves Engine", version="1.0.0")
@@ -21,6 +25,44 @@ app.add_middleware(
 app.include_router(intermarket_router)
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+
+connected_ws: List[WebSocket] = []
+
+@app.websocket("/ws")
+async def websocket_endpoint(ws: WebSocket):
+    await ws.accept()
+    connected_ws.append(ws)
+    try:
+        engine = get_engine()
+        await ws.send_json({
+            "type": "intermarket_full",
+            "data": engine.get_all_curves_summary()
+        })
+        while True:
+            await ws.receive_text()
+    except WebSocketDisconnect:
+        if ws in connected_ws:
+            connected_ws.remove(ws)
+
+async def forward_backend_ws():
+    """Relay live Lightstreamer ticks from backend port 8000 to port 8050 clients."""
+    while True:
+        try:
+            async with websockets.connect("ws://localhost:8000/ws") as b_ws:
+                while True:
+                    msg = await b_ws.recv()
+                    data = json.loads(msg)
+                    for c in list(connected_ws):
+                        try:
+                            await c.send_json(data)
+                        except Exception:
+                            pass
+        except Exception:
+            await asyncio.sleep(2)
+
+@app.on_event("startup")
+async def startup_event():
+    asyncio.create_task(forward_backend_ws())
 
 @app.get("/")
 async def index():

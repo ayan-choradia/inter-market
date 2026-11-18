@@ -427,6 +427,33 @@
     .slope-pill.negative { border-color: rgba(239, 68, 68, 0.4); color: var(--red); background: rgba(239, 68, 68, 0.08); }
     .slope-pill.neutral { color: var(--text-muted); }
 
+    @keyframes flashGreen {
+      0% { background-color: rgba(0, 217, 126, 0.45); color: #fff; }
+      100% { background-color: transparent; }
+    }
+    @keyframes flashRed {
+      0% { background-color: rgba(239, 68, 68, 0.45); color: #fff; }
+      100% { background-color: transparent; }
+    }
+    .flash-up { animation: flashGreen 0.85s ease-out; }
+    .flash-down { animation: flashRed 0.85s ease-out; }
+    .tape-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      transition: all 0.3s ease;
+    }
+    .tape-item.new-tick {
+      border-color: #00d97e;
+      background: #064e3b;
+      color: #fff;
+    }
+
   </style>
 </head>
 <body>
@@ -435,7 +462,10 @@
   <header>
     <div class="brand">
       <h1><i class="fa-solid fa-chart-line" style="color:var(--accent-eur)"></i> Intermarket Fixed Income Curve Intelligence</h1>
-      <span class="badge-live"><span class="pulse-dot"></span> LIGHTSTREAMER CONNECTED</span>
+      <span class="badge-live" id="lsStatusBadge"><span class="pulse-dot"></span> <span id="lsStatusText">LIGHTSTREAMER STREAMING LIVE</span></span>
+      <span class="badge" id="lsTickBadge" style="background:#111a2e; border:1px solid #00d97e55; color:#00d97e; font-family:var(--font-mono); font-size:11px; font-weight:700;">
+        <i class="fa-solid fa-bolt"></i> <span id="lsTickCounter">0</span> ticks (<span id="lsTicksPerSec">0.0</span>/s)
+      </span>
       <span style="font-size:11px; color:var(--text-muted); font-family:var(--font-mono);" id="headerTimestamp"></span>
     </div>
 
@@ -623,6 +653,69 @@
             <span style="font-size:11px; color:var(--text-dim); font-family:var(--font-mono);">Updates live on every tick</span>
           </div>
           <div id="multiCurveEquationsGrid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 12px;"></div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <!-- LEVEL 1 COMPONENT: LIVE FEED OF OUTRIGHTS & STREAMING TAPE     -->
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <div style="margin-top:18px; padding-top:14px; border-top:2px solid #1e3a8a;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:10px;">
+            <div>
+              <div style="font-size:13px; font-weight:800; color:#fff; display:flex; align-items:center; gap:8px;">
+                <i class="fa-solid fa-tower-broadcast" style="color:#00d97e;"></i> 
+                <span>Level 1: Live Feed of Outrights (Streaming IMM Strip & BBO Depth)</span>
+                <span class="badge" style="background:#052e16; color:#4ade80; border:1px solid #16a34a; font-size:10px; font-weight:700; padding:2px 8px; border-radius:12px;">
+                  <i class="fa-solid fa-circle" style="font-size:6px; color:#4ade80; margin-right:4px;"></i> LIVE FEED ACTIVE
+                </span>
+              </div>
+              <div style="font-size:11px; color:var(--text-dim); margin-top:2px;">
+                Real-time tick-by-tick outright prices flowing from Lightstreamer, directly calculating curve coordinates and derivative slopes.
+              </div>
+            </div>
+
+            <!-- Feed Market Filter Buttons -->
+            <div class="selector-group" style="margin:0;">
+              <span class="selector-label">Filter Feed:</span>
+              <button class="btn active" id="btnFeedAll" onclick="setFeedMarketFilter('ALL')">Dual SR3 vs Euribor</button>
+              <button class="btn" id="btnFeedUSD" onclick="setFeedMarketFilter('USD')">🇺🇸 USD SOFR</button>
+              <button class="btn" id="btnFeedEUR" onclick="setFeedMarketFilter('EUR')">🇪🇺 EUR Euribor</button>
+              <button class="btn" id="btnFeedGBP" onclick="setFeedMarketFilter('GBP')">🇬🇧 GBP SONIA</button>
+              <button class="btn" id="btnFeedCHF" onclick="setFeedMarketFilter('CHF')">🇨🇭 CHF SARON</button>
+            </div>
+          </div>
+
+          <!-- Streaming Ticks Tape (The Tape) -->
+          <div style="background:#070b12; border:1px solid #1e293b; border-radius:6px; padding:8px 12px; margin-bottom:12px; display:flex; align-items:center; gap:12px; overflow:hidden;">
+            <div style="display:flex; align-items:center; gap:6px; font-size:11px; font-weight:800; color:#00d97e; white-space:nowrap; border-right:1px solid #1e293b; padding-right:12px;">
+              <i class="fa-solid fa-satellite-dish" style="color:#00d97e;"></i> LIVE TAPE
+            </div>
+            <div id="liveTickerTape" style="display:flex; gap:12px; overflow-x:auto; white-space:nowrap; font-family:var(--font-mono); font-size:11px; color:#94a3b8; scrollbar-width:none;">
+              <span style="color:var(--text-dim);"><i class="fa-solid fa-spinner fa-spin"></i> Connecting to Lightstreamer streaming feed...</span>
+            </div>
+          </div>
+
+          <!-- Outrights Live Table -->
+          <div class="table-responsive" style="max-height:360px; overflow-y:auto; border:1px solid #1e293b; border-radius:6px;">
+            <table id="tableLiveOutrights" style="width:100%; font-family:var(--font-mono); font-size:11px; border-collapse:collapse;">
+              <thead>
+                <tr style="background:#0f172a; border-bottom:1px solid #1e293b; text-align:left; color:#94a3b8; font-size:10px; text-transform:uppercase;">
+                  <th style="padding:8px 10px;">Market</th>
+                  <th style="padding:8px 10px;">Contract</th>
+                  <th style="padding:8px 10px;">Tenor</th>
+                  <th style="padding:8px 10px; text-align:right;">Live VWAP</th>
+                  <th style="padding:8px 10px; text-align:right;">Implied Rate %</th>
+                  <th style="padding:8px 10px; text-align:right;">Best Bid / Ask</th>
+                  <th style="padding:8px 10px; text-align:right;">BBO Spread</th>
+                  <th style="padding:8px 10px; text-align:right;">Rel vs T₀ (bp)</th>
+                  <th style="padding:8px 10px; text-align:right;">Volume</th>
+                  <th style="padding:8px 10px; text-align:right;">Last Update</th>
+                </tr>
+              </thead>
+              <tbody id="liveOutrightsTbody">
+                <!-- Dynamically populated rows with live CSS flash on ticks -->
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
 
@@ -2555,9 +2648,329 @@
       }
     }
 
+    // ─── LIVE OUTRIGHTS FEED & LIGHTSTREAMER STREAMING ENGINE ───
+    let ws = null;
+    let wsTickCount = 0;
+    let wsStartTime = Date.now();
+    let feedMarketFilter = 'ALL';
+    let recentTapeTicks = [];
+    let previousPricesMap = {};
+    let pendingCurveRedraw = false;
+
+    function setFeedMarketFilter(m) {
+      feedMarketFilter = m;
+      for (const btnId of ['btnFeedAll', 'btnFeedUSD', 'btnFeedEUR', 'btnFeedGBP', 'btnFeedCHF']) {
+        const btn = document.getElementById(btnId);
+        if (btn) btn.classList.remove('active');
+      }
+      const activeMap = { 'ALL': 'btnFeedAll', 'USD': 'btnFeedUSD', 'EUR': 'btnFeedEUR', 'GBP': 'btnFeedGBP', 'CHF': 'btnFeedCHF' };
+      const ab = document.getElementById(activeMap[m]);
+      if (ab) ab.classList.add('active');
+      renderLiveOutrightsFeed();
+    }
+
+    function renderLiveOutrightsFeed() {
+      if (!globalData) return;
+      const tbody = document.getElementById('liveOutrightsTbody');
+      if (!tbody) return;
+
+      const markets = (feedMarketFilter === 'ALL') 
+        ? ['USD', 'EUR'] 
+        : [feedMarketFilter];
+
+      // Determine active tenors slice matching the curve
+      let sliceCount = (curveHorizon === '2Y') ? 9 : (curveHorizon === 'FULL' ? ALL_IMM_QUARTERS.length : 5);
+      let startIdx = (curveHorizon === 'FULL') ? 0 : ALL_IMM_QUARTERS.indexOf("DEC26");
+      const activeIMM = ALL_IMM_QUARTERS.slice(startIdx, startIdx + sliceCount);
+      const anchorQuarter = activeIMM[0];
+
+      let rowsHtml = '';
+
+      for (const m of markets) {
+        const c = globalData.markets[m];
+        if (!c) continue;
+        const color = MARKET_COLORS[m] || '#38bdf8';
+        const oDict = {};
+        (c.outrights || []).forEach(o => { oDict[o.code.toUpperCase()] = o; });
+
+        // Anchor contract for relative calculation
+        const p0Obj = Object.entries(oDict).find(([k, v]) => k.includes(anchorQuarter))?.[1] || (c.outrights || [])[0];
+        const p0 = p0Obj ? p0Obj.vwap : 95.0;
+
+        for (const q of activeIMM) {
+          const match = Object.entries(oDict).find(([k, v]) => k.includes(q))?.[1];
+          if (!match) continue;
+
+          const vwap = match.vwap !== null && match.vwap !== undefined ? match.vwap : (match.last || match.settle);
+          const rate = vwap !== null ? (100.0 - vwap).toFixed(4) : '--';
+          const relMove = vwap !== null ? ((p0 - vwap) * 100.0).toFixed(2) : '--';
+          const bid = match.bid !== null && match.bid !== undefined ? match.bid.toFixed(3) : '--';
+          const ask = match.ask !== null && match.ask !== undefined ? match.ask.toFixed(3) : '--';
+          const spreadBps = (match.bid && match.ask) ? ((match.ask - match.bid) * 100.0).toFixed(1) : '--';
+          const vol = (match.volume || 0).toLocaleString();
+          const rowId = `feed-row-${m}-${match.code.replace(/[^a-zA-Z0-9]/g, '')}`;
+
+          rowsHtml += `
+            <tr id="${rowId}" style="border-bottom:1px solid #162032; transition:background-color 0.4s ease;">
+              <td style="padding:6px 10px; font-weight:700; color:${color};">
+                <i class="fa-solid fa-landmark"></i> ${m}
+              </td>
+              <td style="padding:6px 10px; font-weight:600; color:#f1f5f9;">
+                ${match.contract || match.code}
+              </td>
+              <td style="padding:6px 10px; color:#94a3b8; font-weight:700;">
+                <span style="background:#131d33; padding:2px 6px; border-radius:3px; border:1px solid ${color}33;">${q}</span>
+              </td>
+              <td id="${rowId}-vwap" style="padding:6px 10px; text-align:right; font-weight:800; color:#fff;">
+                ${vwap !== null ? vwap.toFixed(4) : '--'}
+              </td>
+              <td id="${rowId}-rate" style="padding:6px 10px; text-align:right; font-weight:700; color:${color};">
+                ${rate}%
+              </td>
+              <td style="padding:6px 10px; text-align:right; color:#94a3b8;">
+                ${bid} / ${ask}
+              </td>
+              <td style="padding:6px 10px; text-align:right; color:#f59e0b;">
+                ${spreadBps} bp
+              </td>
+              <td style="padding:6px 10px; text-align:right; font-weight:700; color:${Number(relMove) >= 0 ? 'var(--green)' : 'var(--red)'};">
+                ${Number(relMove) > 0 ? '+' : ''}${relMove} bp
+              </td>
+              <td style="padding:6px 10px; text-align:right; color:#64748b;">
+                ${vol}
+              </td>
+              <td id="${rowId}-time" style="padding:6px 10px; text-align:right; color:var(--text-dim); font-size:10px;">
+                Just now
+              </td>
+            </tr>
+          `;
+        }
+      }
+
+      tbody.innerHTML = rowsHtml;
+    }
+
+    function addTickToTape(item) {
+      recentTapeTicks.unshift(item);
+      if (recentTapeTicks.length > 15) recentTapeTicks.pop();
+
+      const tapeDiv = document.getElementById('liveTickerTape');
+      if (!tapeDiv) return;
+
+      let html = '';
+      for (const t of recentTapeTicks) {
+        const deltaStr = t.deltaBp !== undefined 
+          ? `<span style="color:${t.deltaBp >= 0 ? '#00d97e' : '#ef4444'}; font-weight:700;">${t.deltaBp > 0 ? '+' : ''}${t.deltaBp.toFixed(1)} bp</span>` 
+          : '';
+        const color = MARKET_COLORS[t.market] || '#38bdf8';
+
+        html += `
+          <div class="tape-item ${t.isNew ? 'new-tick' : ''}">
+            <span style="color:#64748b; font-size:10px;">${t.time}</span>
+            <strong style="color:${color}">${t.market}</strong>
+            <span style="color:#f1f5f9; font-weight:600;">${t.contract}</span>
+            <span style="color:#fff; font-weight:700;">${t.price.toFixed(4)}</span>
+            ${deltaStr}
+            ${t.volume ? `<span style="color:#64748b; font-size:9px;">(${t.volume.toLocaleString()} vol)</span>` : ''}
+          </div>
+        `;
+      }
+      tapeDiv.innerHTML = html;
+    }
+
+    function scheduleCurveRedraw() {
+      if (pendingCurveRedraw) return;
+      pendingCurveRedraw = true;
+      requestAnimationFrame(() => {
+        renderCurvesTab();
+        renderLiveOutrightsFeed();
+        pendingCurveRedraw = false;
+      });
+    }
+
+    function handleLiveTick(msg) {
+      if (!msg || !globalData) return;
+      const nowStr = new Date().toLocaleTimeString();
+
+      // Case 1: Intermarket Outright Tick (Euribor, SONIA, SARON, SOFR)
+      if (msg.type === 'intermarket_tick') {
+        wsTickCount++;
+        const m = msg.market || 'USD';
+        const c = globalData.markets[m];
+        if (!c) return;
+
+        // Find and update outright in globalData
+        const outright = (c.outrights || []).find(o => 
+          o.instrument_id === msg.instrument_id || 
+          o.code.toUpperCase() === (msg.code || '').toUpperCase() ||
+          (msg.contract && o.contract && o.contract.includes(msg.contract))
+        );
+
+        let deltaBp = 0;
+        if (outright) {
+          const oldVwap = outright.vwap;
+          outright.vwap = msg.price !== null ? msg.price : outright.vwap;
+          outright.rate = msg.rate !== null ? msg.rate : (100.0 - outright.vwap);
+          if (msg.bid) outright.bid = msg.bid;
+          if (msg.ask) outright.ask = msg.ask;
+          if (msg.volume) outright.volume = msg.volume;
+          outright.last_tick = nowStr;
+
+          if (oldVwap && msg.price) {
+            deltaBp = (msg.price - oldVwap) * 100.0;
+          }
+        }
+
+        // Add to live tape
+        addTickToTape({
+          time: nowStr,
+          market: m,
+          contract: msg.contract || msg.code || 'Contract',
+          price: msg.price,
+          deltaBp: deltaBp,
+          volume: msg.volume,
+          isNew: true
+        });
+
+        // Flash corresponding row if visible
+        const safeCode = (msg.code || '').replace(/[^a-zA-Z0-9]/g, '');
+        const vwapEl = document.getElementById(`feed-row-${m}-${safeCode}-vwap`);
+        if (vwapEl) {
+          vwapEl.innerText = msg.price.toFixed(4);
+          vwapEl.className = (deltaBp >= 0) ? 'flash-up' : 'flash-down';
+          setTimeout(() => { if (vwapEl) vwapEl.className = ''; }, 850);
+        }
+
+        // Update tick counters
+        updateTickRateHeader();
+
+        // Re-render continuous curve live
+        scheduleCurveRedraw();
+      }
+
+      // Case 2: Standard price_tick from Lightstreamer (SR3 / ZQ)
+      else if (msg.type === 'price_tick' && msg.instrument_type === 'SR3') {
+        const prices = msg.prices || {};
+        const richData = msg.rich_data || {};
+        const c = globalData.markets['USD'];
+        if (!c) return;
+
+        let hasChange = false;
+
+        for (const [code, price] of Object.entries(prices)) {
+          wsTickCount++;
+          const rich = richData[code] || {};
+          // Find matching outright in USD
+          const match = (c.outrights || []).find(o => 
+            (o.code && o.code.toUpperCase().includes(code.toUpperCase())) ||
+            (o.raw_code && o.raw_code.toUpperCase() === code.toUpperCase()) ||
+            (o.contract && o.contract.toUpperCase().includes(code.toUpperCase()))
+          );
+
+          let deltaBp = 0;
+          if (match) {
+            const oldVwap = match.vwap;
+            match.vwap = price;
+            match.rate = Number((100.0 - price).toFixed(4));
+            if (rich.BestBid) match.bid = Number(rich.BestBid) / 100.0;
+            if (rich.BestAsk) match.ask = Number(rich.BestAsk) / 100.0;
+            if (rich.Volume) match.volume = Number(rich.Volume);
+            match.last_tick = nowStr;
+
+            if (oldVwap) deltaBp = (price - oldVwap) * 100.0;
+            hasChange = true;
+
+            const safeCode = (match.code || '').replace(/[^a-zA-Z0-9]/g, '');
+            const vwapEl = document.getElementById(`feed-row-USD-${safeCode}-vwap`);
+            if (vwapEl) {
+              vwapEl.innerText = price.toFixed(4);
+              vwapEl.className = (deltaBp >= 0) ? 'flash-up' : 'flash-down';
+              setTimeout(() => { if (vwapEl) vwapEl.className = ''; }, 850);
+            }
+          }
+
+          addTickToTape({
+            time: nowStr,
+            market: 'USD',
+            contract: `SR3 ${code}`,
+            price: price,
+            deltaBp: deltaBp,
+            volume: rich.Volume ? Number(rich.Volume) : null,
+            isNew: true
+          });
+        }
+
+        updateTickRateHeader();
+        if (hasChange) scheduleCurveRedraw();
+      }
+    }
+
+    function updateTickRateHeader() {
+      const counterEl = document.getElementById('lsTickCounter');
+      const rateEl = document.getElementById('lsTicksPerSec');
+      if (counterEl) counterEl.innerText = wsTickCount.toLocaleString();
+      if (rateEl) {
+        const elapsedSec = Math.max(1, (Date.now() - wsStartTime) / 1000);
+        rateEl.innerText = (wsTickCount / elapsedSec).toFixed(1);
+      }
+    }
+
+    function initWebSocket() {
+      const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+      let wsHost = window.location.host;
+      if (window.location.port === '8050') {
+        wsHost = `${window.location.hostname}:8000`;
+      }
+      const wsUrl = `${wsProtocol}//${wsHost}/ws`;
+      console.log("[WS] Connecting to live Lightstreamer WebSocket feed:", wsUrl);
+
+      try {
+        ws = new WebSocket(wsUrl);
+
+        ws.onopen = function() {
+          console.log("[WS] Connected successfully to live feed!");
+          const badge = document.getElementById('lsStatusBadge');
+          if (badge) {
+            badge.className = 'badge-live';
+            badge.innerHTML = '<span class="pulse-dot"></span> <span id="lsStatusText">LIGHTSTREAMER STREAMING LIVE</span>';
+          }
+        };
+
+        ws.onmessage = function(event) {
+          try {
+            const msg = JSON.parse(event.data);
+            handleLiveTick(msg);
+          } catch (e) {
+            console.error("[WS] Message parsing error:", e);
+          }
+        };
+
+        ws.onclose = function() {
+          console.warn("[WS] Socket disconnected. Reconnecting in 3 seconds...");
+          const badge = document.getElementById('lsStatusBadge');
+          if (badge) {
+            badge.className = 'badge badge-warning';
+            badge.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> RECONNECTING LIVE FEED...';
+          }
+          setTimeout(initWebSocket, 3000);
+        };
+
+        ws.onerror = function(err) {
+          console.error("[WS] WebSocket error:", err);
+          ws.close();
+        };
+      } catch (err) {
+        console.error("[WS] Socket init failed:", err);
+        setTimeout(initWebSocket, 4000);
+      }
+    }
+
     // ─── INITIALIZATION ───
     window.addEventListener('DOMContentLoaded', () => {
-      fetchData();
+      fetchData().then(() => {
+        renderLiveOutrightsFeed();
+        initWebSocket();
+      });
       updateRefreshInterval();
     });
   </script>
