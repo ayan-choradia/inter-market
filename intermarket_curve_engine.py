@@ -25,6 +25,14 @@ log = logging.getLogger("intermarket_curves")
 HERE = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(HERE)
 
+def resolve_file(name: str) -> Optional[str]:
+    candidates = [
+        os.path.join(HERE, name),
+        os.path.join(PROJECT_ROOT, name),
+        os.path.join(PROJECT_ROOT, "fixed-income-platform new222", "fixed-income-platform", name),
+    ]
+    return next((p for p in candidates if os.path.exists(p)), None)
+
 # Month mappings
 MONTH_NAME_TO_NUM = {
     "JAN": 1, "FEB": 2, "MAR": 3, "APR": 4, "MAY": 5, "JUN": 6,
@@ -118,36 +126,37 @@ class IntermarketCurveEngine:
         """Load and index all CSV files for I, SA3, SO3, and SR3 from registry."""
         file_map = {
             "EUR": {
-                "outright": os.path.join(PROJECT_ROOT, "I outreight inst id"),
-                "spreads": os.path.join(PROJECT_ROOT, "I (Euribor spreads ) all inst id"),
+                "outright": resolve_file("I outreight inst id"),
+                "spreads": resolve_file("I (Euribor spreads ) all inst id"),
                 "prefix": "I"
             },
             "CHF": {
-                "outright": os.path.join(PROJECT_ROOT, "SA3 outirght inst id"),
-                "spreads": os.path.join(PROJECT_ROOT, "SA3 spread inst id"),
+                "outright": resolve_file("SA3 outirght inst id"),
+                "spreads": resolve_file("SA3 spread inst id"),
                 "prefix": "SA3"
             },
             "GBP": {
-                "outright": os.path.join(PROJECT_ROOT, "So3 outirght inst isd"),
-                "spreads": os.path.join(PROJECT_ROOT, "SO3 spread Ins id"),
+                "outright": resolve_file("So3 outirght inst isd"),
+                "spreads": resolve_file("SO3 spread Ins id"),
                 "prefix": "SO3"
             }
         }
         
         for mkt, paths in file_map.items():
-            self._load_csv_market(mkt, paths["outright"], paths["spreads"], paths["prefix"])
+            if paths["outright"] and paths["spreads"]:
+                self._load_csv_market(mkt, paths["outright"], paths["spreads"], paths["prefix"])
 
         # Check for real SR3 outright file provided by user
         sr3_outright_candidates = [
-            os.path.join(PROJECT_ROOT, "src outirght curve inst is"),
-            os.path.join(PROJECT_ROOT, "SR3 outright inst id"),
-            os.path.join(PROJECT_ROOT, "SR3 outirght inst id"),
-            os.path.join(PROJECT_ROOT, "sr3 outirght curve inst is"),
+            resolve_file("src outirght curve inst is"),
+            resolve_file("SR3 outright inst id"),
+            resolve_file("SR3 outirght inst id"),
+            resolve_file("sr3 outirght curve inst is"),
         ]
-        sr3_outright_file = next((p for p in sr3_outright_candidates if os.path.exists(p)), None)
-        sr3_spread_file = os.path.join(PROJECT_ROOT, "SR3 spread inst id")
+        sr3_outright_file = next((p for p in sr3_outright_candidates if p and os.path.exists(p)), None)
+        sr3_spread_file = resolve_file("SR3 spread inst id")
 
-        if sr3_outright_file and os.path.exists(sr3_spread_file):
+        if sr3_outright_file and sr3_spread_file and os.path.exists(sr3_spread_file):
             log.info(f"Loading real SOFR outrights from: {sr3_outright_file}")
             self._load_csv_market("USD", sr3_outright_file, sr3_spread_file, "SR3")
         else:
