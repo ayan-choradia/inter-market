@@ -1173,12 +1173,23 @@
 
             <!-- View Mode Switcher -->
             <div class="selector-group" style="margin-bottom:0;">
-              <span class="selector-label" style="font-size:11px;">Curve View:</span>
+              <span class="selector-label" style="font-size:11px;">Curves Display:</span>
               <div class="btn-group">
-                <button id="btnDeduceViewRel" class="btn btn-sm active" onclick="setDeduceViewMode('rel_t0')">Rate Move vs T₀ (bp)</button>
-                <button id="btnDeduceViewYield" class="btn btn-sm" onclick="setDeduceViewMode('yield')">Outright Yield (%)</button>
-                <button id="btnDeduceViewSpreads" class="btn btn-sm" onclick="setDeduceViewMode('spreads')">3M Spreads (bp)</button>
-                <button id="btnDeduceViewFlies" class="btn btn-sm" onclick="setDeduceViewMode('flies')">Flies (bp)</button>
+                <button id="btnDeduceViewAll4" class="btn btn-sm active" onclick="setDeduceViewMode('all_4')">
+                  <i class="fa-solid fa-chart-line"></i> All 4 Curves (Grid)
+                </button>
+                <button id="btnDeduceViewOutright" class="btn btn-sm" onclick="setDeduceViewMode('outright')">
+                  1. Outrights
+                </button>
+                <button id="btnDeduceViewSpreads" class="btn btn-sm" onclick="setDeduceViewMode('spreads')">
+                  2. 3M Spreads
+                </button>
+                <button id="btnDeduceViewFlies" class="btn btn-sm" onclick="setDeduceViewMode('flies')">
+                  3. Butterflies (3M/12M)
+                </button>
+                <button id="btnDeduceViewSlopes" class="btn btn-sm" onclick="setDeduceViewMode('slopes')">
+                  4. Slope of Flies (a − x·b)
+                </button>
               </div>
             </div>
 
@@ -1251,20 +1262,61 @@
 
         </div>
 
-        <!-- VISUAL COMPARISON CHART: LIVE BASELINE VS MY TWEAKED CURVE -->
-        <div style="margin-top:14px; background:#070b14; border:1px solid #162032; border-radius:8px; padding:10px;">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; padding:0 6px;">
-            <div style="font-size:12px; font-weight:700; color:#e2e8f0; display:flex; align-items:center; gap:8px;">
-              <span id="deduceChartTitle">Live Market Forward Curve vs. My Deduced Curve (Continuous Cubic Spline)</span>
-              <span id="deduceCurveStatusBadge" class="badge badge-cyan" style="font-size:10px;">Identical (Unshifted)</span>
+        <!-- VISUAL COMPARISON CHARTS CONTAINER: ALL 4 CURVES (LIVE BASELINE VS MY DEDUCED) -->
+        <div style="margin-top:14px; background:#070b14; border:1px solid #162032; border-radius:8px; padding:12px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; padding:0 4px; border-bottom:1px solid #162032; padding-bottom:8px;">
+            <div style="font-size:13px; font-weight:800; color:#e2e8f0; display:flex; align-items:center; gap:8px;">
+              <i class="fa-solid fa-shapes" style="color:#38bdf8;"></i>
+              <span id="deduceMasterChartTitle">Synchronized Multi-Curve Visual Studio · Older Live Curve vs. New Deduced Curve</span>
+              <span id="deduceCurveStatusBadge" class="badge badge-cyan" style="font-size:10px;">Live Feed Connected</span>
             </div>
-            <div style="display:flex; align-items:center; gap:12px; font-size:11px; font-family:var(--font-mono);">
-              <span style="color:#38bdf8;"><span style="display:inline-block; width:12px; height:3px; background:#38bdf8; vertical-align:middle; margin-right:4px;"></span>Live Market Baseline</span>
-              <span style="color:#fbbf24;"><span style="display:inline-block; width:12px; height:3px; background:#fbbf24; border-top:1px dashed #fbbf24; vertical-align:middle; margin-right:4px;"></span>My Deduced Curve</span>
-              <span style="color:#64748b;"><span style="display:inline-block; width:12px; height:2px; background:#475569; vertical-align:middle; margin-right:4px;"></span>Linear Baseline</span>
+            <div style="display:flex; align-items:center; gap:14px; font-size:11px; font-family:var(--font-mono);">
+              <span style="color:#38bdf8;"><span style="display:inline-block; width:12px; height:3px; background:#38bdf8; vertical-align:middle; margin-right:4px;"></span>Older Live Curve</span>
+              <span style="color:#fbbf24;"><span style="display:inline-block; width:12px; height:3px; background:#fbbf24; border-top:1px dashed #fbbf24; vertical-align:middle; margin-right:4px;"></span>New Deduced Curve</span>
+              <span style="color:#64748b;"><span style="display:inline-block; width:12px; height:2px; background:#475569; vertical-align:middle; margin-right:4px;"></span>Zero Baseline</span>
             </div>
           </div>
-          <div id="chartDeducePlotly" style="width:100%; height:340px;"></div>
+
+          <!-- Multi-Chart Grid (Dynamic 2x2 or 1-Column) -->
+          <div id="deduceMultiChartsGrid" style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+            
+            <!-- Chart 1: Outright Forward Curve -->
+            <div id="wrapChartOutright" style="background:#090e1a; border:1px solid #1c2742; border-radius:6px; padding:8px;">
+              <div style="font-size:11px; font-weight:800; color:#38bdf8; margin-bottom:6px; display:flex; justify-content:space-between; align-items:center;">
+                <span><i class="fa-solid fa-chart-line"></i> 1. Outright Forward Curve (Rate Move vs T₀, bp)</span>
+                <span id="badgeOutrightDelta" class="badge badge-indigo" style="font-size:9px;">0.00 bp</span>
+              </div>
+              <div id="chartDeduceOutright" style="width:100%; height:280px;"></div>
+            </div>
+
+            <!-- Chart 2: 3M Calendar Spreads Curve -->
+            <div id="wrapChartSpreads" style="background:#090e1a; border:1px solid #1c2742; border-radius:6px; padding:8px;">
+              <div style="font-size:11px; font-weight:800; color:#38bdf8; margin-bottom:6px; display:flex; justify-content:space-between; align-items:center;">
+                <span><i class="fa-solid fa-arrows-split-up-and-left"></i> 2. 3M Calendar Spreads Curve (bp)</span>
+                <span id="badgeSpreadsDelta" class="badge badge-indigo" style="font-size:9px;">0.00 bp</span>
+              </div>
+              <div id="chartDeduceSpreads" style="width:100%; height:280px;"></div>
+            </div>
+
+            <!-- Chart 3: Butterfly Flies Curve (3M, 6M, 12M Flies) -->
+            <div id="wrapChartFlies" style="background:#090e1a; border:1px solid #1c2742; border-radius:6px; padding:8px;">
+              <div style="font-size:11px; font-weight:800; color:#c084fc; margin-bottom:6px; display:flex; justify-content:space-between; align-items:center;">
+                <span><i class="fa-solid fa-cubes"></i> 3. Butterfly Flies Curve: 3M, 6M & 12M Flies (bp)</span>
+                <span id="badgeFliesDelta" class="badge badge-indigo" style="font-size:9px;">0.00 bp</span>
+              </div>
+              <div id="chartDeduceFlies" style="width:100%; height:280px;"></div>
+            </div>
+
+            <!-- Chart 4: Slope of Flies & Structure (a - x·b) Curve -->
+            <div id="wrapChartSlopes" style="background:#090e1a; border:1px solid #1c2742; border-radius:6px; padding:8px;">
+              <div style="font-size:11px; font-weight:800; color:#f59e0b; margin-bottom:6px; display:flex; justify-content:space-between; align-items:center;">
+                <span><i class="fa-solid fa-calculator"></i> 4. Slope of Flies & Structure (a − x·b) Curve (bp)</span>
+                <span id="badgeSlopesDelta" class="badge badge-indigo" style="font-size:9px;">0.00 bp</span>
+              </div>
+              <div id="chartDeduceSlopes" style="width:100%; height:280px;"></div>
+            </div>
+
+          </div>
         </div>
 
         <!-- SIDE-BY-SIDE PARAMETER COMPARISON MATRIX TABLE -->
@@ -4381,7 +4433,7 @@
     // 05 · WHAT-IF CURVE DEDUCTION & LIVE COMPARISON STUDIO LOGIC
     // ═══════════════════════════════════════════════════════════════════════════
     let deduceActiveMarket = 'USD';
-    let deduceViewMode = 'rel_t0';      // 'rel_t0', 'yield', 'spreads', 'flies'
+    let deduceViewMode = 'all_4';       // 'all_4', 'outright', 'spreads', 'flies', 'slopes'
     let deduceLock12MSpread = true;     // Invariant lock: Keep 12M net policy rate move constant
     let deduceActiveSlopeType = 'FLYS_SLOPE_1'; // 'FLYS_SLOPE_1', 'FLY_6M_2X3M', 'FLYS_SLOPE_2', 'SEC04_COMBO'
     let deduceBaselineIsLocked = true;  // If true, live streaming updates do NOT override the snapshot baseline
@@ -4392,7 +4444,7 @@
     // User tweaks storage (holds user modifications; null = identical to baseline)
     let deducedFrontShift = 0.0;        // In bp vs T0 reference (front outright can be negative/positive)
     let deducedSpreads = null;          // [S0, S1, S2, S3]
-    let deducedFlies = null;            // [F0, F1, F2, F6M]
+    let deducedFlies = null;            // [F0, F1, F2, F6M, F12M]
     let deduced12MSpread = null;        // Delta_12M
     let deducedFlySlopeVal = null;      // Value of active fly slope
 
@@ -4436,13 +4488,21 @@
       const F1 = Number((spreads[1] - spreads[2]).toFixed(2));
       const F2 = Number((spreads[2] - spreads[3]).toFixed(2));
       const F6M = Number((F0 + 2.0 * F1 + F2).toFixed(2));
-      const flies = [F0, F1, F2, F6M];
+
+      // 12M Fly calculation
+      // If 9 prices exist, F12M = (p0 - 2*p4 + p8)*100, else exact institutional curvature structure 2*F6M - F0
+      let F12M = Number((2.0 * F6M - F0).toFixed(2));
+      if (basePrices.length >= 9 && basePrices[8] !== null && basePrices[8] !== undefined) {
+        F12M = Number(((basePrices[0] - 2.0 * basePrices[4] + basePrices[8]) * 100.0).toFixed(2));
+      }
+      const flies = [F0, F1, F2, F6M, F12M];
       const hikes = Number((d12 / 25.0).toFixed(2));
 
-      // Slope of flies
-      const slope1 = Number((F1 - F0).toFixed(2));
-      const slope2 = Number((F2 - F1).toFixed(2));
-      const ratio6M2X3M = Number((F6M - 2.0 * F0).toFixed(2));
+      // Slope of flies & structures (a - x·b)
+      const slope1 = Number((F1 - F0).toFixed(2));                         // Belly - Front (F1 - F0)
+      const slope2 = Number((F2 - F1).toFixed(2));                         // Back - Belly (F2 - F1)
+      const ratio6M2X3M = Number((F6M - 2.0 * F0).toFixed(2));             // 6M Fly - 2·(3M Fly)
+      const ratio12M2X6M = Number((F12M - 2.0 * F6M).toFixed(2));          // 12M Fly - 2·(6M Fly)
 
       // Rate moves vs T0 (bp)
       const yMoves = [
@@ -4455,7 +4515,7 @@
       // Implied yields (%)
       const yields = basePrices.map(pr => Number((100.0 - pr).toFixed(4)));
 
-      return { p: basePrices, spreads, d12, flies, hikes, yMoves, yields, slope1, slope2, ratio6M2X3M };
+      return { p: basePrices, spreads, d12, flies, hikes, yMoves, yields, slope1, slope2, ratio6M2X3M, ratio12M2X6M };
     }
 
     // Helper: compute Live Spreads, Flies, and 12M Net Spread from live feed
@@ -4508,14 +4568,44 @@
 
     function setDeduceViewMode(mode) {
       deduceViewMode = mode;
-      for (const btnId of ['btnDeduceViewRel', 'btnDeduceViewYield', 'btnDeduceViewSpreads', 'btnDeduceViewFlies']) {
+      for (const btnId of ['btnDeduceViewAll4', 'btnDeduceViewOutright', 'btnDeduceViewSpreads', 'btnDeduceViewFlies', 'btnDeduceViewSlopes']) {
         const btn = document.getElementById(btnId);
         if (btn) btn.classList.remove('active');
       }
-      const map = { 'rel_t0': 'btnDeduceViewRel', 'yield': 'btnDeduceViewYield', 'spreads': 'btnDeduceViewSpreads', 'flies': 'btnDeduceViewFlies' };
-      if (map[mode]) document.getElementById(map[mode]).classList.add('active');
+      const map = {
+        'all_4': 'btnDeduceViewAll4',
+        'outright': 'btnDeduceViewOutright',
+        'spreads': 'btnDeduceViewSpreads',
+        'flies': 'btnDeduceViewFlies',
+        'slopes': 'btnDeduceViewSlopes'
+      };
+      if (map[mode] && document.getElementById(map[mode])) {
+        document.getElementById(map[mode]).classList.add('active');
+      }
 
-      renderDeduceChart();
+      const grid = document.getElementById('deduceMultiChartsGrid');
+      const wOutright = document.getElementById('wrapChartOutright');
+      const wSpreads = document.getElementById('wrapChartSpreads');
+      const wFlies = document.getElementById('wrapChartFlies');
+      const wSlopes = document.getElementById('wrapChartSlopes');
+
+      if (grid && wOutright && wSpreads && wFlies && wSlopes) {
+        if (mode === 'all_4') {
+          grid.style.gridTemplateColumns = '1fr 1fr';
+          wOutright.style.display = 'block';
+          wSpreads.style.display = 'block';
+          wFlies.style.display = 'block';
+          wSlopes.style.display = 'block';
+        } else {
+          grid.style.gridTemplateColumns = '1fr';
+          wOutright.style.display = (mode === 'outright') ? 'block' : 'none';
+          wSpreads.style.display = (mode === 'spreads') ? 'block' : 'none';
+          wFlies.style.display = (mode === 'flies') ? 'block' : 'none';
+          wSlopes.style.display = (mode === 'slopes') ? 'block' : 'none';
+        }
+      }
+
+      renderAll4DeduceCharts();
     }
 
     // Toggle baseline lock
@@ -4667,6 +4757,12 @@
           curSpreads[1] = Number((curSpreads[1] + 0.50 * bellyDelta).toFixed(2));
           curSpreads[2] = Number((curSpreads[2] - 0.50 * bellyDelta).toFixed(2));
           curSpreads[3] = Number((curSpreads[3] - 0.50 * bellyDelta).toFixed(2));
+        } else if (flyIdx === 4) { // F12M (12-month fly)
+          const tilt12M = delta / 4.0;
+          curSpreads[0] = Number((curSpreads[0] + 0.75 * tilt12M).toFixed(2));
+          curSpreads[1] = Number((curSpreads[1] + 0.25 * tilt12M).toFixed(2));
+          curSpreads[2] = Number((curSpreads[2] - 0.25 * tilt12M).toFixed(2));
+          curSpreads[3] = Number((curSpreads[3] - 0.75 * tilt12M).toFixed(2));
         }
       } else {
         if (flyIdx === 0) {
@@ -4677,6 +4773,8 @@
           curSpreads[3] = Number((curSpreads[2] - newVal).toFixed(2));
         } else if (flyIdx === 3) {
           curSpreads[2] = Number((curSpreads[1] - delta / 2.0).toFixed(2));
+        } else if (flyIdx === 4) {
+          curSpreads[0] = Number((curSpreads[0] + delta / 2.0).toFixed(2));
         }
       }
 
@@ -4685,7 +4783,8 @@
       const F1 = Number((deducedSpreads[1] - deducedSpreads[2]).toFixed(2));
       const F2 = Number((deducedSpreads[2] - deducedSpreads[3]).toFixed(2));
       const F6M = Number((F0 + 2.0 * F1 + F2).toFixed(2));
-      deducedFlies = [F0, F1, F2, F6M];
+      const F12M = Number((2.0 * F6M - F0).toFixed(2));
+      deducedFlies = [F0, F1, F2, F6M, F12M];
       deduced12MSpread = Number((deducedSpreads[0] + deducedSpreads[1] + deducedSpreads[2] + deducedSpreads[3]).toFixed(2));
 
       recalculateAndRenderDeduceStudio();
@@ -4702,6 +4801,7 @@
       if (slopeType === 'FLYS_SLOPE_1') curSlopeVal = curFlies[1] - curFlies[0];
       else if (slopeType === 'FLYS_SLOPE_2') curSlopeVal = curFlies[2] - curFlies[1];
       else if (slopeType === 'FLY_6M_2X3M') curSlopeVal = curFlies[3] - 2.0 * curFlies[0];
+      else if (slopeType === 'FLY_12M_2X6M') curSlopeVal = (curFlies[4] || (2*curFlies[3]-curFlies[0])) - 2.0 * curFlies[3];
       else {
         const activeCombo = customCombinationsList.find(c => c.id === activePlottedComboId) || customCombinationsList[0];
         curSlopeVal = getComboNetValue(activeCombo);
@@ -4716,7 +4816,11 @@
         onFlyTweak(1, (curFlies[1] + delta / 2.0).toFixed(2));
       } else if (slopeType === 'FLYS_SLOPE_2') {
         onFlyTweak(2, (curFlies[2] + delta / 2.0).toFixed(2));
-      } else if (slopeType === 'FLY_6M_2X3M' || slopeType === 'SEC04_COMBO') {
+      } else if (slopeType === 'FLY_6M_2X3M') {
+        onFlyTweak(1, (curFlies[1] + delta / 2.0).toFixed(2));
+      } else if (slopeType === 'FLY_12M_2X6M') {
+        onFlyTweak(4, ((curFlies[4] || 40.0) + delta).toFixed(2));
+      } else {
         onFlyTweak(1, (curFlies[1] + delta / 2.0).toFixed(2));
       }
     }
@@ -4879,7 +4983,7 @@
         });
 
         // Build Flies Tweakers
-        const flyLabels = ['F₀ · Dec26 3M Fly', 'F₁ · Mar27 Belly Fly', 'F₂ · Jun27 3M Fly', 'F₆M · Dec26 6M Fly'];
+        const flyLabels = ['F₀ · Dec26 3M Fly', 'F₁ · Mar27 Belly Fly', 'F₂ · Jun27 3M Fly', 'F₆M · Dec26 6M Fly', 'F₁₂M · Dec26 12M Fly'];
         let fliesSlidersHtml = '';
         flies.forEach((val, idx) => {
           const liveVal = base.flies[idx];
@@ -4990,9 +5094,10 @@
                 ${diffSlopeBadge}
               </div>
               <select class="btn btn-sm" style="width:100%; font-size:10px; padding:2px 4px; background:#0c1322; color:#f59e0b; border-color:#334155; margin-bottom:4px;" onchange="setDeduceSlopeType(this.value)">
-                <option value="FLYS_SLOPE_1" ${deduceActiveSlopeType === 'FLYS_SLOPE_1' ? 'selected' : ''}>Fly Slope: Belly − Front (F₁ − F₀)</option>
+                <option value="FLYS_SLOPE_1" ${deduceActiveSlopeType === 'FLYS_SLOPE_1' ? 'selected' : ''}>Fly Slope 1: Belly − Front (F₁ − F₀)</option>
                 <option value="FLY_6M_2X3M" ${deduceActiveSlopeType === 'FLY_6M_2X3M' ? 'selected' : ''}>Institutional: 6M Fly − 2·(3M Fly)</option>
-                <option value="FLYS_SLOPE_2" ${deduceActiveSlopeType === 'FLYS_SLOPE_2' ? 'selected' : ''}>Fly Slope: Back − Belly (F₂ − F₁)</option>
+                <option value="FLY_12M_2X6M" ${deduceActiveSlopeType === 'FLY_12M_2X6M' ? 'selected' : ''}>Institutional: 12M Fly − 2·(6M Fly)</option>
+                <option value="FLYS_SLOPE_2" ${deduceActiveSlopeType === 'FLYS_SLOPE_2' ? 'selected' : ''}>Fly Slope 2: Back − Belly (F₂ − F₁)</option>
                 <option value="SEC04_COMBO" ${deduceActiveSlopeType === 'SEC04_COMBO' ? 'selected' : ''}>Structure from Sec 04 (a − x·b)</option>
               </select>
               <div style="display:flex; align-items:center; gap:8px;">
@@ -5098,17 +5203,54 @@
         `;
       });
 
-      // Belly Fly F1 & 12M Net
+      // Belly Fly F1, 12M Fly F12M, and Slopes
       const bellyDiff = Number((flies[1] - base.flies[1]).toFixed(2));
+      const f12Diff = Number(((flies[4]||0) - (base.flies[4]||0)).toFixed(2));
+      const slope1Diff = Number(((flies[1]-flies[0]) - base.slope1).toFixed(2));
+      const r6MDiff = Number(((flies[3]-2*flies[0]) - base.ratio6M2X3M).toFixed(2));
+
       html += `
         <tr style="border-bottom:1px solid #162032; background:#0c1222;">
-          <td style="padding:5px 8px; color:#c084fc; font-weight:800;">F₁ Belly Curvature (Mar27)</td>
+          <td style="padding:5px 8px; color:#c084fc; font-weight:800;">F₁ Belly Curvature (Mar27 3M Fly)</td>
           <td style="padding:5px 8px; text-align:right; color:#38bdf8;">${base.flies[1] > 0 ? '+' : ''}${base.flies[1].toFixed(2)} bp</td>
           <td style="padding:5px 8px; text-align:right; color:#fbbf24; font-weight:700;">${flies[1] > 0 ? '+' : ''}${flies[1].toFixed(2)} bp</td>
           <td style="padding:5px 8px; text-align:right; color:#c084fc; font-weight:800;">${bellyDiff > 0 ? '+' : ''}${bellyDiff.toFixed(2)} bp</td>
           <td style="padding:5px 8px; text-align:center;">
             <span class="badge ${bellyDiff >= 0 ? 'badge-teal' : 'badge-amber'}" style="font-size:9px;">
               ${bellyDiff >= 0 ? '▲ Convex Hump' : '▼ Concave Trough'}
+            </span>
+          </td>
+        </tr>
+        <tr style="border-bottom:1px solid #162032; background:#0c1222;">
+          <td style="padding:5px 8px; color:#c084fc; font-weight:800;">F₁₂M · Dec26 12M Fly</td>
+          <td style="padding:5px 8px; text-align:right; color:#38bdf8;">${(base.flies[4]||0) > 0 ? '+' : ''}${(base.flies[4]||0).toFixed(2)} bp</td>
+          <td style="padding:5px 8px; text-align:right; color:#fbbf24; font-weight:700;">${(flies[4]||0) > 0 ? '+' : ''}${(flies[4]||0).toFixed(2)} bp</td>
+          <td style="padding:5px 8px; text-align:right; color:#c084fc; font-weight:800;">${f12Diff > 0 ? '+' : ''}${f12Diff.toFixed(2)} bp</td>
+          <td style="padding:5px 8px; text-align:center;">
+            <span class="badge ${Math.abs(f12Diff) < 0.01 ? 'badge-emerald' : 'badge-amber'}" style="font-size:9px;">
+              ${Math.abs(f12Diff) < 0.01 ? 'Identical' : '12M Curvature Shift'}
+            </span>
+          </td>
+        </tr>
+        <tr style="border-bottom:1px solid #162032; background:#070b14;">
+          <td style="padding:5px 8px; color:#f59e0b; font-weight:700;">Slope of Flies: Belly − Front (F₁ − F₀)</td>
+          <td style="padding:5px 8px; text-align:right; color:#38bdf8;">${base.slope1 > 0 ? '+' : ''}${base.slope1.toFixed(2)} bp</td>
+          <td style="padding:5px 8px; text-align:right; color:#fbbf24;">${(flies[1]-flies[0]) > 0 ? '+' : ''}${(flies[1]-flies[0]).toFixed(2)} bp</td>
+          <td style="padding:5px 8px; text-align:right; color:#f59e0b;">${slope1Diff > 0 ? '+' : ''}${slope1Diff.toFixed(2)} bp</td>
+          <td style="padding:5px 8px; text-align:center;">
+            <span class="badge ${Math.abs(slope1Diff) < 0.01 ? 'badge-emerald' : 'badge-amber'}" style="font-size:9px;">
+              ${slope1Diff >= 0 ? '▲ Steeper Slope' : '▼ Flatter Slope'}
+            </span>
+          </td>
+        </tr>
+        <tr style="border-bottom:1px solid #162032; background:#070b14;">
+          <td style="padding:5px 8px; color:#f59e0b; font-weight:700;">Structure: 6M Fly − 2·(3M Fly)</td>
+          <td style="padding:5px 8px; text-align:right; color:#38bdf8;">${base.ratio6M2X3M > 0 ? '+' : ''}${base.ratio6M2X3M.toFixed(2)} bp</td>
+          <td style="padding:5px 8px; text-align:right; color:#fbbf24;">${(flies[3]-2*flies[0]) > 0 ? '+' : ''}${(flies[3]-2*flies[0]).toFixed(2)} bp</td>
+          <td style="padding:5px 8px; text-align:right; color:#f59e0b;">${r6MDiff > 0 ? '+' : ''}${r6MDiff.toFixed(2)} bp</td>
+          <td style="padding:5px 8px; text-align:center;">
+            <span class="badge ${Math.abs(r6MDiff) < 0.01 ? 'badge-emerald' : 'badge-amber'}" style="font-size:9px;">
+              ${r6MDiff >= 0 ? '▲ Curvature Premium' : '▼ Curvature Discount'}
             </span>
           </td>
         </tr>
@@ -5248,23 +5390,30 @@
     }
 
     // Render Visual Plotly Comparison Chart
-    function renderDeduceChart() {
-      const plotDiv = document.getElementById('chartDeducePlotly');
-      if (!plotDiv) return;
-
+        // Render Visual Plotly Comparison Charts (All 4 Synchronized Curves: Outright, Spreads, Flies, Slope/ax-b)
+    function renderAll4DeduceCharts() {
       const base = getEffectiveBaseline();
       const spreads = deducedSpreads || base.spreads;
       const d12 = (deduced12MSpread !== null) ? deduced12MSpread : base.d12;
       const flies = deducedFlies || base.flies;
 
-      const quarterLabels = ['Dec26', 'Mar27', 'Jun27', 'Sep27', 'Dec27'];
-      const knotX = [0, 1, 2, 3, 4];
-      const denseX = [];
-      for (let x = 0; x <= 4.001; x += 0.05) denseX.push(Number(x.toFixed(2)));
+      // Common styling
+      const paperBg = '#070b14';
+      const plotBg = '#070b14';
+      const gridColor = '#131d33';
+      const liveColor = '#38bdf8';
+      const deducedColor = '#fbbf24';
 
-      const traces = [];
+      // ==============================================================
+      // 1. CHART 1: OUTRIGHT FORWARD CURVE (Older Live vs New Deduced)
+      // ==============================================================
+      const pOutright = document.getElementById('chartDeduceOutright');
+      if (pOutright) {
+        const knotX = [0, 1, 2, 3, 4];
+        const quarterLabels = ['Dec26', 'Mar27', 'Jun27', 'Sep27', 'Dec27'];
+        const denseX = [];
+        for (let x = 0; x <= 4.001; x += 0.05) denseX.push(Number(x.toFixed(2)));
 
-      if (deduceViewMode === 'rel_t0') {
         const liveY = base.yMoves;
         const myY = [
           deducedFrontShift,
@@ -5274,189 +5423,327 @@
           Number((deducedFrontShift + d12).toFixed(2))
         ];
 
-        // Dense polynomial interpolation
         const fitLive = fitPolynomialCoeffs(knotX, liveY, 3);
         const fitMy = fitPolynomialCoeffs(knotX, myY, 3);
 
-        const denseLiveY = denseX.map(x => {
-          const c = fitLive.coeffs;
-          return c[0] + c[1]*x + c[2]*x*x + (c[3]||0)*x*x*x;
-        });
-        const denseMyY = denseX.map(x => {
-          const c = fitMy.coeffs;
-          return c[0] + c[1]*x + c[2]*x*x + (c[3]||0)*x*x*x;
-        });
+        const denseLiveY = denseX.map(x => fitLive.coeffs[0] + fitLive.coeffs[1]*x + fitLive.coeffs[2]*x*x + (fitLive.coeffs[3]||0)*x*x*x);
+        const denseMyY = denseX.map(x => fitMy.coeffs[0] + fitMy.coeffs[1]*x + fitMy.coeffs[2]*x*x + (fitMy.coeffs[3]||0)*x*x*x);
 
-        // 1. Zero curvature baseline (numeric x = 0 to 4)
-        traces.push({
-          name: 'Zero Curvature Baseline',
-          x: [0, 4],
-          y: [0, base.d12],
-          mode: 'lines',
-          line: { color: '#475569', width: 1.5, dash: 'dot' },
-          hoverinfo: 'skip'
-        });
-
-        // 2. Continuous Live Market Spline (numeric x = denseX)
-        traces.push({
-          name: 'Live Baseline Spline',
-          x: denseX,
-          y: denseLiveY,
-          mode: 'lines',
-          line: { color: '#38bdf8', width: 2.5 },
-          hoverinfo: 'skip'
-        });
-
-        // 3. Live Market Contract Points
-        traces.push({
-          name: 'Live Baseline Contracts',
-          x: knotX,
-          y: liveY,
-          mode: 'markers+text',
-          marker: { color: '#38bdf8', size: 10, line: { color: '#0f172a', width: 2 } },
-          text: liveY.map(v => `${v > 0 ? '+' : ''}${v.toFixed(1)} bp`),
-          textposition: 'top center',
-          textfont: { color: '#38bdf8', size: 10, family: 'monospace' },
-          customdata: quarterLabels,
-          hovertemplate: '<b>%{customdata} (Live Baseline)</b>: %{y:.2f} bp<extra></extra>'
-        });
-
-        // 4. Continuous Deduced Curve Spline (numeric x = denseX)
-        traces.push({
-          name: 'My Deduced Spline',
-          x: denseX,
-          y: denseMyY,
-          mode: 'lines',
-          line: { color: '#fbbf24', width: 2.5, dash: 'dash' },
-          hoverinfo: 'skip'
-        });
-
-        // 5. Deduced Contract Points
-        traces.push({
-          name: 'My Deduced Points',
-          x: knotX,
-          y: myY,
-          mode: 'markers+text',
-          marker: { color: '#fbbf24', symbol: 'diamond', size: 11, line: { color: '#0f172a', width: 2 } },
-          text: myY.map((v, i) => {
-            const diff = Number((v - liveY[i]).toFixed(2));
-            return Math.abs(diff) > 0.05 ? `${diff > 0 ? '+' : ''}${diff.toFixed(1)} bp` : '';
-          }),
-          textposition: 'bottom center',
-          textfont: { color: '#fbbf24', size: 10, family: 'monospace' },
-          customdata: quarterLabels,
-          hovertemplate: '<b>%{customdata} (My Deduced)</b>: %{y:.2f} bp<extra></extra>'
-        });
-
-      } else if (deduceViewMode === 'yield') {
-        const liveYields = base.yields;
-        const myYields = [
-          Number((liveYields[0] + deducedFrontShift / 100.0).toFixed(4)),
-          Number((liveYields[0] + (deducedFrontShift + spreads[0]) / 100.0).toFixed(4)),
-          Number((liveYields[0] + (deducedFrontShift + spreads[0] + spreads[1]) / 100.0).toFixed(4)),
-          Number((liveYields[0] + (deducedFrontShift + spreads[0] + spreads[1] + spreads[2]) / 100.0).toFixed(4)),
-          Number((liveYields[0] + (deducedFrontShift + d12) / 100.0).toFixed(4))
+        const traces1 = [
+          {
+            name: 'Zero Curvature Baseline',
+            x: [0, 4],
+            y: [0, base.d12],
+            mode: 'lines',
+            line: { color: '#475569', width: 1.5, dash: 'dot' },
+            hoverinfo: 'skip'
+          },
+          {
+            name: 'Older Live Outright Spline',
+            x: denseX,
+            y: denseLiveY,
+            mode: 'lines',
+            line: { color: liveColor, width: 2.5 },
+            hoverinfo: 'skip'
+          },
+          {
+            name: 'Live Outright Contracts',
+            x: knotX,
+            y: liveY,
+            mode: 'markers+text',
+            marker: { color: liveColor, size: 9, line: { color: '#0f172a', width: 2 } },
+            text: liveY.map(v => `${v > 0 ? '+' : ''}${v.toFixed(1)} bp`),
+            textposition: 'top center',
+            textfont: { color: liveColor, size: 9, family: 'monospace' },
+            customdata: quarterLabels,
+            hovertemplate: '<b>%{customdata} (Live Outright)</b>: %{y:.2f} bp<extra></extra>'
+          },
+          {
+            name: 'New Deduced Spline',
+            x: denseX,
+            y: denseMyY,
+            mode: 'lines',
+            line: { color: deducedColor, width: 2.5, dash: 'dash' },
+            hoverinfo: 'skip'
+          },
+          {
+            name: 'Deduced Outright Points',
+            x: knotX,
+            y: myY,
+            mode: 'markers+text',
+            marker: { color: deducedColor, symbol: 'diamond', size: 10, line: { color: '#0f172a', width: 2 } },
+            text: myY.map((v, i) => {
+              const diff = Number((v - liveY[i]).toFixed(2));
+              return Math.abs(diff) > 0.05 ? `${diff > 0 ? '+' : ''}${diff.toFixed(1)} bp` : '';
+            }),
+            textposition: 'bottom center',
+            textfont: { color: deducedColor, size: 9, family: 'monospace' },
+            customdata: quarterLabels,
+            hovertemplate: '<b>%{customdata} (Deduced Outright)</b>: %{y:.2f} bp<extra></extra>'
+          }
         ];
 
-        traces.push({
-          name: 'Live Yield (%)',
-          x: knotX,
-          y: liveYields,
-          mode: 'lines+markers',
-          line: { color: '#38bdf8', width: 2.5 },
-          marker: { color: '#38bdf8', size: 9 },
-          customdata: quarterLabels,
-          hovertemplate: '<b>%{customdata} Live Baseline Yield</b>: %{y:.4f}%<extra></extra>'
-        });
+        const layout1 = {
+          margin: { l: 45, r: 20, t: 15, b: 35 },
+          paper_bgcolor: paperBg,
+          plot_bgcolor: plotBg,
+          xaxis: {
+            tickvals: knotX,
+            ticktext: quarterLabels,
+            range: [-0.2, 4.2],
+            gridcolor: gridColor,
+            zerolinecolor: '#334155',
+            tickfont: { color: '#94a3b8', size: 10, family: 'monospace' }
+          },
+          yaxis: {
+            title: { text: 'Move vs T₀ (bp)', font: { color: '#64748b', size: 9 } },
+            gridcolor: gridColor,
+            zeroline: true,
+            zerolinecolor: '#475569',
+            zerolinewidth: 2,
+            tickfont: { color: '#94a3b8', size: 10, family: 'monospace' }
+          },
+          legend: { font: { color: '#94a3b8', size: 9 }, orientation: 'h', y: -0.22 },
+          hovermode: 'x unified'
+        };
 
-        traces.push({
-          name: 'Deduced Yield (%)',
-          x: knotX,
-          y: myYields,
-          mode: 'lines+markers',
-          line: { color: '#fbbf24', width: 2.5, dash: 'dash' },
-          marker: { color: '#fbbf24', symbol: 'diamond', size: 10 },
-          customdata: quarterLabels,
-          hovertemplate: '<b>%{customdata} Deduced Yield</b>: %{y:.4f}%<extra></extra>'
-        });
-
-      } else if (deduceViewMode === 'spreads') {
-        const spreadLabels = ['Dec26/Mar27', 'Mar27/Jun27', 'Jun27/Sep27', 'Sep27/Dec27'];
-        traces.push({
-          name: 'Live 3M Spreads (bp)',
-          x: [0, 1, 2, 3],
-          y: base.spreads,
-          type: 'bar',
-          marker: { color: '#38bdf8', opacity: 0.7 },
-          customdata: spreadLabels,
-          hovertemplate: '<b>%{customdata} (Live Baseline)</b>: %{y:.2f} bp<extra></extra>'
-        });
-        traces.push({
-          name: 'Deduced 3M Spreads (bp)',
-          x: [0, 1, 2, 3],
-          y: spreads,
-          type: 'bar',
-          marker: { color: '#fbbf24', opacity: 0.85 },
-          customdata: spreadLabels,
-          hovertemplate: '<b>%{customdata} (Deduced)</b>: %{y:.2f} bp<extra></extra>'
-        });
-
-      } else if (deduceViewMode === 'flies') {
-        const flyLabels = ['Dec26 3M Fly', 'Mar27 3M Fly', 'Jun27 3M Fly', 'Dec26 6M Fly'];
-        traces.push({
-          name: 'Live Flies (bp)',
-          x: [0, 1, 2, 3],
-          y: base.flies,
-          type: 'bar',
-          marker: { color: '#a855f7', opacity: 0.7 },
-          customdata: flyLabels,
-          hovertemplate: '<b>%{customdata} (Live Baseline)</b>: %{y:.2f} bp<extra></extra>'
-        });
-        traces.push({
-          name: 'Deduced Flies (bp)',
-          x: [0, 1, 2, 3],
-          y: flies,
-          type: 'bar',
-          marker: { color: '#fbbf24', opacity: 0.85 },
-          customdata: flyLabels,
-          hovertemplate: '<b>%{customdata} (Deduced)</b>: %{y:.2f} bp<extra></extra>'
-        });
+        Plotly.react(pOutright, traces1, layout1, { responsive: true, displayModeBar: false });
+        const bOut = document.getElementById('badgeOutrightDelta');
+        if (bOut) {
+          const shiftTotal = Number((myY[4] - liveY[4]).toFixed(2));
+          bOut.innerText = `Δ12M: ${shiftTotal > 0 ? '+' : ''}${shiftTotal.toFixed(2)} bp`;
+          bOut.className = Math.abs(shiftTotal) < 0.01 ? 'badge badge-emerald' : 'badge badge-amber';
+        }
       }
 
-      const layout = {
-        margin: { l: 55, r: 30, t: 20, b: 40 },
-        paper_bgcolor: '#070b14',
-        plot_bgcolor: '#070b14',
-        xaxis: {
-          tickvals: (deduceViewMode === 'spreads' || deduceViewMode === 'flies') ? [0, 1, 2, 3] : [0, 1, 2, 3, 4],
-          ticktext: (deduceViewMode === 'spreads') ? ['Dec26/Mar27', 'Mar27/Jun27', 'Jun27/Sep27', 'Sep27/Dec27']
-                  : (deduceViewMode === 'flies') ? ['Dec26 3M Fly', 'Mar27 3M Fly', 'Jun27 3M Fly', 'Dec26 6M Fly']
-                  : ['Dec26', 'Mar27', 'Jun27', 'Sep27', 'Dec27'],
-          range: (deduceViewMode === 'spreads' || deduceViewMode === 'flies') ? [-0.5, 3.5] : [-0.2, 4.2],
-          gridcolor: '#131d33',
-          zerolinecolor: '#334155',
-          tickfont: { color: '#94a3b8', size: 11, family: 'monospace' }
-        },
-        yaxis: {
-          title: { 
-            text: deduceViewMode === 'yield' ? 'Implied Yield (%)' : 'Rate Move vs T₀ Ref (bp)', 
-            font: { color: '#64748b', size: 10 } 
-          },
-          gridcolor: '#131d33',
-          zeroline: true,
-          zerolinecolor: '#475569',
-          zerolinewidth: 2,
-          tickfont: { color: '#94a3b8', size: 10, family: 'monospace' }
-        },
-        barmode: 'group',
-        legend: { font: { color: '#94a3b8', size: 10 }, orientation: 'h', y: -0.2 },
-        hovermode: 'x unified'
-      };
+      // ==============================================================
+      // 2. CHART 2: 3M CALENDAR SPREADS CURVE (Older Live vs New Deduced)
+      // ==============================================================
+      const pSpreads = document.getElementById('chartDeduceSpreads');
+      if (pSpreads) {
+        const spreadX = [0, 1, 2, 3];
+        const spreadLabels = ['Dec26/Mar27', 'Mar27/Jun27', 'Jun27/Sep27', 'Sep27/Dec27'];
+        const liveS = base.spreads;
+        const myS = spreads;
 
-      Plotly.react(plotDiv, traces, layout, { responsive: true, displayModeBar: false });
+        const traces2 = [
+          {
+            name: 'Older Live 3M Spreads',
+            x: spreadX,
+            y: liveS,
+            mode: 'lines+markers',
+            line: { color: liveColor, width: 2.5 },
+            marker: { color: liveColor, size: 8 },
+            customdata: spreadLabels,
+            hovertemplate: '<b>%{customdata} Live Spread</b>: %{y:.2f} bp<extra></extra>'
+          },
+          {
+            name: 'New Deduced 3M Spreads',
+            x: spreadX,
+            y: myS,
+            mode: 'lines+markers',
+            line: { color: deducedColor, width: 2.5, dash: 'dash' },
+            marker: { color: deducedColor, symbol: 'diamond', size: 9 },
+            customdata: spreadLabels,
+            hovertemplate: '<b>%{customdata} Deduced Spread</b>: %{y:.2f} bp<extra></extra>'
+          }
+        ];
+
+        const layout2 = {
+          margin: { l: 45, r: 20, t: 15, b: 35 },
+          paper_bgcolor: paperBg,
+          plot_bgcolor: plotBg,
+          xaxis: {
+            tickvals: spreadX,
+            ticktext: ['Z26/H27', 'H27/M27', 'M27/U27', 'U27/Z27'],
+            range: [-0.3, 3.3],
+            gridcolor: gridColor,
+            zerolinecolor: '#334155',
+            tickfont: { color: '#94a3b8', size: 10, family: 'monospace' }
+          },
+          yaxis: {
+            title: { text: '3M Spread (bp)', font: { color: '#64748b', size: 9 } },
+            gridcolor: gridColor,
+            zeroline: true,
+            zerolinecolor: '#334155',
+            zerolinewidth: 1.5,
+            tickfont: { color: '#94a3b8', size: 10, family: 'monospace' }
+          },
+          legend: { font: { color: '#94a3b8', size: 9 }, orientation: 'h', y: -0.22 },
+          hovermode: 'x unified'
+        };
+
+        Plotly.react(pSpreads, traces2, layout2, { responsive: true, displayModeBar: false });
+        const bSp = document.getElementById('badgeSpreadsDelta');
+        if (bSp) {
+          const maxSpDiff = Math.max(...myS.map((s, i) => Math.abs(s - liveS[i])));
+          bSp.innerText = `Max Δ: ${maxSpDiff.toFixed(2)} bp`;
+          bSp.className = maxSpDiff < 0.01 ? 'badge badge-emerald' : 'badge badge-amber';
+        }
+      }
+
+      // ==============================================================
+      // 3. CHART 3: BUTTERFLY FLIES CURVE (3M, 6M, 12M Flies)
+      // ==============================================================
+      const pFlies = document.getElementById('chartDeduceFlies');
+      if (pFlies) {
+        const flyX = [0, 1, 2, 3, 4];
+        const flyLabels = ['F₀ (Dec26 3M)', 'F₁ (Mar27 3M)', 'F₂ (Jun27 3M)', 'F₆M (Dec26 6M)', 'F₁₂M (Dec26 12M)'];
+        const liveF = base.flies;
+        const myF = flies;
+
+        const traces3 = [
+          {
+            name: 'Older Live Flies',
+            x: flyX,
+            y: liveF,
+            mode: 'lines+markers',
+            line: { color: '#a855f7', width: 2.5 },
+            marker: { color: '#a855f7', size: 8 },
+            customdata: flyLabels,
+            hovertemplate: '<b>%{customdata} Live Fly</b>: %{y:.2f} bp<extra></extra>'
+          },
+          {
+            name: 'New Deduced Flies',
+            x: flyX,
+            y: myF,
+            mode: 'lines+markers',
+            line: { color: deducedColor, width: 2.5, dash: 'dash' },
+            marker: { color: deducedColor, symbol: 'diamond', size: 9 },
+            customdata: flyLabels,
+            hovertemplate: '<b>%{customdata} Deduced Fly</b>: %{y:.2f} bp<extra></extra>'
+          }
+        ];
+
+        const layout3 = {
+          margin: { l: 45, r: 20, t: 15, b: 35 },
+          paper_bgcolor: paperBg,
+          plot_bgcolor: plotBg,
+          xaxis: {
+            tickvals: flyX,
+            ticktext: ['F₀ (3M)', 'F₁ (Belly)', 'F₂ (3M)', 'F₆M (6M)', 'F₁₂M (12M)'],
+            range: [-0.3, 4.3],
+            gridcolor: gridColor,
+            zerolinecolor: '#334155',
+            tickfont: { color: '#94a3b8', size: 10, family: 'monospace' }
+          },
+          yaxis: {
+            title: { text: 'Fly Curvature (bp)', font: { color: '#64748b', size: 9 } },
+            gridcolor: gridColor,
+            zeroline: true,
+            zerolinecolor: '#334155',
+            zerolinewidth: 1.5,
+            tickfont: { color: '#94a3b8', size: 10, family: 'monospace' }
+          },
+          legend: { font: { color: '#94a3b8', size: 9 }, orientation: 'h', y: -0.22 },
+          hovermode: 'x unified'
+        };
+
+        Plotly.react(pFlies, traces3, layout3, { responsive: true, displayModeBar: false });
+        const bFl = document.getElementById('badgeFliesDelta');
+        if (bFl) {
+          const bellyDiff = Number((myF[1] - liveF[1]).toFixed(2));
+          bFl.innerText = `Belly ΔF₁: ${bellyDiff > 0 ? '+' : ''}${bellyDiff.toFixed(2)} bp`;
+          bFl.className = Math.abs(bellyDiff) < 0.01 ? 'badge badge-emerald' : 'badge badge-amber';
+        }
+      }
+
+      // ==============================================================
+      // 4. CHART 4: SLOPE OF FLIES & STRUCTURE (a - x·b) CURVE
+      // ==============================================================
+      const pSlopes = document.getElementById('chartDeduceSlopes');
+      if (pSlopes) {
+        const slopeX = [0, 1, 2, 3, 4];
+        const slopeLabels = [
+          'F₁ − F₀ (Belly vs Front)',
+          'F₂ − F₁ (Back vs Belly)',
+          '6M − 2·3M Fly',
+          '12M − 2·6M Fly',
+          'Active Sec 04 (a − x·b)'
+        ];
+
+        // Active combo from Section 04
+        const activeCombo = customCombinationsList.find(c => c.id === activePlottedComboId) || customCombinationsList[0];
+        const liveComboVal = getComboNetValue(activeCombo);
+        const myComboVal = (deducedFlySlopeVal !== null) ? deducedFlySlopeVal : liveComboVal;
+
+        const liveSlopes = [
+          base.slope1,
+          base.slope2,
+          base.ratio6M2X3M,
+          base.ratio12M2X6M,
+          liveComboVal
+        ];
+        const mySlopes = [
+          Number((flies[1] - flies[0]).toFixed(2)),
+          Number((flies[2] - flies[1]).toFixed(2)),
+          Number((flies[3] - 2.0 * flies[0]).toFixed(2)),
+          Number((flies[4] - 2.0 * flies[3]).toFixed(2)),
+          myComboVal
+        ];
+
+        const traces4 = [
+          {
+            name: 'Older Live Slopes',
+            x: slopeX,
+            y: liveSlopes,
+            mode: 'lines+markers',
+            line: { color: '#f59e0b', width: 2.5 },
+            marker: { color: '#f59e0b', size: 8 },
+            customdata: slopeLabels,
+            hovertemplate: '<b>%{customdata} Live</b>: %{y:.2f} bp<extra></extra>'
+          },
+          {
+            name: 'New Deduced Slopes',
+            x: slopeX,
+            y: mySlopes,
+            mode: 'lines+markers',
+            line: { color: deducedColor, width: 2.5, dash: 'dash' },
+            marker: { color: deducedColor, symbol: 'diamond', size: 9 },
+            customdata: slopeLabels,
+            hovertemplate: '<b>%{customdata} Deduced</b>: %{y:.2f} bp<extra></extra>'
+          }
+        ];
+
+        const layout4 = {
+          margin: { l: 45, r: 20, t: 15, b: 35 },
+          paper_bgcolor: paperBg,
+          plot_bgcolor: plotBg,
+          xaxis: {
+            tickvals: slopeX,
+            ticktext: ['F₁−F₀', 'F₂−F₁', '6M−2x3M', '12M−2x6M', 'Sec04'],
+            range: [-0.3, 4.3],
+            gridcolor: gridColor,
+            zerolinecolor: '#334155',
+            tickfont: { color: '#94a3b8', size: 10, family: 'monospace' }
+          },
+          yaxis: {
+            title: { text: 'Slope / Structure Value (bp)', font: { color: '#64748b', size: 9 } },
+            gridcolor: gridColor,
+            zeroline: true,
+            zerolinecolor: '#334155',
+            zerolinewidth: 1.5,
+            tickfont: { color: '#94a3b8', size: 10, family: 'monospace' }
+          },
+          legend: { font: { color: '#94a3b8', size: 9 }, orientation: 'h', y: -0.22 },
+          hovermode: 'x unified'
+        };
+
+        Plotly.react(pSlopes, traces4, layout4, { responsive: true, displayModeBar: false });
+        const bSl = document.getElementById('badgeSlopesDelta');
+        if (bSl) {
+          const s1Diff = Number((mySlopes[0] - liveSlopes[0]).toFixed(2));
+          bSl.innerText = `ΔSlope1: ${s1Diff > 0 ? '+' : ''}${s1Diff.toFixed(2)} bp`;
+          bSl.className = Math.abs(s1Diff) < 0.01 ? 'badge badge-emerald' : 'badge badge-amber';
+        }
+      }
     }
 
-    // Called on live WebSocket tick or snapshot update
+    // Alias renderDeduceChart to renderAll4DeduceCharts
+    function renderDeduceChart() {
+      renderAll4DeduceCharts();
+    }
+
     function updateDeduceModuleLive() {
       // If baseline is not locked, sync to live feed automatically
       if (!deduceBaselineIsLocked) {
