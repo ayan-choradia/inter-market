@@ -187,7 +187,7 @@ function renderFourPanels() {
   const tenors = SOFR.tenor_labels;
 
   // Panel 1: Outright Curve & Differential
-  const diffRates = snap2.rates.map((r, i) => (r - snap1.rates[i]) * 100); # bp
+  const diffRates = snap2.rates.map((r, i) => (r - snap1.rates[i]) * 100); // bp
   Plotly.newPlot('chartP1', [
     { x: tenors, y: snap1.rates, mode: 'lines+markers', name: `${d1} (Rate %)`, line: { color: '#38bdf8', width: 2.5 } },
     { x: tenors, y: snap2.rates, mode: 'lines+markers', name: `${d2} (Rate %)`, line: { color: '#fbbf24', width: 2.5, dash: 'dash' } },
