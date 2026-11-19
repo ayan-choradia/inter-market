@@ -226,6 +226,11 @@ async def index():
 async def dashboard():
     return FileResponse(os.path.join(HERE, "intermarket_curves_dashboard.html"))
 
+@app.get("/stir_research")
+@app.get("/stir_global_research_dashboard.html")
+async def stir_research():
+    return FileResponse(os.path.join(HERE, "stir_global_research_dashboard.html"))
+
 @app.get("/Intermarket_Curve_Intelligence_Mathematical_Report.pdf")
 async def pdf_report():
     return FileResponse(os.path.join(HERE, "Intermarket_Curve_Intelligence_Mathematical_Report.pdf"), media_type="application/pdf")
